@@ -1,0 +1,24 @@
+Maze
+--------------------------------------------------
+	private Room currentRoom;
+	private int startRoom;
+	private int bossRoom;
+	private Room[][] map = new Room[10][10];
+--------------------------------------------------
+	public Maze(string filename)
+	public string ToString()
+--------------------------------------------------
+
+
+Room
+--------------------------------------------------
+	public int X;
+	public int Y;
+	public bool IsVisited;
+	public string Name;
+	public string Description;
+	public bool IsEntrance;
+	public bool IsBoss;
+	public int GoldPieces;
+	public ArrayList<Character> nonPlayers;
+--------------------------------------------------
