@@ -1,0 +1,269 @@
+CharacterClass
+	public string Name
+	public string Description
+	public int DexterityModifier
+	public int IntelligenceModifier
+	public int HealthModifier
+	public int StrengthModifier
+
+Character
+	public string Name
+	public string CharacterClass
+	public int Dexterity
+	public int Intelligence
+	public int Health
+	public int Strength
+	public Item item
+	public int Gold
+	public bool IsDead
+	public Character(bool IsBoss)
+		// name the character
+		// figure out stats (different if isBoss == true)
+		// allocate items
+		// set IsDead = false :)
+
+
+Maze
+	private Room currentRoom;
+	private int startRoom;
+	private int bossRoom;
+	private Room[][] map = new Room[10][10];
+	public Maze(string filename)
+	public string ToString()
+
+public class Room
+	public int X;
+	public int Y;
+	public bool IsVisited;
+	public string Name;
+	public string Description;
+	public bool IsEntrance;
+	public bool IsBoss;
+	public int GoldPieces;
+	public ArrayList<Character> nonPlayers;
+
+ArrayList
+	// reuse from previous assignments.
+
+Dice
+	private int Sides
+	private Random generator
+	public Dice(int sides)
+	public int Roll()	
+
+Action
+	type (fight, sleep, hide)
+
+Fight
+	public Room FightClub;
+	public Character[] players;
+	public Character[] nonPlayers;
+
+Item
+	public string name 
+	public string description
+	public int damage
+
+Weapon extends Item
+	public bool IsRangeWeapon
+	private int Durability
+	private int Usage
+	public void Use()
+		//if usage < durability 
+		//  use it...
+		//else
+		//	break!
+
+
+Armor extends Item
+	private int Durability
+	private int Usage
+	public void Use()
+		//if usage < durability 
+		//  use it...
+		//else
+		//	break!
+	
+Spell extends Item
+	public bool isMemorized
+
+Potion extends Item
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+READING THE MAP FILE
+
+public Maze()
+{
+	currentRoomNumber = 0;
+	currentRow = 0;
+	currentColumn = 0;
+	open the map file
+	while (file.hasnextline) {
+		line = readline;
+		currentRow++;
+	    split into rooms (string.split())
+	    for each room in line {
+	    	currentColumn++;
+	        if (room > 0) {
+	         	currentRoomNumber++;
+				CreateNewRoom(roomNumber, currentColumn, currentRow);
+			    map[currentRow][currentColumn] = room
+			}
+			else {
+				// no room here!
+				map[currentRow][currentColumn] = null;
+			}
+		}	
+	}
+}
+
+public void DescribeRoom(Room room, int roomNumber)
+{
+    File file = openfile("room" + currentRoomNumber + ".txt")
+    room.name = file.ReadLine();
+    while (file.hasNextLine()) {
+    	room.description = room.description + file.ReadLine();
+    }
+}
+
+		ROOM1.TXT FORMAT
+
+		NAME
+		Description here
+		Description here
+		Description here
+		Description here
+
+public Room CreateNewRoom(int roomNumber, int currentColumn, int currentRow)
+{
+    Room room = new Room();
+    room.x = currentColumn;
+    room.y = currentRow;
+
+    DescribeRoom(currentRoomNumber);
+
+    room.IsVisited = false;
+    room.IsEntrance = (currentRoomNumber == 1);
+    room.IsBoss = (currentRow == 9 && currentColumn == 9);
+	Dice die1D20 = new Dice(20); // maybe use global set of dice for everything.
+    room.GoldPieces = die1D20.Roll();
+
+	int numNPC = CalculateNumberOfNPC(room.IsBoss);
+
+    for (int i=0; i < numNPC, i++) {
+    	Character npc = new Character(room.IsBoss);	
+    	room.NonPlayers.Add(npc);
+    }
+}
+
+public int CalculateNumberOfNPC(bool isBossRoom)
+{
+    Dice d;
+    if (room.IsBoss) {
+    	// roll 1-6
+    	d = new Dice(6);
+    	return d.Roll();
+   	}
+   	else {
+   		// roll 0-6
+    	d = new Dice(7);
+    	return d.Roll() - 1;
+	}
+}
+
+public Room Maze.CanMoveNorth() {
+	return map[currentRoom.y-1][currentRoom.x];	
+}
+
+public Room Maze.CanMoveSouth() {
+	return map[currentRoom.y+1][currentRoom.x];	
+}
+
+public Room Maze.CanMoveEast() {
+	return map[currentRoom.y][currentRoom.x+1];	
+}
+
+public Room Maze.CanMoveWest() {
+	return map[currentRoom.y][currentRoom.x-1];	
+}
+
+public void Maze.Move(string direction)
+{
+	// handle the move.
+	// consider if the main game loop passes "NORTH", "N", "n"
+	if (direction == "north") {
+		TryMoveNorth();
+	}
+	if (direction == "south") {
+		TryMoveSouth();
+	}
+
+	if (direction == "east") {
+		TryMoveEast();
+	}
+
+	if (direction == "west") {
+		TryMoveWest();
+	}
+
+	// handle the backtracking...
+	if (currentRoom.isVisited == false) {
+		// action section?
+	}
+	else {
+		// TODO: remove stuff from the room too :)
+		
+		// tell user it's empty...
+		print("You've been here before, it's empty!");
+	}
+	
+	// tell user where they are... 
+	print(CurrentRoom.Name);
+	print(CurrentRoom.Description);
+}
+
+private void TryMoveNorth()
+{
+	Room newRoom = CanMoveNorth();
+	if (newRoom != null) 
+	{
+		Maze.currentRoom = newRoom;
+	}
+	else 
+	{
+		// can't move, tell user...
+	}
+}
+
+private void TryMoveSouth()
+{
+	Room newRoom = CanMoveSouth();
+	if (newRoom != null) {
+		Maze.currentRoom = newRoom;
+	}
+	else {
+		// can't move, tell user...
+	}
+}
+
+private void TryMoveEast()
+{
+	Room newRoom = CanMoveEast();
+	if (newRoom != null) {
+		Maze.currentRoom = newRoom;
+	}
+	else {
+		// can't move, tell user...
+	}
+}
+
+private void TryMoveWest()
+{
+	Room newRoom = CanMoveWest();
+	if (newRoom != null) {
+		Maze.currentRoom = newRoom;
+	}
+	else {
+		// can't move, tell user...
+	}
+}
