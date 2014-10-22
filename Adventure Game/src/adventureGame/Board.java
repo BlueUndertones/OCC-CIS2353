@@ -31,9 +31,9 @@ public class Board extends JPanel implements ActionListener {
         
 		//ImageIcon img = new ImageIcon ("C:\\Users\\NADHIR\\Desktop\\ch05\\ch5\\Maze\\mario.png");
 		//g.drawImage(img.getImage(), 32, 32, this  );
-		for (int x=0; x < map.columns;x++)
-			for (int y =0; y < map.rows; y++){
-				if (map.grid[y][x] == 1)
+		for (int x=0; x < map.rows;x++)
+			for (int y =0; y < map.columns; y++){
+				if (map.grid[x][y] == 1)
 				{
 					
 					g.setColor(Color.white);
@@ -41,7 +41,7 @@ public class Board extends JPanel implements ActionListener {
 					g.setColor(Color.red);
 					g.fillRect(x * 60+1, y *60 +1,  60, 60);
 				}
-				if (map.grid[y][x] == 0)
+				if (map.grid[x][y] == 0)
 				{
 					
 					g.setColor(Color.white);
