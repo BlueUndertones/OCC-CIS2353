@@ -68,22 +68,22 @@ public class Board extends JPanel implements ActionListener {
 		{
 			int keyCode = e.getKeyCode();
 			
-			if(keyCode == KeyEvent.VK_W){
+			if(keyCode == KeyEvent.VK_UP){
             	if(map.grid[p.getTitleX()][(p.getTileY()-1)] == 1){
             		p.move(0, -1);
             	}
 			}
-            if(keyCode == KeyEvent.VK_S){
+            if(keyCode == KeyEvent.VK_DOWN){
             	if(map.grid[p.getTitleX()][(p.getTileY()+1)] == 1){
             		p.move(0, 1);
             	}
             }
-            if(keyCode == KeyEvent.VK_A){
+            if(keyCode == KeyEvent.VK_LEFT){
             	if(map.grid[(p.getTitleX()-1)][p.getTileY()] == 1){
             		p.move(-1, 0);
             	}
             }
-            if(keyCode == KeyEvent.VK_D){
+            if(keyCode == KeyEvent.VK_RIGHT){
             	if(map.grid[(p.getTitleX()+1)][p.getTileY()] == 1){
             		p.move(1, 0);
             	}
