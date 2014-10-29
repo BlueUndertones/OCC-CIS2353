@@ -18,7 +18,7 @@ public class Player implements character
     protected int strength, dexterity, intelligence, hitPoints, gold;
     protected Object weapons;
     protected Die dice;
-
+    private int tileX, tileY ; 
    
     public Player( String name )
     {
@@ -27,7 +27,21 @@ public class Player implements character
         setDexterity ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
         setIntelligence ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
         setHitPoints (  );
+        tileX= 0;
+		  tileY =0;
     }
+    
+  	public int getTitleX(){
+		return tileX;
+	}
+	public int getTileY(){
+		return tileY;
+	}
+	public void move(int dx, int dy)
+	{
+		tileX += dx;
+		tileY += dy;
+	}
     public void setName( String name )
     {
          try

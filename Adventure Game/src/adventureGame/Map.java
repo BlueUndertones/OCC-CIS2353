@@ -1,6 +1,7 @@
 package adventureGame;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Map 
@@ -10,11 +11,11 @@ public class Map
     public static final byte CORRIDOR = 1;
     public static final byte PATH = 9;
     public static final byte DEAD_END = 2;
-    
-    protected Position start, finish;
+    public static final int ROWS = 10;
+    public static final int COLUMNS = 10;
     protected byte[ ][ ] grid;
-    int rows = 0;
-    int columns = 0;
+    ArrayList <Position> rooms = new  <Position> ArrayList();
+    ArrayList <Position>  walls = new  <Position> ArrayList();;
 	public Map()
 	{
 		openFile();
@@ -31,26 +32,30 @@ public class Map
 	}
 	public void readFile()
 	{
-		rows = scan.nextInt();
-	    columns = scan.nextInt();
-	          
-		grid = new byte [rows][columns];               
-		start = new Position (scan.nextInt(), scan.nextInt());                
-		finish = new Position (scan.nextInt(), scan.nextInt());     
-		for (int i = 0; i < rows; i++)                                   
-			for (int j = 0; j < columns; j++)
+		grid = new byte [ROWS][COLUMNS];                    
+		for (int i = 0; i < ROWS; i++)                                   
+			for (int j = 0; j < ROWS; j++)
 		    {
 		    	grid [i][j] = scan.nextByte();
+		    	
+		    	if (grid [i][j] == CORRIDOR)
+		    	{
+		    		rooms.add (new Position(i,j));
+		    	}
+		    	if (grid [i][j] == WALL)
+		    	{
+		    		walls.add (new Position(i,j));
+		    	}
 		    	if (grid [i][j] != WALL && grid [i][j] != CORRIDOR)
 		        	throw new NumberFormatException ("At position (" + i + ", " + j + "), " +
 		            	grid [i][j] + " should be " +
 		                				WALL + " or " + CORRIDOR + ".");
-		     } 
+		     }
 		//scan.close();
 	}
 	public String toString () 
     {
- 	   String result = "\n";
+ 	    String result = "\n";
 
         for (int row = 0; row < grid.length; row++) 
         {
