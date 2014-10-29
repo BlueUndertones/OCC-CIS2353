@@ -131,13 +131,13 @@ public class Player implements character
     
     public String toString()
     {
-        String stats = "Player: " + name +
-                        " \nHit Points: " + hitPoints +
-                        " \nIntelligence: " + intelligence +
-                        " \nDexterity: " + dexterity + 
-                        " \nStrength: " + strength +
-                        " \nGold: " + gold +
-                        "\n-----------------------------";
+        String stats = "<html>Player: " + name +
+                        " \n<br>Hit Points: " + hitPoints +
+                        " \n<br>Intelligence: " + intelligence +
+                        " \n<br>Dexterity: " + dexterity + 
+                        " \n<br>Strength: " + strength +
+                        " \n<br>Gold: " + gold +
+                        "\n<br>-----------------------------</html>";
         return stats;
     }
  

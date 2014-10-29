@@ -28,7 +28,7 @@ public class Board extends JPanel implements ActionListener {
 	//save random room numbers to draw the random gold on the maze
 	public void saveRandomRoomNumbers ()
 	{
-		for (int i =0; i < 6; i++)
+		for (int i =0; i < 10; i++)
 			num.add (ran.nextInt(map.rooms.size()));
 	}
 	public void actionPerformed(ActionEvent e) {
@@ -59,27 +59,26 @@ public class Board extends JPanel implements ActionListener {
 			}
 		}
 		//draw gold on the maze
-		for(int i =0; i < 6; i++)
+		for(int i =0; i < 10; i++)
 		{
-	        Image gold = null;
-			try {
-				gold = ImageIO.read(this.getClass().getResource("gold.png"));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			//get random room positions to place random gold on.
-	        g.drawImage(gold, map.rooms.get(num.get(i)).getColumn() * 60, map.rooms.get(num.get(i)).getRow() * 60, 60, 60, null);
+	        g.drawImage(drawImage("gold.png"), map.rooms.get(num.get(i)).getColumn() * 60, map.rooms.get(num.get(i)).getRow() * 60, 60, 60, null);
 		}
- 
-		//draw a player Image source
-        Image image = null;
+		//draw mario image on the board
+        g.drawImage(drawImage("mario.png"), p.getTitleX() * 60, p.getTileY() * 60, 60, 60, null);  
+	}
+	
+	
+	public Image drawImage (String imagePath)
+	{
+		Image img = null;
 		try {
-			image = ImageIO.read(this.getClass().getResource("mario.png"));
+			img = ImageIO.read(this.getClass().getResource(imagePath));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        g.drawImage(image, p.getTitleX() * 60, p.getTileY() * 60, 60, 60, null);  
+		return img;
 	}
+	
 	public class Al extends KeyAdapter
 	{
 		public void keyPressed(KeyEvent e)
