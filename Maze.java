@@ -1,3 +1,12 @@
+/*
+   What should the Maze do?
+   -----------------------------------------------
+   Create a board 10 x 10
+   Create rooms according to a file
+   Control movement
+   Decide if room has NPCs
+*/
+
 import java.util.*;
 import java.io.*;
 

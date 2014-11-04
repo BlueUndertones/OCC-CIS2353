@@ -1,44 +1,49 @@
-
+/*
+   What should the room do?
+   -----------------------------------------
+   -track how much gold is in there
+   -track if the room has been visited
+   -know its name and description
+      -read description from file
+   -know if boss room or regular room
+   -return the name & description somewhere
+*/
 package adventuregame;
 
 import java.util.*;
 
 public class Room {
-	private int X;
-	private int Y;
+	private int X;//?
+	private int Y;//?
+   private int GoldPieces;
+   private boolean IsBoss;
 	private boolean IsVisited;
 	private String Name;
 	private String Description;
-	private boolean IsEntrance;
-	private boolean IsBoss;
-	private int GoldPieces;
-	//public ArrayList<Character> nonPlayers;
    
    public Room()
    {
-   //track which room is randomly set to whagt so when you move out it is the same when you come back.
+      //track which room is randomly set to what so when you move out it is the same when you come back.
    }
    
-   //BETTER HERE OR CREATE ROOM?
-   public int setGold()
+   public void setGold()
    {
       //randomly roll gold 1d20
-      return GoldPieces;
+      //remember that value
    }
    
-   //IN MAZE?
-//    public NPC setNPC()
-//    {
-//       //randomly roll if NPC in room 0-6 NPCS possible
-//       return npc;
-//    }
-   
-   //IN MAZE?
-   public boolean isVisited()
+   public void isVisited()
    {
       //track if room has been visited
       //if so clear room on way out
-      return true;
+   }
+   
+   public void isBoss()
+   {
+      //if room is last room @ ???
+         //isBoss = true;
+      //else
+         //isBoss = false;
    }
    
    /*
@@ -53,42 +58,42 @@ public class Room {
       
       switch(roomNum)
       {
-      
          case 1:
          {
-            roomDesc = "room1.txt";	
+            roomDesc = "room1.txt";	//read what's in this file
             break;
          }
          case 2:
          {
-            roomDesc = "room2.txt";	
+            roomDesc = "room2.txt";	//read what's in this file
             break;
          } 
          case 3:
          {
-            roomDesc = "room3.txt";	
+            roomDesc = "room3.txt";	//read what's in this file
             break;
          } 
          case 4:
          {
-            roomDesc = "room4.txt";	
+            roomDesc = "room4.txt";	//read what's in this file
             break;
          } 
          case 5:
          {
-            roomDesc = "room5.txt";	
+            roomDesc = "room5.txt";	//read what's in this file
             break;
          } 
          case 6:
          {
-            roomDesc = "room6.txt";	
+            roomDesc = "room6.txt";	//read what's in this file
             break;
          } 
-         }
-         
+      } 
    }
    
-   //CALL FOM MAZE?
+   /*
+      ...
+   */
    public String toString()
    {
       String name = "Whatever";
