@@ -11,6 +11,7 @@
 package adventuregame;
 
 import java.util.*;
+import java.io.*;
 
 public class Room {
 	private int X;//?
@@ -29,7 +30,10 @@ public class Room {
    public void setGold()
    {
       //randomly roll gold 1d20
+      Die die = new Die();
+      gold = die.roll(20);
       //remember that value
+      gold = GoldPieces;
    }
    
    public void isVisited()
@@ -41,9 +45,14 @@ public class Room {
    public void isBoss()
    {
       //if room is last room @ ???
-         //isBoss = true;
-      //else
-         //isBoss = false;
+      if(position[x][y])
+      {
+         isBoss = true;
+      }
+      else
+      {
+         isBoss = false;
+      }
    }
    
    /*
@@ -60,35 +69,48 @@ public class Room {
       {
          case 1:
          {
+            name = "Slime Cavern";
             roomDesc = "room1.txt";	//read what's in this file
             break;
          }
          case 2:
          {
+            name = "Mess Hall";
             roomDesc = "room2.txt";	//read what's in this file
             break;
          } 
          case 3:
          {
+            name = "Hallway";
             roomDesc = "room3.txt";	//read what's in this file
             break;
          } 
          case 4:
          {
+            
+            name = "Mist Cavern";
             roomDesc = "room4.txt";	//read what's in this file
             break;
          } 
          case 5:
          {
+            name = "Sleeping Quarters";
             roomDesc = "room5.txt";	//read what's in this file
             break;
          } 
          case 6:
          {
+            name = "Cellar";
             roomDesc = "room6.txt";	//read what's in this file
             break;
          } 
       } 
+   }
+   
+   public void getRoomFile()
+   {
+      File file = new File();
+      
    }
    
    /*
