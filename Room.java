@@ -25,9 +25,11 @@ public class Room {
    public Room()
    {
       //track which room is randomly set to what so when you move out it is the same when you come back.
+      //set gold here
+      setGold();
    }
    
-   public void setGold()
+   private void setGold()
    {
       //randomly roll gold 1d20
       Die die = new Die();
@@ -45,7 +47,7 @@ public class Room {
    public void isBoss()
    {
       //if room is last room @ ???
-      if(position[x][y])
+      if(position[9][8])
       {
          isBoss = true;
       }
@@ -58,7 +60,7 @@ public class Room {
    /*
       this will choose 1 of 6 room descriptions
    */
-   public void setRoomDesc()
+   public String setRoomDesc()
    {
       Random rr = new Random( );
 		//choose a random room number 1 - 6
@@ -69,39 +71,45 @@ public class Room {
       {
          case 1:
          {
-            name = "Slime Cavern";
+            Name = "Slime Cavern";
             roomDesc = "room1.txt";	//read what's in this file
+            return Name;
             break;
          }
          case 2:
          {
-            name = "Mess Hall";
+            Name = "Mess Hall";
             roomDesc = "room2.txt";	//read what's in this file
+            return Name;
             break;
          } 
          case 3:
          {
-            name = "Hallway";
+            Name = "Hallway";
             roomDesc = "room3.txt";	//read what's in this file
+            return Name;
             break;
          } 
          case 4:
          {
             
-            name = "Mist Cavern";
+            Name = "Mist Cavern";
             roomDesc = "room4.txt";	//read what's in this file
+            return Name;
             break;
          } 
          case 5:
          {
-            name = "Sleeping Quarters";
+            Name = "Sleeping Quarters";
             roomDesc = "room5.txt";	//read what's in this file
+            return Name;
             break;
          } 
          case 6:
          {
-            name = "Cellar";
+            Name = "Cellar";
             roomDesc = "room6.txt";	//read what's in this file
+            return Name;
             break;
          } 
       } 
@@ -109,7 +117,7 @@ public class Room {
    
    public void getRoomFile()
    {
-      File file = new File();
+      File file = new File(roomDesc);
       
    }
    
@@ -118,8 +126,7 @@ public class Room {
    */
    public String toString()
    {
-      String name = "Whatever";
-      String description = name + "/n" +
+      String description = Name + "/n" +
                            "This is just a dummy description";
       return description;
    }
