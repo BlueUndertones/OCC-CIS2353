@@ -14,40 +14,76 @@ import java.util.*;
 import java.io.*;
 
 public class Room {
-	private int X;//?
-	private int Y;//?
+   // current room location in maze...
+	private int X;
+	private int Y;
+
    private int GoldPieces;
    private boolean IsBoss;
 	private boolean IsVisited;
 	private String Name;
 	private String Description;
-   
-   public Room()
+   public ArrayList<NPC> NPCs;
+
+   public Room(int x, int y)
    {
-      //track which room is randomly set to what so when you move out it is the same when you come back.
-      //set gold here
+      X = x;
+      Y = y;
+      IsVisited = false;
+      setRoomDesc();
+      setNPCs();
       setGold();
    }
    
    private void setGold()
    {
       //randomly roll gold 1d20
-      Die die = new Die();
-      gold = die.roll(20);
-      //remember that value
-      gold = GoldPieces;
+      Die die = new Die(20);
+      GoldPieces = die.roll();
    }
    
-   public void isVisited()
+   private int getGold()
    {
-      //track if room has been visited
-      //if so clear room on way out
+      return GoldPieces;
+   }
+
+   private void setNPCs()
+   {
+      // need roll of 0-6
+      Die die = new Die(7);
+      int numNPCs = die.roll() - 1;
+      for (i=0; i< numNPCs; i++)
+      {
+         NPCs.add(new NPC());
+      }
+   }
+
+   public void clearNPCs()
+   {
+      NPCs.clear();
+   }
+
+   // This method should be called by the code that moves the player into a new room, as the player
+   // leaves the current room.
+   // else with that room.
+   // i.e. previousRoom.visited()
+   public void visited()
+   {
+      IsVisited = true;
+      GoldPieces = 0;
+      clearNPCS();
+   }   
+
+   // this method reports whether or not the room has been visited...
+   public boolean isVisited()
+   {
+      return IsVisited;
    }
    
    public void isBoss()
    {
       //if room is last room @ ???
-      if(position[9][8])
+      if(X == 9 && Y == 8)
       {
          isBoss = true;
       }
@@ -62,63 +98,56 @@ public class Room {
    */
    public String setRoomDesc()
    {
-      Random rr = new Random( );
-		//choose a random room number 1 - 6
-      int roomNum = rr.nextInt( 6 ) + 1; //+1 eliminates 0
-      String roomDesc = " "; //start out empty
-      
+      String roomFilename;
+
+      Die d = new Die(6);
+      int roomNum = d.roll();
       switch(roomNum)
       {
          case 1:
          {
             Name = "Slime Cavern";
-            roomDesc = "room1.txt";	//read what's in this file
-            return Name;
             break;
          }
          case 2:
          {
             Name = "Mess Hall";
-            roomDesc = "room2.txt";	//read what's in this file
-            return Name;
             break;
          } 
          case 3:
          {
             Name = "Hallway";
-            roomDesc = "room3.txt";	//read what's in this file
-            return Name;
             break;
          } 
          case 4:
          {
-            
             Name = "Mist Cavern";
-            roomDesc = "room4.txt";	//read what's in this file
-            return Name;
             break;
          } 
          case 5:
          {
             Name = "Sleeping Quarters";
-            roomDesc = "room5.txt";	//read what's in this file
-            return Name;
             break;
          } 
          case 6:
          {
             Name = "Cellar";
-            roomDesc = "room6.txt";	//read what's in this file
-            return Name;
             break;
          } 
+
+         roomFilename = "room" + roomNum + ".txt";
+         Description = getRoomFile(roomFilename).toString();
       } 
    }
    
-   public void getRoomFile()
+   public String getRoomFile(String filename)
    {
-      File file = new File(roomDesc);
-      
+      List<String> lines = Files.readAllLines(filename);
+      StringBuilder sb = new StringBuilder();
+      for(String s: lines) {
+         sb.append(s);
+      }
+      return sb.toString();
    }
    
    /*
@@ -126,8 +155,6 @@ public class Room {
    */
    public String toString()
    {
-      String description = Name + "/n" +
-                           "This is just a dummy description";
-      return description;
+      return (Name + "/n" + Description);
    }
 }
