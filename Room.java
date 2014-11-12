@@ -8,7 +8,6 @@
    -know if boss room or regular room
    -return the name & description somewhere
 */
-package adventuregame;
 
 import java.util.*;
 import java.io.*;
@@ -52,9 +51,9 @@ public class Room {
       // need roll of 0-6
       Die die = new Die(7);
       int numNPCs = die.roll() - 1;
-      for (i=0; i< numNPCs; i++)
+      for (int i=0; i< numNPCs; i++)
       {
-         NPCs.add(new NPC());
+         NPCs.add(new NPC("Monster")); //need to pass string here, like name of NPC
       }
    }
 
@@ -71,7 +70,7 @@ public class Room {
    {
       IsVisited = true;
       GoldPieces = 0;
-      clearNPCS();
+      clearNPCs();
    }   
 
    // this method reports whether or not the room has been visited...
@@ -85,11 +84,11 @@ public class Room {
       //if room is last room @ ???
       if(X == 9 && Y == 8)
       {
-         isBoss = true;
+         IsBoss = true;
       }
       else
       {
-         isBoss = false;
+         IsBoss = false;
       }
    }
    
@@ -142,7 +141,7 @@ public class Room {
    
    public String getRoomFile(String filename)
    {
-      List<String> lines = Files.readAllLines(filename);
+      List<String> lines = File.readAllLines(filename);
       StringBuilder sb = new StringBuilder();
       for(String s: lines) {
          sb.append(s);
