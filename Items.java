@@ -4,13 +4,12 @@ public class Items {
 
 	private String itemName; // weapon, armor, Potion, spell
 	private String description;
-	private int damage;
 	
-	public Items(String name,String desc, int dmg)
+	
+	public Items(String name,String desc)
 	{
 		name= itemName;
 		desc = description;
-		dmg=damage;		
 	}
 
 	public String getItemName() {
@@ -27,14 +26,6 @@ public class Items {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public int getDamage() {
-		return damage;
-	}
-
-	public void setDamage(int damage) {
-		this.damage = damage;
 	}
 	
 }
