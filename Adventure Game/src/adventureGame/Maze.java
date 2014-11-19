@@ -13,22 +13,21 @@ import javax.swing.JPanel;
 
 public class Maze {
     Player p = new Player("Mario");
+    Board board = new Board();
 	public static void main(String[] args) {
 		new Maze();
-		Map map = new Map();
-	    
 	}
 	public Maze()
 	{
 		JFrame frame = new JFrame();
 		frame.setLayout(new GridLayout (1,1));
 		
-		JPanel infoPanel = new JPanel();
-		JLabel button = new JLabel(p.toString());
-		infoPanel.add(button);
+		//JPanel infoPanel = new JPanel();
+		//JLabel button = new JLabel(p.toString());
+		//infoPanel.add(button);
 		
-		frame.add(new Board());
-		frame.add(infoPanel);
+		frame.add(board);
+		frame.add(board.buildPlayerInfo());
 
 		frame.setTitle("Advanture Game");
 		frame.setSize(1240, 640);

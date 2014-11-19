@@ -90,9 +90,9 @@ public class Player implements character
     {
         this.hitPoints = MAX_HIT_POINTS;
     }
-    public void setGold( )
+    public void setGold(int num )
     {
-        
+        this.gold += num;
     }
         
     public void setWeapon ( Object item )
@@ -130,6 +130,17 @@ public class Player implements character
     }
     
     public String toString()
+    {
+        String stats = "<html>Player: " + name +
+                        " \n<br>Hit Points: " + hitPoints +
+                        " \n<br>Intelligence: " + intelligence +
+                        " \n<br>Dexterity: " + dexterity + 
+                        " \n<br>Strength: " + strength +
+                        " \n<br>Gold: " + gold +
+                        "\n<br>-----------------------------</html>";
+        return stats;
+    }
+    public String toString(String name, int hitPoints, int intelligence, int dexterity, int strength, int gold)
     {
         String stats = "<html>Player: " + name +
                         " \n<br>Hit Points: " + hitPoints +

@@ -20,6 +20,12 @@ public class Position {
 	public int getColumn() {
 		return column;
 	} 
+	 public boolean equals( Position pos )
+	 {
+	      if(this.getColumn() == pos.getColumn() && this.getRow() == pos.getRow())
+	    	  return true;
+	      return false;
+	 }
 
 } 
 
