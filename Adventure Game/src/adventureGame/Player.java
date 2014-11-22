@@ -1,12 +1,17 @@
 package adventureGame;
 
+/**
+ *
+ * @author DeMario
+ */
 public class Player implements character
 {   
     private final int MAX_HIT_POINTS = 20;
+    private final int NO_HIT_POINTS = 0;
     private final int NUMBER_OF_ROLLS = 3; 
     private final int NUMBER_OF_SIDES = 6;
     protected String name;
-    protected int strength, dexterity, intelligence, hitPoints, gold;
+    protected int strength, dexterity, intelligence, hitPoints = 5, gold;
     protected Object weapons;
     protected Die dice;
     private int tileX, tileY ; 
@@ -17,12 +22,11 @@ public class Player implements character
         setStrength( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
         setDexterity ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
         setIntelligence ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
-        setHitPoints (  );
+        //setHitPoints (  );
         tileX= 0;
 		tileY = 1;
     }
-    
-  	public int getTitleX(){
+    public int getTitleX(){
 		return tileX;
 	}
 	public int getTileY(){
@@ -90,9 +94,32 @@ public class Player implements character
     {
         this.hitPoints = MAX_HIT_POINTS;
     }
-    public void setGold(int num )
+    public void addHitPoints()
     {
-        this.gold += num;
+    	if ( hitPoints == MAX_HIT_POINTS )
+    	{
+    		System.out.println("Max Health");
+    	}
+    	else 
+    	{
+    		hitPoints += 5;    		
+    	}
+    }
+    
+    public void removeHitPoints()
+    {
+    	if ( hitPoints == NO_HIT_POINTS )
+    	{
+    		System.out.println("Player is dead");
+    	}
+    	else 
+    	{
+    		hitPoints -= 5;    		
+    	}
+    }
+    public void setGold( )
+    {
+        
     }
         
     public void setWeapon ( Object item )
@@ -139,17 +166,5 @@ public class Player implements character
                         " \n<br>Gold: " + gold +
                         "\n<br>-----------------------------</html>";
         return stats;
-    }
-    public String toString(String name, int hitPoints, int intelligence, int dexterity, int strength, int gold)
-    {
-        String stats = "<html>Player: " + name +
-                        " \n<br>Hit Points: " + hitPoints +
-                        " \n<br>Intelligence: " + intelligence +
-                        " \n<br>Dexterity: " + dexterity + 
-                        " \n<br>Strength: " + strength +
-                        " \n<br>Gold: " + gold +
-                        "\n<br>-----------------------------</html>";
-        return stats;
-    }
- 
+    } 
 }

@@ -27,13 +27,14 @@ public class Die
       the die.
    */
    
-   public void roll()
+   public int roll()
    {
       // Create a Random object.
       Random rand = new Random();
       
       // Get a random value for the die.
       value = rand.nextInt(sides) + 1;
+      return value;
    }
    
    /**

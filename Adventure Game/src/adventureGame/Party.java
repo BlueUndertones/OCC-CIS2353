@@ -1,9 +1,10 @@
+package adventureGame;
 import java.util.*;
 
 
 public class Party
 {
-   Sequence party;
+   static Sequence party;
    private int MIN_PARTY_SIZE = 0;
    private int MAX_PARTY_SIZE = 6;
    
@@ -20,7 +21,7 @@ public class Party
 		}
 	}
 	
-	public void sleep( )//demario
+	public static void sleep( )//demario
 	{
 		
 		Die dice = new Die(2);
@@ -45,22 +46,22 @@ public class Party
 	}
 
 
-	private void fight() //krupa
+	public static void fight() //krupa
 	{
 		System.out.println("Fight Begins");
 	}
 	
-	public void search() // Heather
+	public static void search() // Heather
 	{
 		 
 	}
 	
-	public void hide()// nadir
+	public static void hide()// nadir
 	{
 		
 	}
 	
-	public void run()//demario
+	public static void run()//demario
 	{
 		Die dice = new Die(2);
 		dice.roll(); 

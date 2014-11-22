@@ -1,5 +1,4 @@
 package adventureGame;
-
 /*
    What should the room do?
    -----------------------------------------
@@ -135,10 +134,14 @@ public class Room {
             Name = "Cellar";
             break;
          } 
-
+         default:
+        	 Name = "Room Description --default";
+        	 
          roomFilename = "room" + roomNum + ".txt";
          Description = getRoomFile(roomFilename).toString();
-      } 
+         
+      }
+	return Name; 
    }
    
    public String getRoomFile(String filename)

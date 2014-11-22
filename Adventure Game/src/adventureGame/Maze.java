@@ -12,8 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Maze {
-    Player p = new Player("Mario");
+	
     Board board = new Board();
+    
 	public static void main(String[] args) {
 		new Maze();
 	}
@@ -26,11 +27,20 @@ public class Maze {
 		//JLabel button = new JLabel(p.toString());
 		//infoPanel.add(button);
 		
-		frame.add(board);
-		frame.add(board.buildPlayerInfo());
-
+		JPanel p = new JPanel(new BorderLayout());
+		p.add(board.buildNpcInfo(), BorderLayout.EAST);
+		p.add(board.buildPlayerInfo(),BorderLayout.WEST);
+		
+		JPanel center = new JPanel(new GridLayout(0,1));
+		center.add(board,BorderLayout.CENTER);
+		
+		p.add(center);
+		//frame.add(board);
+		//frame.add(board.buildPlayerInfo());
+		frame.add(p);
+			
 		frame.setTitle("Advanture Game");
-		frame.setSize(1240, 640);
+		frame.setSize(900, 640);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

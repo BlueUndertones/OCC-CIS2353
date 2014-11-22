@@ -1,3 +1,4 @@
+package adventureGame;
 import java.util.*;
 
 public class Sequence<E>implements Collection<E>{

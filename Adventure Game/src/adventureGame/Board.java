@@ -16,28 +16,27 @@ public class Board extends JPanel implements ActionListener {
 	private Timer timer;
 	private Map map;
 	private Player p;
+	private NPC npc;
 	Random ran = new Random ();
-	ArrayList <Integer> num = new <Integer> ArrayList () ;
 	ArrayList <Position> roomsVisited = new <Position> ArrayList ();
 	ArrayList <Position> roomsInvalid = new <Position> ArrayList ();
+	ArrayList<Player> myPlayers = new <Player> ArrayList();
+	//ArrayList <Integer> num = new <Integer> ArrayList () ;
 	//ArrayList <Position> roomsHasGold = new <Position> ArrayList ();
-	String name;
-	int hitPoints;
-	int intelligence;
-	int dexterity;
-	int strength;
-	int gold;
-	JLabel info = new JLabel();
+	
 	
 	public Board () {
 		map = new Map();
-		p = new Player("Mario");
+		choosePlayers();
+		p = myPlayers.get(0);
+		npc = new NPC("Witch");
 		//saveRandomRoomNumbers ();  //used to generate gold
 		addKeyListener(new Al());
 		setFocusable(true);
 		timer = new Timer (25, this);
 		timer.start();
 	}
+	
 	/*//save random room numbers to draw the random gold on the maze
 	public void saveRandomRoomNumbers ()
 	{
@@ -50,11 +49,25 @@ public class Board extends JPanel implements ActionListener {
 	}*/
 	public JPanel buildPlayerInfo ()
 	{
-		JPanel infoPanel = new JPanel();
-		info.setText(p.toString());
-		infoPanel.add(info);
+		JPanel infoPanel = new JPanel(new GridLayout(0,1));
+		
+		for(int i =0; i < myPlayers.size(); i ++)
+		{
+			JLabel info = new JLabel();
+			info.setText(myPlayers.get(i).toString());
+			infoPanel.add(info);
+		}
 		repaint();
 		return infoPanel;
+	}
+	public JPanel buildNpcInfo ()
+	{
+		JLabel info = new JLabel();
+		JPanel NpcInfo = new JPanel(new GridLayout(0,1));
+		info.setText(npc.toString());
+		NpcInfo.add(info);
+		repaint();
+		return NpcInfo;
 	}
 	public void actionPerformed(ActionEvent e) {
 		repaint();
@@ -67,25 +80,27 @@ public class Board extends JPanel implements ActionListener {
         {
              for (int y = 0; y < map.grid [0].length; y++)
              {
-				g.setColor(Color.white);
-				g.fillRect(y * TILE_WIDTH, x * TILE_HEIGHT,  TILE_WIDTH, TILE_HEIGHT);
-				g.setColor(Color.gray);
-				g.fillRect(y * TILE_WIDTH+1, x * TILE_HEIGHT +1,  TILE_WIDTH, TILE_HEIGHT);
+				//g.setColor(Color.white);
+				//g.fillRect(y * TILE_WIDTH, x * TILE_HEIGHT,  TILE_WIDTH, TILE_HEIGHT);
+				//g.setColor(Color.gray);
+				//g.fillRect(y * TILE_WIDTH+1, x * TILE_HEIGHT +1,  TILE_WIDTH, TILE_HEIGHT);
+            	 g.drawImage(drawImage("tile.jpg"), y * TILE_WIDTH+1, x * TILE_HEIGHT +1, TILE_WIDTH, TILE_HEIGHT, null);
 			}
 		}
 		for (int index =0; index < roomsVisited.size(); index++)
 		{
 			int x = roomsVisited.get(index).getRow();
 			int y = roomsVisited.get(index).getColumn();
-			g.setColor(Color.red);
+			g.setColor(Color.white);
 			g.fillRect(y * TILE_WIDTH +1, x * TILE_HEIGHT +1,  TILE_WIDTH, TILE_HEIGHT);
 		}
 		for (int index =0; index < roomsInvalid.size(); index++)
 		{
 			int x = roomsInvalid.get(index).getRow();
 			int y = roomsInvalid.get(index).getColumn();
-			g.setColor(Color.black);
-			g.fillRect(y * TILE_WIDTH +1, x * TILE_HEIGHT +1,  TILE_WIDTH, TILE_HEIGHT);
+//			g.setColor(Color.black);
+//			g.fillRect(y * TILE_WIDTH +1, x * TILE_HEIGHT +1,  TILE_WIDTH, TILE_HEIGHT);
+			g.drawImage(drawImage("locked.png"), y * TILE_WIDTH +1, x * TILE_HEIGHT +1, TILE_WIDTH, TILE_HEIGHT, null);
 		}
 		
 		//draw gold on the maze
@@ -95,7 +110,7 @@ public class Board extends JPanel implements ActionListener {
 		}*/
 		
 		//draw mario image on the board
-        g.drawImage(drawImage("mario.png"), p.getTitleX() * TILE_WIDTH, p.getTileY() * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, null);  
+        g.drawImage(drawImage("players.png"), p.getTitleX() * TILE_WIDTH, p.getTileY() * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, null);  
 	}
 
 	public Image drawImage (String imagePath)
@@ -133,10 +148,10 @@ public class Board extends JPanel implements ActionListener {
 		return false;
 	}
 	*/
-	public void actionChosen ()
+	public int chooseAction ()
 	{
-		String[] choices = {"Fight", "Sleep", "Run", "Search", "hide"};
-	    JOptionPane.showOptionDialog(
+		String[] choices = {"Fight", "Sleep", "Run", "Search", "Hide"};
+	    int actionChosen = JOptionPane.showOptionDialog(
 	                               null                       // Center in window.
 	                             , "What Do you want to do in this room?"  // Message
 	                             , "Choose Action"            // Title in titlebar
@@ -146,7 +161,83 @@ public class Board extends JPanel implements ActionListener {
 	                             , choices                    // Button text as above.
 	                             , "Default"    // Default button's label
 	                           );
+	    
+	    return actionChosen;
+	}
+	public void choosePlayers()
+	{
+		JCheckBox mario = new JCheckBox("Mario");
+		JCheckBox link = new JCheckBox("Link");
+		JCheckBox strife = new JCheckBox("Cloud Strife");
+		JCheckBox kratos = new JCheckBox("Kratos");
+		JCheckBox sonic = new JCheckBox("Sonic");
+		JCheckBox arthus = new JCheckBox("Arthus");
+		
+		mario.setSelected(true);
+	  
+		Object[] array = {
+		        new JLabel("Select at least one Player:"),
+		        mario,
+		        link,
+		        strife,
+		        kratos,
+		        sonic,
+		        arthus   
+		};
+		
+	    int res = JOptionPane.showConfirmDialog(null, array, "Select", JOptionPane.OK_CANCEL_OPTION);
 
+		if (mario.isSelected()) { 
+			myPlayers.add(new Player ("Mario"));
+		}
+		
+		if (link.isSelected()) {
+			myPlayers.add(new Player ("Link")); 
+		}
+		
+		if (strife.isSelected()) {
+			myPlayers.add(new Player ("Strife")); 
+		}
+		if (kratos.isSelected()) { 
+			myPlayers.add(new Player ("Kratos")); 
+		}
+		
+		if (sonic.isSelected()) {
+			myPlayers.add(new Player ("Sonic")); 
+		}
+		
+		if (arthus.isSelected()) {
+			myPlayers.add(new Player ("Arthus"));
+		}
+		if (res == JOptionPane.CANCEL_OPTION)
+			System.exit(0);
+		if (myPlayers.size() == 0)
+			choosePlayers();
+	}
+	
+	public void doAction (int actionChosen)
+	{
+		switch (actionChosen) {
+        case 0: 
+            Party.fight();
+            break;
+        case 1:
+            Party.sleep();
+            break;
+        case 2:
+        	Party.run();
+            break;
+        case 3:
+        	Party.search();
+        	break;
+        case 4:
+        	Party.hide();
+            break;
+        //case -1:
+            //System.exit(0); 
+        default:
+            JOptionPane.showMessageDialog(null, "Unexpected response " + actionChosen);
+		}
 	}
 	public class Al extends KeyAdapter
 	{
@@ -156,34 +247,22 @@ public class Board extends JPanel implements ActionListener {
 			
 			if(keyCode == KeyEvent.VK_UP){
             	if(map.grid[p.getTileY()-1][p.getTitleX()] == 1){
-            		/* used for gold
-            		if (checkForGold(p.getTileY()-1, p.getTitleX()))
-            		{
-            			for (Position pos: roomsHasGold)
-            			System.out.println (pos.getColumn() + " " + pos.getRow());
-            			roomHasGold();
-            			int i = roomsHasGold.indexOf(new Position (p.getTileY()-1, p.getTitleX()));
-            			System.out.println (i);
-            			roomsHasGold.remove(new Position (p.getTileY()-1, p.getTitleX()));
-            			for (Position pos: roomsHasGold)
-                			System.out.println (pos.getColumn() + " " + pos.getRow());
-            			//System.out.println (roomsHasGold.get(i));
-            		}
-            		*/
         			roomsVisited.add(new Position (p.getTileY()-1, p.getTitleX())); 		
             		p.move(0, -1);
-            		actionChosen ();
+            		doAction(chooseAction ());
             		
             	}
             	else {
             		roomsInvalid.add(new Position (p.getTileY()-1, p.getTitleX()));
             		thatsWallOutput();
+           
             	}	
 			}
             if(keyCode == KeyEvent.VK_DOWN){
             	if(map.grid[p.getTileY()+1][p.getTitleX()] == 1){
             		roomsVisited.add(new Position (p.getTileY()+1, p.getTitleX()));
             		p.move(0, 1);
+            		doAction(chooseAction ());
             	}
             	else {
             		roomsInvalid.add(new Position (p.getTileY()+1, p.getTitleX()));
@@ -194,6 +273,7 @@ public class Board extends JPanel implements ActionListener {
             	if(map.grid[p.getTileY()][p.getTitleX()-1] == 1){
             		roomsVisited.add(new Position (p.getTileY(), p.getTitleX()-1));
             		p.move(-1, 0);
+            		doAction(chooseAction ());
             	}
             	else {
             		roomsInvalid.add(new Position (p.getTileY(), p.getTitleX()-1));
@@ -204,6 +284,7 @@ public class Board extends JPanel implements ActionListener {
             	if(map.grid[p.getTileY()][p.getTitleX()+1] == 1){
             		roomsVisited.add(new Position (p.getTileY(), p.getTitleX()+1));
             		p.move(1, 0);
+            		doAction(chooseAction ());
             	}
             	else {
             		roomsInvalid.add(new Position (p.getTileY(), p.getTitleX()+1));
