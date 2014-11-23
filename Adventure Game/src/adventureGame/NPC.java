@@ -63,10 +63,10 @@ public class NPC extends Player implements character
     {
         String stats = "<html>NPC: " + name +
 		                " \n<br>Hit Points: " + hitPoints +
-		                " \n<br>Intelligence: " + intelligence +
-		                " \n<br>Dexterity: " + dexterity + 
-		                " \n<br>Strength: " + strength +
-		                " \n<br>Gold: " + gold +
+//		                " \n<br>Intelligence: " + intelligence +
+//		                " \n<br>Dexterity: " + dexterity + 
+//		                " \n<br>Strength: " + strength +
+//		                " \n<br>Gold: " + gold +
 		                "\n<br>-----------------------------</html>";
         return stats;
     }
