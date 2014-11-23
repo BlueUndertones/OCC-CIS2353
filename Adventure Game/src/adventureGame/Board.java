@@ -312,7 +312,7 @@ public class Board extends JPanel implements ActionListener {
 		        arthus   
 		};
 		
-	    int res = JOptionPane.showConfirmDialog(null, array, "Select", JOptionPane.OK_CANCEL_OPTION);
+	    int res = JOptionPane.showConfirmDialog(null, array, "Select Your Players", JOptionPane.OK_CANCEL_OPTION);
 
 		if (mario.isSelected()) { 
 			myPlayersArray.add(new Player ("Mario"));
@@ -354,8 +354,8 @@ public class Board extends JPanel implements ActionListener {
         case 2:
         	Party.hide();
             break;
-        //case -1:
-            //System.exit(0); 
+        case -1:
+            System.exit(0); 
         default:
             JOptionPane.showMessageDialog(null, "Unexpected response " + actionChosen);
 		}
