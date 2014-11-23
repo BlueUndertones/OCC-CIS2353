@@ -20,7 +20,7 @@ public class Board extends JPanel implements ActionListener {
 	Random ran = new Random ();
 	ArrayList <Position> roomsVisited = new <Position> ArrayList ();
 	ArrayList <Position> roomsInvalid = new <Position> ArrayList ();
-	ArrayList<Player> myPlayers = new <Player> ArrayList();
+	ArrayList<Player> myPlayersArray = new <Player> ArrayList();
 	//ArrayList <Integer> num = new <Integer> ArrayList () ;
 	//ArrayList <Position> roomsHasGold = new <Position> ArrayList ();
 	Room currentRoom;
@@ -29,7 +29,7 @@ public class Board extends JPanel implements ActionListener {
 	public Board () {
 		map = new Map();
 		choosePlayers();
-		players = myPlayers.get(0);
+		players = myPlayersArray.get(0);
 		npc = new NPC("Witch");
 		//saveRandomRoomNumbers ();  //used to generate gold
 		addKeyListener(new Al());
@@ -51,12 +51,12 @@ public class Board extends JPanel implements ActionListener {
 	public JPanel buildPlayerInfo ()
 	{
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
-		if (myPlayers.size() > 0 )
+		if (myPlayersArray.size() > 0 )
 		{
-			for(int i =0; i < myPlayers.size(); i ++)
+			for(int i =0; i < myPlayersArray.size(); i ++)
 			{
 				JLabel info = new JLabel();
-				info.setText(myPlayers.get(i).toString());
+				info.setText(myPlayersArray.get(i).toString());
 				infoPanel.add(info);
 			}
 		}
@@ -315,30 +315,30 @@ public class Board extends JPanel implements ActionListener {
 	    int res = JOptionPane.showConfirmDialog(null, array, "Select", JOptionPane.OK_CANCEL_OPTION);
 
 		if (mario.isSelected()) { 
-			myPlayers.add(new Player ("Mario"));
+			myPlayersArray.add(new Player ("Mario"));
 		}
 		
 		if (link.isSelected()) {
-			myPlayers.add(new Player ("Link")); 
+			myPlayersArray.add(new Player ("Link")); 
 		}
 		
 		if (strife.isSelected()) {
-			myPlayers.add(new Player ("Strife")); 
+			myPlayersArray.add(new Player ("Strife")); 
 		}
 		if (kratos.isSelected()) { 
-			myPlayers.add(new Player ("Kratos")); 
+			myPlayersArray.add(new Player ("Kratos")); 
 		}
 		
 		if (sonic.isSelected()) {
-			myPlayers.add(new Player ("Sonic")); 
+			myPlayersArray.add(new Player ("Sonic")); 
 		}
 		
 		if (arthus.isSelected()) {
-			myPlayers.add(new Player ("Arthus"));
+			myPlayersArray.add(new Player ("Arthus"));
 		}
 		if (res == JOptionPane.CANCEL_OPTION)
 			System.exit(0);
-		if (myPlayers.size() == 0)
+		if (myPlayersArray.size() == 0)
 			choosePlayers();
 	}
 	

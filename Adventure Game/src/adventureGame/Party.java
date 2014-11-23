@@ -83,47 +83,4 @@ public class Party
 			System.out.println("You escape before the enemy could attack!");
 		}
 	}
-	
-	public String getNpcName(int npcValue )
-	{
-		String npcName = "";
-		
-		switch ( npcValue )
-		{
-		
-			case 1:
-			{
-				npcName = "Small Monster";
-				break;	
-			}
-		
-			case 2:
-			{
-				npcName = "Goblin";
-				break;	
-			}
-			case 3:
-			{
-				npcName = "Dragon";
-				break;	
-			}
-			
-			case 4:
-			{
-				npcName = "Hobbit";
-				break;	
-			}
-			case 5:
-			{
-				npcName = "Witch";
-				break;
-			}		
-			default:
-			{
-				
-			}
-		}
-		return npcName;
-
-	}
 }
