@@ -12,11 +12,24 @@ public class NPC extends Player implements character
     public NPC( String name )
     {
         super( name ); 
-        this.strength = numberOfDiceRolls(NUMBER_OF_ROLLS, NUMBER_OF_SIDES);
-        this.dexterity = numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES );
-        this.intelligence = numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES );
-        this.strength = numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES );
-        this.hitPoints = numberOfDiceRolls(NUMBER_OF_ROLLS, NUMBER_OF_SIDES );
+        this.setStrength ( numberOfDiceRolls(NUMBER_OF_ROLLS, NUMBER_OF_SIDES) );
+        this.setDexterity ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
+        this.setIntelligence ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
+        this.setStrength ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
+        this.setHitPoints ( numberOfDiceRolls(NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
+    }
+    
+    public NPC ( )
+    {
+    	Die dice = new Die(6);
+		dice.roll(); 
+		int value = dice.getValue(); 
+		this.setName( getNpcName(value) );
+    	this.setStrength ( numberOfDiceRolls(NUMBER_OF_ROLLS, NUMBER_OF_SIDES) );
+        this.setDexterity ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
+        this.setIntelligence ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
+        this.setStrength ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
+        this.setHitPoints ( numberOfDiceRolls(NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
     }
     
     public static String getNpcName(int npcValue )
@@ -61,12 +74,11 @@ public class NPC extends Player implements character
 	}
     public String toString()
     {
-        String stats = "<html>NPC: " + name +
-		                " \n<br>Hit Points: " + hitPoints +
-		                " \n<br>Intelligence: " + intelligence +
-		                " \n<br>Dexterity: " + dexterity + 
-		                " \n<br>Strength: " + strength +
-//		                " \n<br>Gold: " + gold +
+        String stats = "<html>NPC: " + this.getName()+
+		                " \n<br>Hit Points: " + this.getHitPoints()+
+		                " \n<br>Intelligence: " + this.getIntelligence() +
+		                " \n<br>Dexterity: " + this.getDexterity() + 
+		                " \n<br>Strength: " + this.getStrength() +
 		                "\n<br>-----------------------------</html>";
         return stats;
     }
