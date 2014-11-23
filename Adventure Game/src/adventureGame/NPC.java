@@ -19,7 +19,7 @@ public class NPC extends Player implements character
         this.hitPoints = numberOfDiceRolls(NUMBER_OF_ROLLS, NUMBER_OF_SIDES );
     }
     
-     public String toString()
+    public String toString()
     {
         String stats = "<html>NPC: " + name +
 		                " \n<br>Hit Points: " + hitPoints +
