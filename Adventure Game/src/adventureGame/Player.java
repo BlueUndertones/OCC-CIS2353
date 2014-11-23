@@ -15,8 +15,9 @@ public class Player implements character
     protected Object weapons;
     protected Die dice;
     private int tileX, tileY ; 
-   
-    public Player( String name )
+    public boolean isHidden = false;
+    
+	public Player( String name )
     {
         setName(name);
         setStrength( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
@@ -60,7 +61,14 @@ public class Player implements character
             throw new IllegalArgumentException();
         }
     }
-
+    
+    public boolean getHiden() {
+		return isHidden;
+	}
+	public void setHiden(boolean hiden) {
+		this.isHidden = hiden;
+	}
+	
     private void setStrength( int strength )
     {   
         this.strength = strength;
