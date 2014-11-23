@@ -67,7 +67,7 @@ public class Room {
       Die die = new Die(7);
       int numNPCs = die.roll() - 1;
       for (int i = 0; i< numNPCs; i ++)
-    	  NPCs.add(new NPC ("NPC "+1));
+    	  NPCs.add(new NPC (NPC.getNpcName(i)));
    }
    public ArrayList<NPC> getNPCs ()
    {

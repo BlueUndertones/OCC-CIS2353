@@ -19,35 +19,35 @@ public class NPC extends Player implements character
         this.hitPoints = numberOfDiceRolls(NUMBER_OF_ROLLS, NUMBER_OF_SIDES );
     }
     
-    public String getNpcName(int npcValue )
+    public static String getNpcName(int npcValue )
 	{
 		String npcName = "";
 		
 		switch ( npcValue )
 		{
-			case 1:
+			case 0:
 			{
 				npcName = "Small Monster";
 				break;	
 			}
 		
-			case 2:
+			case 1:
 			{
 				npcName = "Goblin";
 				break;	
 			}
-			case 3:
+			case 2:
 			{
 				npcName = "Dragon";
 				break;	
 			}
 			
-			case 4:
+			case 3:
 			{
 				npcName = "Hobbit";
 				break;	
 			}
-			case 5:
+			case 4:
 			{
 				npcName = "Witch";
 				break;
