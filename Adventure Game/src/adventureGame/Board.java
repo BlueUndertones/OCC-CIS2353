@@ -81,18 +81,22 @@ public class Board extends JPanel implements ActionListener {
 	public void hide()
 	{
 		playerOnTheLead.isHidden = true;
-		System.out.println(playerOnTheLead.getName());
+		int currentPositionX = playerOnTheLead.getTileY();
+		int currentPositionY = playerOnTheLead.getTileX();
+		System.out.println("Current Leader: " + playerOnTheLead.getName());
 		int num = 0;
 		if (myPlayersArray.size() > 0)
 		{
 			//look for and get the next not hidden player tp take the hit and be currentOnlead
 			for (int i = 0; i < myPlayersArray.size(); i++)
 			{
-				if (!myPlayersArray.get(i).isHidden)
+				num++;
+				if (!myPlayersArray.get(i).isHidden && myPlayersArray.get(i).getHitPoints() != 0)
 				{
 					playerOnTheLead = myPlayersArray.get(i);
+					playerOnTheLead.setTileY(currentPositionY);
+					playerOnTheLead.setTileX(currentPositionX);
 					playerOnTheLead.removeHitPoints();
-					
 				}
 				//if no next player was unhidden then get all the player to get hit
 				if (num == myPlayersArray.size() )
@@ -103,7 +107,6 @@ public class Board extends JPanel implements ActionListener {
 						myPlayersArray.get(i).removeHitPoints();
 					}
 				}
-				num++;
 			}
 		}
 		else
@@ -113,7 +116,7 @@ public class Board extends JPanel implements ActionListener {
 			
 		System.out.println(myPlayersArray.get(0).getName() + " "+ myPlayersArray.get(0).getHitPoints());
 		System.out.println(myPlayersArray.get(1).getName()+ " "+myPlayersArray.get(1).getHitPoints());
-		System.out.println(playerOnTheLead.getName());
+		System.out.println("Leader Changed to: " +playerOnTheLead.getName());
 	}
 	public class Al extends KeyAdapter
 	{
@@ -122,12 +125,12 @@ public class Board extends JPanel implements ActionListener {
 			int keyCode = e.getKeyCode();
 			
 			if(keyCode == KeyEvent.VK_UP){
-            	if(map.grid[playerOnTheLead.getTileY()-1][playerOnTheLead.getTitleX()] == 1){
-            		if(!checkIfVisited ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTitleX() ))
+            	if(map.grid[playerOnTheLead.getTileY()-1][playerOnTheLead.getTileX()] == 1){
+            		if(!checkIfVisited ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTileX() ))
             		{
-            			currentRoom = new Room ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTitleX() );
+            			currentRoom = new Room ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTileX() );
                 		currentRoomNPCs = currentRoom.getNPCs();
-            			roomsVisited.add(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTitleX())); 		
+            			roomsVisited.add(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTileX())); 		
                 		playerOnTheLead.move(0, -1);
                 		if (currentRoom.getNPCs().size() > 0)
                 			doActionWithNPC(chooseActionWithNPC ());
@@ -139,18 +142,18 @@ public class Board extends JPanel implements ActionListener {
             			
             	}
             	else {
-            		roomsInvalid.add(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTitleX()));
+            		roomsInvalid.add(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTileX()));
             		thatsWallOutput();
            
             	}	
 			}
             if(keyCode == KeyEvent.VK_DOWN){
-            	if(map.grid[playerOnTheLead.getTileY()+1][playerOnTheLead.getTitleX()] == 1){
-            		if(!checkIfVisited ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTitleX() ))
+            	if(map.grid[playerOnTheLead.getTileY()+1][playerOnTheLead.getTileX()] == 1){
+            		if(!checkIfVisited ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTileX() ))
             		{
-	            		currentRoom = new Room ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTitleX() );
+	            		currentRoom = new Room ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTileX() );
 	            		currentRoomNPCs = currentRoom.getNPCs();
-	            		roomsVisited.add(new Position ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTitleX()));
+	            		roomsVisited.add(new Position ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTileX()));
 	            		playerOnTheLead.move(0, 1);
 	            		if (currentRoom.getNPCs().size() > 0)
 	            			doActionWithNPC(chooseActionWithNPC ());
@@ -161,17 +164,17 @@ public class Board extends JPanel implements ActionListener {
             			playerOnTheLead.move(0, 1);
             	}
             	else {
-            		roomsInvalid.add(new Position ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTitleX()));
+            		roomsInvalid.add(new Position ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTileX()));
             		thatsWallOutput();
             	}
             }
             if(keyCode == KeyEvent.VK_LEFT){
-            	if(map.grid[playerOnTheLead.getTileY()][playerOnTheLead.getTitleX()-1] == 1){
-            		if(!checkIfVisited (playerOnTheLead.getTileY(), (playerOnTheLead.getTitleX()-1) ))
+            	if(map.grid[playerOnTheLead.getTileY()][playerOnTheLead.getTileX()-1] == 1){
+            		if(!checkIfVisited (playerOnTheLead.getTileY(), (playerOnTheLead.getTileX()-1) ))
             		{
-	            		currentRoom = new Room (playerOnTheLead.getTileY(), (playerOnTheLead.getTitleX()-1) );
+	            		currentRoom = new Room (playerOnTheLead.getTileY(), (playerOnTheLead.getTileX()-1) );
 	            		currentRoomNPCs = currentRoom.getNPCs();
-	            		roomsVisited.add(new Position (playerOnTheLead.getTileY(), (playerOnTheLead.getTitleX()-1)));
+	            		roomsVisited.add(new Position (playerOnTheLead.getTileY(), (playerOnTheLead.getTileX()-1)));
 	            		playerOnTheLead.move(-1, 0);
 	            		if (currentRoom.getNPCs().size() > 0)
 	            			doActionWithNPC(chooseActionWithNPC ());
@@ -182,17 +185,17 @@ public class Board extends JPanel implements ActionListener {
             			playerOnTheLead.move(-1, 0);
             	}
             	else {
-            		roomsInvalid.add(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTitleX()-1));
+            		roomsInvalid.add(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTileX()-1));
             		thatsWallOutput();
             	}
             }
             if(keyCode == KeyEvent.VK_RIGHT){
-            	if(map.grid[playerOnTheLead.getTileY()][playerOnTheLead.getTitleX()+1] == 1){
-            		if(!checkIfVisited (playerOnTheLead.getTileY(), (playerOnTheLead.getTitleX()+1) ))
+            	if(map.grid[playerOnTheLead.getTileY()][playerOnTheLead.getTileX()+1] == 1){
+            		if(!checkIfVisited (playerOnTheLead.getTileY(), (playerOnTheLead.getTileX()+1) ))
             		{
-	            		currentRoom = new Room (playerOnTheLead.getTileY(), (playerOnTheLead.getTitleX()+1) );
+	            		currentRoom = new Room (playerOnTheLead.getTileY(), (playerOnTheLead.getTileX()+1) );
 	            		currentRoomNPCs = currentRoom.getNPCs();
-	            		roomsVisited.add(new Position (playerOnTheLead.getTileY(), (playerOnTheLead.getTitleX()+1)));
+	            		roomsVisited.add(new Position (playerOnTheLead.getTileY(), (playerOnTheLead.getTileX()+1)));
 	            		playerOnTheLead.move(1, 0);
 	            		if (currentRoom.getNPCs().size() > 0)
 	            			doActionWithNPC(chooseActionWithNPC ());
@@ -203,7 +206,7 @@ public class Board extends JPanel implements ActionListener {
             			playerOnTheLead.move(1, 0);
             	}
             	else {
-            		roomsInvalid.add(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTitleX()+1));
+            		roomsInvalid.add(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTileX()+1));
             		thatsWallOutput();
             	}
             }
@@ -258,7 +261,7 @@ public class Board extends JPanel implements ActionListener {
 		}*/
 		
 		//draw mario image on the board
-        g.drawImage(drawImage("players.png"), playerOnTheLead.getTitleX() * TILE_WIDTH, playerOnTheLead.getTileY() * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, null);  
+        g.drawImage(drawImage("players.png"), playerOnTheLead.getTileX() * TILE_WIDTH, playerOnTheLead.getTileY() * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, null);  
 	}
 
 	public Image drawImage (String imagePath)
