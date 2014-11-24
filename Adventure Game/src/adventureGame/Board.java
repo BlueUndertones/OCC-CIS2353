@@ -82,18 +82,29 @@ public class Board extends JPanel implements ActionListener {
 	{
 		playerOnTheLead.isHidden = true;
 		Player playerToTakeLead;
-		
+		int num = 0;
 		if (myPlayersArray.size() > 0)
 		{
 			//look for and get the next not hidden player and assign it to the currentonlead
 			for (int i = 0; i < myPlayersArray.size(); i++)
 			{
 				if (!myPlayersArray.get(i).isHidden)
+				{
 					playerToTakeLead = myPlayersArray.get(i);
-				//else
-					//myPlayersArray.get(i).
+					num++;
+				}
+				//if no next player was unhidden then get all the player to get hit
+				else if (num == myPlayersArray.size() )
+				{
+					for (int x = 0; x < myPlayersArray.size(); x++)
+					{
+						myPlayersArray.get(i).removeHitPoints();
+					}
+				}
 			}
 		}
+		else
+			myPlayersArray.get(0).removeHitPoints();
 		
 	}
 	public class Al extends KeyAdapter

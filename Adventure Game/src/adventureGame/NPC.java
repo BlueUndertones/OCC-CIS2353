@@ -47,33 +47,38 @@ public class NPC extends Player implements character
 		switch ( npcValue )
 		{
 		
-			case 1:
+			case 0:
 			{
 				npcName = "Small Monster";
 				break;	
 			}
 		
-			case 2:
+			case 1:
 			{
 				npcName = "Goblin";
 				break;	
 			}
-			case 3:
+			case 2:
 			{
 				npcName = "Dragon";
 				break;	
 			}
 			
-			case 4:
+			case 3:
 			{
 				npcName = "Hobbit";
 				break;	
 			}
-			case 5:
+			case 4:
 			{
 				npcName = "Witch";
 				break;
-			}		
+			}
+			case 5:
+			{
+				npcName = "Bowser";
+				break;
+			}
 			default:
 			{
 				
