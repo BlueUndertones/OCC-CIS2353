@@ -15,40 +15,26 @@ import java.io.*;
 
 public class Room {
    // current room location in maze...
-	private int x;
-	private int y;
+	private int X;
+	private int Y;
 
-	private int GoldPieces;
-    private boolean IsBoss;
+   private int GoldPieces;
+   private boolean IsBoss;
 	private boolean IsVisited;
 	private String Name;
 	private String Description;
-    public ArrayList<NPC> NPCs = new <NPC> ArrayList();
+   public ArrayList<NPC> NPCs;
 
    public Room(int x, int y)
    {
-      this.x = x;
-      this.y = y;
+      X = x;
+      Y = y;
       IsVisited = false;
-      //setRoomDesc();
+      setRoomDesc();
       setNPCs();
       setGold();
    }
-   public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
+   
    private void setGold()
    {
       //randomly roll gold 1d20
@@ -66,13 +52,12 @@ public class Room {
       // need roll of 0-6
       Die die = new Die(7);
       int numNPCs = die.roll() - 1;
-      for (int i = 0; i< numNPCs; i ++)
-    	  NPCs.add(new NPC (NPC.getNpcName(i)));
+      for (int i=0; i< numNPCs; i++)
+      {
+         NPCs.add(new NPC("Monster")); //need to pass string here, like name of NPC
+      }
    }
-   public ArrayList<NPC> getNPCs ()
-   {
-	   return NPCs;
-   }
+
    public void clearNPCs()
    {
       NPCs.clear();
@@ -98,7 +83,7 @@ public class Room {
    public void isBoss()
    {
       //if room is last room @ ???
-      if(x == 9 && y == 8)
+      if(X == 9 && Y == 8)
       {
          IsBoss = true;
       }
@@ -111,63 +96,77 @@ public class Room {
    /*
       this will choose 1 of 6 room descriptions
    */
-//   public String setRoomDesc()
-//   {
-//      String roomFilename;
-//
-//      Die d = new Die(6);
-//      int roomNum = d.roll();
-//      switch(roomNum)
-//      {
-//         case 1:
-//         {
-//            Name = "Slime Cavern";
-//            break;
-//         }
-//         case 2:
-//         {
-//            Name = "Mess Hall";
-//            break;
-//         } 
-//         case 3:
-//         {
-//            Name = "Hallway";
-//            break;
-//         } 
-//         case 4:
-//         {
-//            Name = "Mist Cavern";
-//            break;
-//         } 
-//         case 5:
-//         {
-//            Name = "Sleeping Quarters";
-//            break;
-//         } 
-//         case 6:
-//         {
-//            Name = "Cellar";
-//            break;
-//         } 
-//         default:
-//        	 Name = "Room Description --default";
-//        	 
-//         roomFilename = "room" + roomNum + ".txt";
-//         Description = getRoomFile(roomFilename).toString();
-//         
-//      }
-//	return Name; 
-//   }
-//   
-//   public String getRoomFile(String filename)
-//   {
-//      List<String> lines = File.readAllLines(filename);
-//      StringBuilder sb = new StringBuilder();
-//      for(String s: lines) {
-//         sb.append(s);
-//      }
-//      return sb.toString();
-//   }
+   public String setRoomDesc()
+   {
+      String roomFilename;
+
+      Die d = new Die(6);
+      int roomNum = d.roll();
+      switch(roomNum)
+      {
+         case 1:
+         {
+            Name = "Slime Cavern";
+            break;
+         }
+         case 2:
+         {
+            Name = "Mess Hall";
+            break;
+         } 
+         case 3:
+         {
+            Name = "Hallway";
+            break;
+         } 
+         case 4:
+         {
+            Name = "Mist Cavern";
+            break;
+         } 
+         case 5:
+         {
+            Name = "Sleeping Quarters";
+            break;
+         } 
+         case 6:
+         {
+            Name = "Cellar";
+            break;
+         } 
+         default:
+         Name = "what";
+         roomFilename = "room" + roomNum + ".txt";
+         Description = getRoomFile(roomFilename).toString();
+         
+
+      } 
+               return Description;
+   }
+   
+   public String getRoomFile(String roomFilename)
+   {
+      File file = new File(roomFilename);
+      String line ="";
+      try
+      {
+         Scanner scan = new Scanner(file);
+                  
+         while (scan.hasNextLine())
+         {
+            StringBuilder sb = new StringBuilder();
+            line = scan.nextLine();
+   
+               sb.append(line);
+         }
+         scan.close();
+      }
+      catch(FileNotFoundException be)
+      {}
+      return line;
+
+      
+   }
    
    /*
       ...
