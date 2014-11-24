@@ -15,7 +15,7 @@ public class Board extends JPanel implements ActionListener {
 	private final int TILE_HEIGHT = 60;
 	private Timer timer;
 	private Map map;
-	private Player players;
+	private Player playerOnTheLead;
 	private NPC npc;
 	Random ran = new Random ();
 	ArrayList <Position> roomsVisited = new <Position> ArrayList ();
@@ -29,7 +29,7 @@ public class Board extends JPanel implements ActionListener {
 	public Board () {
 		map = new Map();
 		choosePlayers();
-		players = myPlayersArray.get(0);
+		playerOnTheLead = myPlayersArray.get(0);
 		npc = new NPC("Witch");
 		//saveRandomRoomNumbers ();  //used to generate gold
 		addKeyListener(new Al());
@@ -78,6 +78,24 @@ public class Board extends JPanel implements ActionListener {
 		repaint();
 		return NpcInfo;
 	}
+	public void hide()
+	{
+		playerOnTheLead.isHidden = true;
+		Player playerToTakeLead;
+		
+		if (myPlayersArray.size() > 0)
+		{
+			//look for and get the next not hidden player and assign it to the currentonlead
+			for (int i = 0; i < myPlayersArray.size(); i++)
+			{
+				if (!myPlayersArray.get(i).isHidden)
+					playerToTakeLead = myPlayersArray.get(i);
+				//else
+					//myPlayersArray.get(i).
+			}
+		}
+		
+	}
 	public class Al extends KeyAdapter
 	{
 		public void keyPressed(KeyEvent e)
@@ -85,88 +103,88 @@ public class Board extends JPanel implements ActionListener {
 			int keyCode = e.getKeyCode();
 			
 			if(keyCode == KeyEvent.VK_UP){
-            	if(map.grid[players.getTileY()-1][players.getTitleX()] == 1){
-            		if(!checkIfVisited ((players.getTileY()-1), players.getTitleX() ))
+            	if(map.grid[playerOnTheLead.getTileY()-1][playerOnTheLead.getTitleX()] == 1){
+            		if(!checkIfVisited ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTitleX() ))
             		{
-            			currentRoom = new Room ((players.getTileY()-1), players.getTitleX() );
+            			currentRoom = new Room ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTitleX() );
                 		currentRoomNPCs = currentRoom.getNPCs();
-            			roomsVisited.add(new Position ((players.getTileY()-1), players.getTitleX())); 		
-                		players.move(0, -1);
+            			roomsVisited.add(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTitleX())); 		
+                		playerOnTheLead.move(0, -1);
                 		if (currentRoom.getNPCs().size() > 0)
                 			doActionWithNPC(chooseActionWithNPC ());
                 		else
                 			doAction(chooseAction ());
             		}
             		else
-            			players.move(0, -1);
+            			playerOnTheLead.move(0, -1);
             			
             	}
             	else {
-            		roomsInvalid.add(new Position ((players.getTileY()-1), players.getTitleX()));
+            		roomsInvalid.add(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTitleX()));
             		thatsWallOutput();
            
             	}	
 			}
             if(keyCode == KeyEvent.VK_DOWN){
-            	if(map.grid[players.getTileY()+1][players.getTitleX()] == 1){
-            		if(!checkIfVisited ((players.getTileY()+1), players.getTitleX() ))
+            	if(map.grid[playerOnTheLead.getTileY()+1][playerOnTheLead.getTitleX()] == 1){
+            		if(!checkIfVisited ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTitleX() ))
             		{
-	            		currentRoom = new Room ((players.getTileY()+1), players.getTitleX() );
+	            		currentRoom = new Room ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTitleX() );
 	            		currentRoomNPCs = currentRoom.getNPCs();
-	            		roomsVisited.add(new Position ((players.getTileY()+1), players.getTitleX()));
-	            		players.move(0, 1);
+	            		roomsVisited.add(new Position ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTitleX()));
+	            		playerOnTheLead.move(0, 1);
 	            		if (currentRoom.getNPCs().size() > 0)
 	            			doActionWithNPC(chooseActionWithNPC ());
 	            		else
 	            			doAction(chooseAction ());
             		}
             		else
-            			players.move(0, 1);
+            			playerOnTheLead.move(0, 1);
             	}
             	else {
-            		roomsInvalid.add(new Position ((players.getTileY()+1), players.getTitleX()));
+            		roomsInvalid.add(new Position ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTitleX()));
             		thatsWallOutput();
             	}
             }
             if(keyCode == KeyEvent.VK_LEFT){
-            	if(map.grid[players.getTileY()][players.getTitleX()-1] == 1){
-            		if(!checkIfVisited (players.getTileY(), (players.getTitleX()-1) ))
+            	if(map.grid[playerOnTheLead.getTileY()][playerOnTheLead.getTitleX()-1] == 1){
+            		if(!checkIfVisited (playerOnTheLead.getTileY(), (playerOnTheLead.getTitleX()-1) ))
             		{
-	            		currentRoom = new Room (players.getTileY(), (players.getTitleX()-1) );
+	            		currentRoom = new Room (playerOnTheLead.getTileY(), (playerOnTheLead.getTitleX()-1) );
 	            		currentRoomNPCs = currentRoom.getNPCs();
-	            		roomsVisited.add(new Position (players.getTileY(), (players.getTitleX()-1)));
-	            		players.move(-1, 0);
+	            		roomsVisited.add(new Position (playerOnTheLead.getTileY(), (playerOnTheLead.getTitleX()-1)));
+	            		playerOnTheLead.move(-1, 0);
 	            		if (currentRoom.getNPCs().size() > 0)
 	            			doActionWithNPC(chooseActionWithNPC ());
 	            		else
 	            			doAction(chooseAction ());
             		}
             		else
-            			players.move(-1, 0);
+            			playerOnTheLead.move(-1, 0);
             	}
             	else {
-            		roomsInvalid.add(new Position (players.getTileY(), players.getTitleX()-1));
+            		roomsInvalid.add(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTitleX()-1));
             		thatsWallOutput();
             	}
             }
             if(keyCode == KeyEvent.VK_RIGHT){
-            	if(map.grid[players.getTileY()][players.getTitleX()+1] == 1){
-            		if(!checkIfVisited (players.getTileY(), (players.getTitleX()+1) ))
+            	if(map.grid[playerOnTheLead.getTileY()][playerOnTheLead.getTitleX()+1] == 1){
+            		if(!checkIfVisited (playerOnTheLead.getTileY(), (playerOnTheLead.getTitleX()+1) ))
             		{
-	            		currentRoom = new Room (players.getTileY(), (players.getTitleX()+1) );
+	            		currentRoom = new Room (playerOnTheLead.getTileY(), (playerOnTheLead.getTitleX()+1) );
 	            		currentRoomNPCs = currentRoom.getNPCs();
-	            		roomsVisited.add(new Position (players.getTileY(), (players.getTitleX()+1)));
-	            		players.move(1, 0);
+	            		roomsVisited.add(new Position (playerOnTheLead.getTileY(), (playerOnTheLead.getTitleX()+1)));
+	            		playerOnTheLead.move(1, 0);
 	            		if (currentRoom.getNPCs().size() > 0)
 	            			doActionWithNPC(chooseActionWithNPC ());
 	            		else
 	            			doAction(chooseAction ());
             		}
             		else
-            			players.move(1, 0);
+            			playerOnTheLead.move(1, 0);
             	}
             	else {
-            		roomsInvalid.add(new Position (players.getTileY(), players.getTitleX()+1));
+            		roomsInvalid.add(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTitleX()+1));
             		thatsWallOutput();
             	}
             }
@@ -221,7 +239,7 @@ public class Board extends JPanel implements ActionListener {
 		}*/
 		
 		//draw mario image on the board
-        g.drawImage(drawImage("players.png"), players.getTitleX() * TILE_WIDTH, players.getTileY() * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, null);  
+        g.drawImage(drawImage("players.png"), playerOnTheLead.getTitleX() * TILE_WIDTH, playerOnTheLead.getTileY() * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, null);  
 	}
 
 	public Image drawImage (String imagePath)
@@ -261,10 +279,10 @@ public class Board extends JPanel implements ActionListener {
 	*/
 	public int chooseActionWithNPC ()
 	{
-		String[] choices = {"Fight", "Run", "Hide"};
+		String[] choices = {"Fight", "Run", "Hide", "Sleep"};
 	    int actionChosen = JOptionPane.showOptionDialog(
 	                               null                       // Center in window.
-	                             , currentRoom.getNPCs().size()+ " NPC in This Room, \n What Do you want to do?"  // Message
+	                             , currentRoom.getNPCs().size()+ " NPC(s) in This Room, \n What Do you want to do?"  // Message
 	                             , "Choose Action"            // Title in titlebar
 	                             , JOptionPane.YES_NO_OPTION  // Option type
 	                             , JOptionPane.PLAIN_MESSAGE  // messageType
@@ -275,6 +293,7 @@ public class Board extends JPanel implements ActionListener {
 	    
 	    return actionChosen;
 	}
+	
 	public int chooseAction ()
 	{
 		String[] choices = {"Sleep", "Search", "Move On"};
@@ -291,6 +310,47 @@ public class Board extends JPanel implements ActionListener {
 	    
 	    return actionChosen;
 	}
+	
+	public void doActionWithNPC (int actionChosen)
+	{
+		switch (actionChosen) {
+        case 0: 
+            Party.fight();
+            break;
+        case 1:
+        	Party.run();
+            break;
+        case 2:
+        	Party.hide();
+            break;
+        case 3:
+        	Party.sleep();
+            break;
+        case -1:
+            System.exit(0); 
+        default:
+            JOptionPane.showMessageDialog(null, "Unexpected response " + actionChosen);
+		}
+	}
+	
+	public void doAction (int actionChosen)
+	{
+		switch (actionChosen) {
+        case 0:
+            Party.sleep();
+            break;
+        case 1:
+        	Party.search();
+        	break;
+        case 2:
+        	break;
+        //case -1:
+            //System.exit(0); 
+        default:
+            JOptionPane.showMessageDialog(null, "Unexpected response " + actionChosen);
+		}
+	}
+	
 	public void choosePlayers()
 	{
 		JCheckBox mario = new JCheckBox("Mario");
@@ -340,42 +400,5 @@ public class Board extends JPanel implements ActionListener {
 			System.exit(0);
 		if (myPlayersArray.size() == 0)
 			choosePlayers();
-	}
-	
-	public void doActionWithNPC (int actionChosen)
-	{
-		switch (actionChosen) {
-        case 0: 
-            Party.fight();
-            break;
-        case 1:
-        	Party.run();
-            break;
-        case 2:
-        	Party.hide();
-            break;
-        case -1:
-            System.exit(0); 
-        default:
-            JOptionPane.showMessageDialog(null, "Unexpected response " + actionChosen);
-		}
-	}
-	
-	public void doAction (int actionChosen)
-	{
-		switch (actionChosen) {
-        case 0:
-            Party.sleep();
-            break;
-        case 1:
-        	Party.search();
-        	break;
-        case 2:
-        	break;
-        //case -1:
-            //System.exit(0); 
-        default:
-            JOptionPane.showMessageDialog(null, "Unexpected response " + actionChosen);
-		}
 	}
 }

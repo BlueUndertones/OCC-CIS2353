@@ -1,3 +1,4 @@
+package adventureGame;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -39,7 +40,7 @@ public class NPC extends Player implements character
         value = dice.getValue();
         this.setWeapon(value);
     }
-	public String getNpcName(int npcValue )
+	public static String getNpcName(int npcValue )
 	{
 		String npcName = "";
 		
@@ -79,19 +80,16 @@ public class NPC extends Player implements character
 			}
 		}
 		return npcName;
-
 	}
-    
-	
-	
-     public String toString()
+
+    public String toString()
     {
-        String stats = "NPC: " + this.getName() +
-                        " \nHit Points: " + this.getHitPoints()+
-                        " \nIntelligence: " + this.getIntelligence() +
-                        " \nDexterity: " + this.getDexterity() + 
-                        " \nStrength: " + this.getStrength() +
-                        " \nGold: " + this.getGold();
+        String stats = "<html>NPC: " + this.getName() +
+                        " \n<br>Hit Points: " + this.getHitPoints()+
+                        " \n<br>Intelligence: " + this.getIntelligence() +
+                        " \n<br>Dexterity: " + this.getDexterity() + 
+                        " \n<br>Strength: " + this.getStrength()+
+                        "\n<br>-----------------------------</html>";
         return stats;
     }
  
