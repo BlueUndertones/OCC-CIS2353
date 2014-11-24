@@ -1,5 +1,3 @@
-package adventureGame;
-
 /**
  *
  * @author DeMario
@@ -145,6 +143,41 @@ public class Player implements character
 	    {
 	        this.weapons = weapon;
 	    }
+	    public void setWeapon(int npcValue )
+		{
+			Items item;
+			
+			switch ( npcValue )
+			{
+			
+				case 1:
+				{
+					item = new Weapon("Sword", "S", 10, 10 );
+					this.weapons = (Weapon) item;
+					break;	
+				}
+			
+				case 2:
+				{
+					item= new Weapon("Two Swords", "S", 10, 10 );
+					this.weapons = (Weapon) item;
+					break;	
+				}
+				case 3:
+				{
+					item = new Armor("Armor", "S", 10, 10 );
+					this.weapons = (Weapon) item;
+					break;
+				}
+				
+				default:
+				{
+					
+				}
+			}
+
+		}
+	    
 	    public void setArmor( Armor armor )
 	    {
 	    	this.armor = armor;
