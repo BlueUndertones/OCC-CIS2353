@@ -81,31 +81,39 @@ public class Board extends JPanel implements ActionListener {
 	public void hide()
 	{
 		playerOnTheLead.isHidden = true;
-		Player playerToTakeLead;
+		System.out.println(playerOnTheLead.getName());
 		int num = 0;
 		if (myPlayersArray.size() > 0)
 		{
-			//look for and get the next not hidden player and assign it to the currentonlead
+			//look for and get the next not hidden player tp take the hit and be currentOnlead
 			for (int i = 0; i < myPlayersArray.size(); i++)
 			{
 				if (!myPlayersArray.get(i).isHidden)
 				{
-					playerToTakeLead = myPlayersArray.get(i);
-					num++;
+					playerOnTheLead = myPlayersArray.get(i);
+					playerOnTheLead.removeHitPoints();
+					
 				}
 				//if no next player was unhidden then get all the player to get hit
-				else if (num == myPlayersArray.size() )
+				if (num == myPlayersArray.size() )
 				{
 					for (int x = 0; x < myPlayersArray.size(); x++)
 					{
+						System.out.println("aaaaaaaall are dead");
 						myPlayersArray.get(i).removeHitPoints();
 					}
 				}
+				num++;
 			}
 		}
 		else
-			myPlayersArray.get(0).removeHitPoints();
-		
+		{
+			playerOnTheLead.removeHitPoints();
+		}
+			
+		System.out.println(myPlayersArray.get(0).getName() + " "+ myPlayersArray.get(0).getHitPoints());
+		System.out.println(myPlayersArray.get(1).getName()+ " "+myPlayersArray.get(1).getHitPoints());
+		System.out.println(playerOnTheLead.getName());
 	}
 	public class Al extends KeyAdapter
 	{
@@ -332,7 +340,7 @@ public class Board extends JPanel implements ActionListener {
         	Party.run();
             break;
         case 2:
-        	Party.hide();
+        	hide();
             break;
         case 3:
         	Party.sleep();
