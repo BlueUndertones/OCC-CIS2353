@@ -2,7 +2,7 @@ package adventureGame;
 
 public class Items {
 
-	private String itemName; // weapon, armor, Potion, spell
+	private String itemName; 
 	private String description;
 	
 	

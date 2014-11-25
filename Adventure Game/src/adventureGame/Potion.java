@@ -1,11 +1,10 @@
 package adventureGame;
 public class Potion extends Items{
 
-	Player player;
-	public Potion(String name, String desc) {
+	int playerHitPoints = 0;
+	public Potion(String name, String desc, int playerHitPoints) {
 		super(name, desc);
-	//	player = new Player(playerName); How can I get player name here? it is giving me error!
-	//	player.getHitPoints() + 1;
-	}
+      this.playerHitPoints = playerHitPoints++;
+		}
 
 }

@@ -47,10 +47,63 @@ public class Party
 	}
 
 
-	public static void fight() //krupa
+	public static void fight(Player player, NPC npc) //krupa
 	{
 		System.out.println("Fight Begins");
+		if(player.getDexterity() > npc.getDexterity())
+		{
+			boolean isDead = false;
+           do{
+        	  attack(player,npc); 
+              if(player.getHitPoints() == 0)
+              {
+            	  isDead = true;
+              }
+           }while(!(isDead));
+		}
+
 	}
+	
+	public static void attack(Player currentPlayer, NPC target)
+	{
+		int chooseAction = 1;
+		Weapon currentWeapon  = null;
+		String useWeapon = "";
+		int totalDamage;
+		int armorDamage = currentPlayer.getArmor().getDamage();
+		switch(chooseAction)
+		{
+		case 1:
+			System.out.println("You have selected Melee Attack");
+			System.out.println("Do you want to use your weapon or your fists?");
+			if(useWeapon == "weapon")
+			{
+				currentWeapon = new Weapon(currentWeapon);
+				currentPlayer.setWeapon(currentWeapon);
+			}
+			
+		case 2:
+			System.out.println("You have selected range Attack");
+			currentWeapon = new Weapon(currentWeapon);
+			currentPlayer.setWeapon(currentWeapon);
+			
+	    case 3:
+		    System.out.println("You have selected Spell cast");
+	    case 4:
+	    	System.out.println("You have selected memorize spell");
+	    	if(currentPlayer.getIntelligence()>=10)
+	    	{
+	    		System.out.println("Some spells to memorize");
+	    	}
+	    	else
+	    		System.out.println("You can't memorize spell");
+	    default:
+			System.out.println("You have not selected any actions");	
+		}
+		int weaponDamage = currentWeapon.getDamage();
+	    totalDamage = currentPlayer.getStrength()/3 + weaponDamage - armorDamage;
+	}
+
 	
 	public static void search(Room room, Player player) // Heather
 	{
