@@ -145,7 +145,6 @@ public class Board extends JPanel implements ActionListener {
             	else {
             		roomsInvalid.add(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTileX()));
             		thatsWallOutput();
-           
             	}	
 			}
             if(keyCode == KeyEvent.VK_DOWN){

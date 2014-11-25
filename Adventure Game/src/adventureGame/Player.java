@@ -38,11 +38,17 @@ public class Player implements character
    {
    	
    }
-   public int getTitleX(){
+   public int getTileX(){
 		return tileX;
 	}
 	public int getTileY(){
 		return tileY;
+	}
+	public void setTileX(int  tileX){
+		this.tileX = tileX;
+	}
+	public void setTileY(int tileY){
+		this.tileY = tileY;
 	}
 	public void move(int dx, int dy)
 	{
