@@ -144,9 +144,9 @@ public class Player implements character
 	    		hitPoints -= 5;    		
 	    	}
 	    }
-	    public void setGold( )
+	    public void setGold(int gold )
 	    {
-	        
+	        this.gold = gold;
 	    }
 	        
 	    public void setWeapon ( Weapon weapon )

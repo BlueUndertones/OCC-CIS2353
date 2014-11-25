@@ -18,12 +18,12 @@ public class Room {
 	private int X;
 	private int Y;
 
-   private int GoldPieces;
-   private boolean IsBoss;
-	private boolean IsVisited;
+	private int GoldPieces;
+    private boolean IsBoss;
+	private boolean IsVisited = false;
 	private String Name;
 	private String Description;
-   public ArrayList<NPC> NPCs;
+   public ArrayList<NPC> NPCs = new <NPC> ArrayList();;
 
    public Room(int x, int y)
    {
@@ -35,14 +35,29 @@ public class Room {
       setGold();
    }
    
-   private void setGold()
-   {
+    public int getX() {
+		return X;
+	}
+
+	public void setX(int x) {
+		X = x;
+	}
+
+	public int getY() {
+		return Y;
+	}
+
+	public void setY(int y) {
+		Y = y;
+	}
+	public void setGold()
+    {
       //randomly roll gold 1d20
       Die die = new Die(20);
       GoldPieces = die.roll();
    }
    
-   private int getGold()
+   public int getGold()
    {
       return GoldPieces;
    }
@@ -54,10 +69,13 @@ public class Room {
       int numNPCs = die.roll() - 1;
       for (int i=0; i< numNPCs; i++)
       {
-         NPCs.add(new NPC("Monster")); //need to pass string here, like name of NPC
+    	  NPCs.add(new NPC (NPC.getNpcName(i)));
       }
    }
-
+   public ArrayList<NPC> getNPCs ()
+   {
+	   return NPCs;
+   }
    public void clearNPCs()
    {
       NPCs.clear();
@@ -104,32 +122,32 @@ public class Room {
       int roomNum = d.roll();
       switch(roomNum)
       {
-         case 1:
+         case 0:
          {
             Name = "Slime Cavern";
             break;
          }
-         case 2:
+         case 1:
          {
             Name = "Mess Hall";
             break;
          } 
-         case 3:
+         case 2:
          {
             Name = "Hallway";
             break;
          } 
-         case 4:
+         case 3:
          {
             Name = "Mist Cavern";
             break;
          } 
-         case 5:
+         case 4:
          {
             Name = "Sleeping Quarters";
             break;
          } 
-         case 6:
+         case 5:
          {
             Name = "Cellar";
             break;
@@ -138,8 +156,6 @@ public class Room {
          Name = "what";
          roomFilename = "room" + roomNum + ".txt";
          Description = getRoomFile(roomFilename).toString();
-         
-
       } 
                return Description;
    }
@@ -163,9 +179,7 @@ public class Room {
       }
       catch(FileNotFoundException be)
       {}
-      return line;
-
-      
+      return line; 
    }
    
    /*

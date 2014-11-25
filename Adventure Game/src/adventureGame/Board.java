@@ -277,7 +277,7 @@ public class Board extends JPanel implements ActionListener {
 	
 	public void thatsWallOutput ()
 	{
-		JOptionPane.showMessageDialog (null, "Room not available --WALL", "WALL", JOptionPane.INFORMATION_MESSAGE);
+		//JOptionPane.showMessageDialog (null, "Room not available --WALL", "WALL", JOptionPane.INFORMATION_MESSAGE);
 	}
 	/*
 	public void roomHasGold()
@@ -362,7 +362,7 @@ public class Board extends JPanel implements ActionListener {
             Party.sleep();
             break;
         case 1:
-        	Party.search();
+        	Party.search(new Room(playerOnTheLead.getTileX(), playerOnTheLead.getTileY()), playerOnTheLead );
         	break;
         case 2:
         	break;
