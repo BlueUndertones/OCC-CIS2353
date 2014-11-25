@@ -19,11 +19,11 @@ public class Room {
 	private int Y;
 
 	private int GoldPieces;
-    private boolean IsBoss;
+    	private boolean IsBoss;
 	private boolean IsVisited = false;
 	private String Name;
 	private String Description;
-   public ArrayList<NPC> NPCs = new <NPC> ArrayList();;
+   	public ArrayList<NPC> NPCs = new <NPC> ArrayList();
 
    public Room(int x, int y)
    {
@@ -50,7 +50,7 @@ public class Room {
 	public void setY(int y) {
 		Y = y;
 	}
-	public void setGold()
+    public void setGold()
     {
       //randomly roll gold 1d20
       Die die = new Die(20);
