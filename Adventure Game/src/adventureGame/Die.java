@@ -9,6 +9,7 @@ public class Die
 {
    private int sides;   // Number of sides
    private int value;   // The die's value
+   private Random rand = new Random();
    
    /**
       The constructor performs an initial
@@ -29,8 +30,6 @@ public class Die
    
    public int roll()
    {
-      // Create a Random object.
-      Random rand = new Random();
       
       // Get a random value for the die.
       value = rand.nextInt(sides) + 1;
