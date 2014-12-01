@@ -23,7 +23,7 @@ public class Room {
 	private boolean IsVisited = false;
 	private String Name;
 	private String Description;
-   	public ArrayList<NPC> NPCs = new <NPC> ArrayList();
+   	public Sequence<NPC> NPCs = new <NPC> Sequence();
 
    public Room(int x, int y)
    {
@@ -69,10 +69,10 @@ public class Room {
       int numNPCs = die.roll() - 1;
       for (int i=0; i< numNPCs; i++)
       {
-    	  NPCs.add(new NPC (NPC.getNpcName(i)));
+    	  NPCs.append(new NPC (NPC.getNpcName(i)));
       }
    }
-   public ArrayList<NPC> getNPCs ()
+   public Sequence<NPC> getNPCs ()
    {
 	   return NPCs;
    }

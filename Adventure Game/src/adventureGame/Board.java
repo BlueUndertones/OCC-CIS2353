@@ -18,15 +18,15 @@ public class Board extends JPanel implements ActionListener {
 	private Player playerOnTheLead;
 	private NPC npc;
 	Random ran = new Random ();
-	ArrayList <Position> roomsVisited = new <Position> ArrayList ();
-	ArrayList <Position> roomsInvalid = new <Position> ArrayList ();
+	Sequence <Position> roomsVisited = new <Position> Sequence ();
+	Sequence <Position> roomsInvalid = new <Position> Sequence ();
 	Sequence<Player> myPlayersArray = new <Player> Sequence();
 	Party myPlayersParty = new Party(myPlayersArray);
 	//	ArrayList<Player> myPlayersArray = new <Player> ArrayList();
 	//ArrayList <Integer> num = new <Integer> ArrayList () ;
 	//ArrayList <Position> roomsHasGold = new <Position> ArrayList ();
 	Room currentRoom;
-	ArrayList <NPC> currentRoomNPCs =  new <NPC> ArrayList();
+	Sequence <NPC> currentRoomNPCs =  new <NPC> Sequence();
 	
 	public Board () {
 		map = new Map();
@@ -133,7 +133,7 @@ public class Board extends JPanel implements ActionListener {
             		{
             			currentRoom = new Room ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTileX() );
                 		currentRoomNPCs = currentRoom.getNPCs();
-            			roomsVisited.add(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTileX())); 		
+            			roomsVisited.append(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTileX())); 		
                 		playerOnTheLead.move(0, -1);
                 		if (currentRoom.getNPCs().size() > 0)
                 			doActionWithNPC(chooseActionWithNPC ());
@@ -145,7 +145,7 @@ public class Board extends JPanel implements ActionListener {
             			
             	}
             	else {
-            		roomsInvalid.add(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTileX()));
+            		roomsInvalid.append(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTileX()));
             		thatsWallOutput();
             	}	
 			}
@@ -155,7 +155,7 @@ public class Board extends JPanel implements ActionListener {
             		{
 	            		currentRoom = new Room ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTileX() );
 	            		currentRoomNPCs = currentRoom.getNPCs();
-	            		roomsVisited.add(new Position ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTileX()));
+	            		roomsVisited.append(new Position ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTileX()));
 	            		playerOnTheLead.move(0, 1);
 	            		if (currentRoom.getNPCs().size() > 0)
 	            			doActionWithNPC(chooseActionWithNPC ());
@@ -166,7 +166,7 @@ public class Board extends JPanel implements ActionListener {
             			playerOnTheLead.move(0, 1);
             	}
             	else {
-            		roomsInvalid.add(new Position ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTileX()));
+            		roomsInvalid.append(new Position ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTileX()));
             		thatsWallOutput();
             	}
             }
@@ -176,7 +176,7 @@ public class Board extends JPanel implements ActionListener {
             		{
 	            		currentRoom = new Room (playerOnTheLead.getTileY(), (playerOnTheLead.getTileX()-1) );
 	            		currentRoomNPCs = currentRoom.getNPCs();
-	            		roomsVisited.add(new Position (playerOnTheLead.getTileY(), (playerOnTheLead.getTileX()-1)));
+	            		roomsVisited.append(new Position (playerOnTheLead.getTileY(), (playerOnTheLead.getTileX()-1)));
 	            		playerOnTheLead.move(-1, 0);
 	            		if (currentRoom.getNPCs().size() > 0)
 	            			doActionWithNPC(chooseActionWithNPC ());
@@ -187,7 +187,7 @@ public class Board extends JPanel implements ActionListener {
             			playerOnTheLead.move(-1, 0);
             	}
             	else {
-            		roomsInvalid.add(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTileX()-1));
+            		roomsInvalid.append(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTileX()-1));
             		thatsWallOutput();
             	}
             }
@@ -197,7 +197,7 @@ public class Board extends JPanel implements ActionListener {
             		{
 	            		currentRoom = new Room (playerOnTheLead.getTileY(), (playerOnTheLead.getTileX()+1) );
 	            		currentRoomNPCs = currentRoom.getNPCs();
-	            		roomsVisited.add(new Position (playerOnTheLead.getTileY(), (playerOnTheLead.getTileX()+1)));
+	            		roomsVisited.append(new Position (playerOnTheLead.getTileY(), (playerOnTheLead.getTileX()+1)));
 	            		playerOnTheLead.move(1, 0);
 	            		if (currentRoom.getNPCs().size() > 0)
 	            			doActionWithNPC(chooseActionWithNPC ());
@@ -208,7 +208,7 @@ public class Board extends JPanel implements ActionListener {
             			playerOnTheLead.move(1, 0);
             	}
             	else {
-            		roomsInvalid.add(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTileX()+1));
+            		roomsInvalid.append(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTileX()+1));
             		thatsWallOutput();
             	}
             }
