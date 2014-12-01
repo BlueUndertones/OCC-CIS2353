@@ -148,7 +148,7 @@ public class Player implements character
 	    protected void removeHitPoints()
 	    {
 	    	playerAlive = checkForDeadPlayers();
-	    	if ( playerAlive = true )
+	    	if ( playerAlive == true )
 	    	{
 	    		hitPoints -= 5; 
 	    	}
