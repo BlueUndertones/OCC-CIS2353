@@ -160,7 +160,6 @@ public class Board extends JPanel implements ActionListener {
             	}
             	else {
             		roomsInvalid.append(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTileX()));
-            		thatsWallOutput();
             	}	
 			}
             if(keyCode == KeyEvent.VK_DOWN){
@@ -181,7 +180,6 @@ public class Board extends JPanel implements ActionListener {
             	}
             	else {
             		roomsInvalid.append(new Position ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTileX()));
-            		thatsWallOutput();
             	}
             }
             if(keyCode == KeyEvent.VK_LEFT){
@@ -202,7 +200,6 @@ public class Board extends JPanel implements ActionListener {
             	}
             	else {
             		roomsInvalid.append(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTileX()-1));
-            		thatsWallOutput();
             	}
             }
             if(keyCode == KeyEvent.VK_RIGHT){
@@ -223,7 +220,6 @@ public class Board extends JPanel implements ActionListener {
             	}
             	else {
             		roomsInvalid.append(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTileX()+1));
-            		thatsWallOutput();
             	}
             }
 		}
@@ -265,18 +261,9 @@ public class Board extends JPanel implements ActionListener {
 		{
 			int x = roomsInvalid.get(index).getRow();
 			int y = roomsInvalid.get(index).getColumn();
-//			g.setColor(Color.black);
-//			g.fillRect(y * TILE_WIDTH +1, x * TILE_HEIGHT +1,  TILE_WIDTH, TILE_HEIGHT);
 			g.drawImage(drawImage("locked.png"), y * TILE_WIDTH +1, x * TILE_HEIGHT +1, TILE_WIDTH, TILE_HEIGHT, null);
 		}
 		
-		//draw gold on the maze
-		/*for(int i =0; i < 10; i++)
-		{
-	        g.drawImage(drawImage("gold.png"), roomsHasGold.get(i).getColumn() * TILE_WIDTH, roomsHasGold.get(i).getRow() * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, null);
-		}*/
-		
-		//draw mario image on the board
         g.drawImage(drawImage("players.png"), playerOnTheLead.getTileX() * TILE_WIDTH, playerOnTheLead.getTileY() * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT, null);  
 	}
 
@@ -291,30 +278,6 @@ public class Board extends JPanel implements ActionListener {
 		return img;
 	}
 	
-	public void thatsWallOutput ()
-	{
-		//JOptionPane.showMessageDialog (null, "Room not available --WALL", "WALL", JOptionPane.INFORMATION_MESSAGE);
-	}
-	/*
-	public void roomHasGold()
-	{
-		JOptionPane.showMessageDialog (null, "Room Has Gold", "WALL", JOptionPane.INFORMATION_MESSAGE);
-		p.setGold(1);
-		//gold = p.getGold();
-		info.setText(p.toString(name, hitPoints, intelligence, dexterity, strength, p.getGold()));
-		
-	}
-	*/
-	/*
-	public boolean checkForGold (int y, int x)
-	{
-		Position pos = new Position (y, x);
-		for (int i = 0; i < roomsHasGold.size(); i++)
-			if (roomsHasGold.get(i).equals(pos))
-				return true;
-		return false;
-	}
-	*/
 	public int chooseActionWithNPC ()
 	{
 		String[] choices = {"Fight", "Run", "Hide", "Sleep"};
