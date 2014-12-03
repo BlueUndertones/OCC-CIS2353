@@ -13,7 +13,7 @@ public class Player implements character
    private int strength;
    private int dexterity;
    private int intelligence;
-   private int hitPoints = 19;
+   private int hitPoints = 20;
    private int gold;
    private Weapon weapons;
    private Armor armor;
