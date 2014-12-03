@@ -31,8 +31,9 @@ public class Party
 		
 		if ( value == 1 )
 		{
-			System.out.println("While you were sleeping your party was attacked!");
-			fight();//party.
+			Board.info.setText("While you were sleeping your party was attacked!");
+			//System.out.println("While you were sleeping your party was attacked!");
+			//fight();//party.
 		}
 		else
 		{
@@ -41,7 +42,7 @@ public class Party
 				Player p;				
 				p = (Player) party.get(i);
 				p.addHitPoints();
-				System.out.println(p);
+				//System.out.println(p);
 			}
 		}
 	}
@@ -139,7 +140,8 @@ public class Party
 		int roomInt = intDie.roll();
 		if (playerInt > roomInt) { // ? what about >= ?
 			int goldFound = room.getGold();
-			System.out.println(player.getName() + " has found " + goldFound + " gold pieces.");
+			Board.info.setText(player.getName() + " has found " + goldFound + " gold pieces.");
+			//System.out.println(player.getName() + " has found " + goldFound + " gold pieces.");
 			// gold = playerGold + goldFound;
 			player.setGold(player.getGold()+ goldFound);
 //			System.out.println("room gold is " + roomInt);
@@ -150,7 +152,8 @@ public class Party
 			// return nothing found..
 //			System.out.println("room gold is " +roomInt);
 //			System.out.println("intele is " + player.getIntelligence());
-			System.out.println("There is nothing to find here.");
+			Board.info.setText("your intelligence is too low to find Gold!");
+			//System.out.println("There is nothing to find here.");
 		}
 		isSearched = true;
 	}
@@ -168,18 +171,20 @@ public class Party
 		
 		if ( value == 1 )
 		{
-			System.out.println("While you were running your party was attacked!");
+			Board.info.setText("While you were running your party was attacked!");
+			//System.out.println("While you were running your party was attacked!");
 			for ( int i = 0; i < party.size(); i++ )
 			{
 				Player p;				
 				p = (Player) party.get(i);
 				p.removeHitPoints();
-				System.out.println(p);
+				//System.out.println(p);
 			}
 		}
 		else
 		{
-			System.out.println("You escape before the enemy could attack!");
+			Board.info.setText("You escape before the enemy could attack!");
+//			System.out.println("You escape before the enemy could attack!");
 		}
 	}
 }

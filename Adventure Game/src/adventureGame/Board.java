@@ -27,6 +27,7 @@ public class Board extends JPanel implements ActionListener {
 	//ArrayList <Position> roomsHasGold = new <Position> ArrayList ();
 	Room currentRoom;
 	Sequence <NPC> currentRoomNPCs =  new <NPC> Sequence();
+	static JLabel info = new JLabel();
 	
 	public Board () {
 		map = new Map();
@@ -108,8 +109,7 @@ public class Board extends JPanel implements ActionListener {
 	{
 		JPanel NpcInfo = new JPanel();
 		
-		JLabel info = new JLabel();
-		info.setText("this is buildActionInfo");
+		//info.setText("this is panel for the party actions");
 		NpcInfo.add(info);
 		repaint();
 		return NpcInfo;

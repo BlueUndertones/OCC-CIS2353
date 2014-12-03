@@ -35,17 +35,17 @@ public class Maze {
 				    	  mainPanel.revalidate();
 				    	  mainPanel.add(board.buildPlayerInfo(),BorderLayout.WEST);
 				    	  mainPanel.revalidate();
-				    	  
+				    	   	  
 				    	  party.removeAll();
-				    	  party.add(board.buildRoomInfo());
+				    	  party.add(board.partyPanel());
 				    	  party.revalidate();
 				    	  
 				    	  roomDesc.removeAll();
-				  		  roomDesc.add(board.partyPanel());
-				  		  roomDesc.revalidate();
-				    	  
+				    	  roomDesc.add(board.buildRoomInfo());
+				    	  roomDesc.revalidate();
+				    	    
+				    	  southPanel.add(party);
 				    	  southPanel.add(roomDesc);
-				  		  southPanel.add(party);
 				  		  southPanel.revalidate();
 				    
 				    	  mainPanel.add(southPanel,BorderLayout.SOUTH);
@@ -61,8 +61,8 @@ public class Maze {
 		party.add(board.buildRoomInfo());
 		roomDesc.add(board.partyPanel());
 		
-		southPanel.add(roomDesc);
 		southPanel.add(party);
+		southPanel.add(roomDesc);
 		
 		mainPanel.add(board.buildNpcInfo(), BorderLayout.EAST);
 		mainPanel.add(board.buildPlayerInfo(),BorderLayout.WEST);
