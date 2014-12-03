@@ -124,36 +124,42 @@ public class Room {
       {
          case 1:
          {
+            roomNum = 1;
             Name = "Slime Cavern";
             break;
          }
          case 2:
          {
+            roomNum = 2;
             Name = "Mess Hall";
             break;
          } 
          case 3:
          {
+            roomNum = 3;
             Name = "Hallway";
             break;
          } 
          case 4:
          {
+            roomNum = 4;
             Name = "Mist Cavern";
             break;
          } 
          case 5:
          {
+            roomNum = 5;
             Name = "Sleeping Quarters";
             break;
          } 
          case 6:
          {
+            roomNum = 6;
             Name = "Cellar";
             break;
          } 
          default:
-        	 Name = "what";
+        	 Name = "Not valid.";
          
          roomFilename = "room" + roomNum + ".txt";
          Description = getRoomFile(roomFilename).toString();
