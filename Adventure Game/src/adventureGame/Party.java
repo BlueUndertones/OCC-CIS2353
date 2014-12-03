@@ -50,24 +50,44 @@ public class Party
 	public static void fight(Player player, NPC npc) //krupa
 	{
 		System.out.println("Fight Begins");
-		if(player.getDexterity() > npc.getDexterity())
-		{
-			boolean isDead = false;
-           do{
-        	  attack(player,npc); 
-              if(player.getHitPoints() == 0)
-              {
-            	  isDead = true;
-              }
-           }while(!(isDead));
-		}
+		boolean isDead = false;
+		Player nextPlayer = null;
+		
+		for(int i = 0; i< party.size(); i++)
+			{
+				player = (Player) party.get(i);
+				
+				if(party.size()>i+1)
+				{
+					nextPlayer = (Player) party.get(i+1);
+				}
+				if(player.getDexterity() > nextPlayer.getDexterity())
+				{
+		           do{
+		        	  attack(player,npc); 
+		              if(player.getHitPoints() == 0)
+		              {
+		            	  isDead = true;
+		              }
+		           }while(!(isDead));
+				}else
+				{
+					 do{
+			        	  attack(nextPlayer,npc); 
+			              if(player.getHitPoints() == 0)
+			              {
+			            	  isDead = true;
+			              }
+			           }while(!(isDead));
+				}
+			}
 
 	}
 	
 	public static void attack(Player currentPlayer, NPC target)
 	{
 		int chooseAction = 1;
-		Weapon currentWeapon  = null;
+		Weapon currentWeapon = null;
 		String useWeapon = "";
 		int totalDamage;
 		int armorDamage = currentPlayer.getArmor().getDamage();
@@ -78,14 +98,12 @@ public class Party
 			System.out.println("Do you want to use your weapon or your fists?");
 			if(useWeapon == "weapon")
 			{
-				currentWeapon = new Weapon(currentWeapon);
-				currentPlayer.setWeapon(currentWeapon);
+				currentPlayer.getWeapon();
 			}
 			
 		case 2:
 			System.out.println("You have selected range Attack");
-			currentWeapon = new Weapon(currentWeapon);
-			currentPlayer.setWeapon(currentWeapon);
+			currentPlayer.getWeapon();
 			
 	    case 3:
 		    System.out.println("You have selected Spell cast");

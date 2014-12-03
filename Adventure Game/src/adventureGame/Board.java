@@ -336,7 +336,7 @@ public class Board extends JPanel implements ActionListener {
 	{
 		switch (actionChosen) {
         case 0: 
-//            Party.fight();
+            Party.fight(playerOnTheLead,npc);
             break;
         case 1:
         	myPlayersParty.run();
