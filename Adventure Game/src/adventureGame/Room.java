@@ -160,11 +160,10 @@ public class Room {
          } 
          default:
         	 Name = "Not valid.";
-         
+      } 
          roomFilename = "room" + roomNum + ".txt";
          Description = getRoomFile(roomFilename).toString();
-      } 
-               return Description;
+         return Description;
    }
    
    public String getRoomFile(String roomFilename)
