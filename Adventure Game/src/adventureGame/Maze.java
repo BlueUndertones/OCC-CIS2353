@@ -1,16 +1,11 @@
 package adventureGame;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.GridLayout;
-import java.awt.TextArea;
-import java.awt.TextField;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -45,8 +40,19 @@ public class Maze {
 		
 		frame.setLayout(new GridLayout (1,1));
 		
+		JPanel southPanel = new JPanel (new GridLayout(1,2));
+		
+		JPanel party = new JPanel ();
+		party.add(board.buildRoomInfo());
+		JPanel roomDesc = new JPanel ();
+		roomDesc.add(board.partyPanel());
+		
+		southPanel.add(roomDesc);
+		southPanel.add(party);
+		
 		mainPanel.add(board.buildNpcInfo(), BorderLayout.EAST);
 		mainPanel.add(board.buildPlayerInfo(),BorderLayout.WEST);
+		mainPanel.add(southPanel,BorderLayout.SOUTH);
 		
 		JPanel center = new JPanel(new GridLayout(0,1));
 		center.add(board,BorderLayout.CENTER);
@@ -56,7 +62,7 @@ public class Maze {
 		frame.add(mainPanel);
 			
 		frame.setTitle("Advanture Game");
-		frame.setSize(900, 640);
+		frame.setSize(900, 740);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
