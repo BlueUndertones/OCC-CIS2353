@@ -103,7 +103,16 @@ public class Board extends JPanel implements ActionListener {
 		repaint();
 		return NpcInfo;
 	}
-
+	public JPanel partyPanel ()
+	{
+		JPanel NpcInfo = new JPanel();
+		
+		JLabel info = new JLabel();
+		info.setText("this is buildActionInfo");
+		NpcInfo.add(info);
+		repaint();
+		return NpcInfo;
+	}
 	public void hide()
 	{
 		playerOnTheLead.isHidden = true;
