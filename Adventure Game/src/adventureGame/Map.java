@@ -24,7 +24,7 @@ public class Map
 	public void openFile()
 	{
 		try {
-			scan = new Scanner(new File ("C:\\Users\\NADHIR\\Desktop\\ch05\\ch5\\Maze\\maze.txt"));
+			scan = new Scanner(new File ("./../maze.txt"));
 		}
 		catch (Exception e) {
 			System.out.println ("Maze not Found");
