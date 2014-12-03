@@ -122,38 +122,39 @@ public class Room {
       int roomNum = d.roll();
       switch(roomNum)
       {
-         case 0:
+         case 1:
          {
             Name = "Slime Cavern";
             break;
          }
-         case 1:
+         case 2:
          {
             Name = "Mess Hall";
             break;
          } 
-         case 2:
+         case 3:
          {
             Name = "Hallway";
             break;
          } 
-         case 3:
+         case 4:
          {
             Name = "Mist Cavern";
             break;
          } 
-         case 4:
+         case 5:
          {
             Name = "Sleeping Quarters";
             break;
          } 
-         case 5:
+         case 6:
          {
             Name = "Cellar";
             break;
          } 
          default:
-         Name = "what";
+        	 Name = "what";
+         
          roomFilename = "room" + roomNum + ".txt";
          Description = getRoomFile(roomFilename).toString();
       } 
@@ -187,6 +188,8 @@ public class Room {
    */
    public String toString()
    {
-      return (Name + "/n" + Description);
+	   String desc = "<html>" + Name +
+                       " \n<br>" + Description + "</html>";
+      return desc;
    }
 }
