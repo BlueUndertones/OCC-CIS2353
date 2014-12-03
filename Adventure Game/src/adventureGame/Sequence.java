@@ -17,14 +17,12 @@ public class Sequence<E>implements Collection<E>{
 		{
 			throw new IllegalArgumentException( n + " Must be larger than 0 ");			
 		}
-		
 		capacity = (E[]) new Object [n];
 	}
 	
 	public int size()
 	{
 		return numberOfElementsStored;
-		
 	}
 	
 	public void append ( E element )
@@ -58,7 +56,22 @@ public class Sequence<E>implements Collection<E>{
 		capacity[k] = newElement;
 	}
 	
-	
+	public E remove(int index){
+        if(index < numberOfElementsStored){
+            E obj = capacity[index];
+            capacity[index] = null;
+            int tmp = index;
+            while(tmp < numberOfElementsStored){
+            	capacity[tmp] = capacity[tmp+1];
+            	capacity[tmp+1] = null;
+                tmp++;
+            }
+            numberOfElementsStored--;
+            return obj;
+        } else {
+            throw new ArrayIndexOutOfBoundsException();
+        } 
+    }
 	public boolean add(E arg0) 
 	{
 		return false;
@@ -94,10 +107,10 @@ public class Sequence<E>implements Collection<E>{
 		return null;
 	}
 
-	public boolean remove(Object arg0) 
-	{
-		return false;
-	}
+//	public boolean remove(Object arg0) 
+//	{
+//		return false;
+//	}
 
 	public boolean removeAll(Collection<?> arg0) 
 	{
@@ -117,5 +130,11 @@ public class Sequence<E>implements Collection<E>{
 	public <T> T[] toArray(T[] arg0) 
 	{
 		return null;
+	}
+
+	@Override
+	public boolean remove(Object arg0) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
