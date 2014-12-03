@@ -57,9 +57,18 @@ public class Board extends JPanel implements ActionListener {
 		{
 			for(int i =0; i < myPlayersArray.size(); i ++)
 			{
-				JLabel info = new JLabel();
-				info.setText(myPlayersArray.get(i).toString());
-				infoPanel.add(info);
+				if (!myPlayersArray.get(i).isPlayerDead())
+				{
+					JLabel info = new JLabel();
+					info.setText(myPlayersArray.get(i).toString());
+					infoPanel.add(info);
+				}
+				else
+				{
+					JLabel info = new JLabel();
+					info.setText(myPlayersArray.get(i).getName() + " has Died");
+					infoPanel.add(info);
+				}
 			}
 		}
 		repaint();

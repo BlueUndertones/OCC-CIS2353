@@ -121,36 +121,39 @@ public class Player implements character
 	    }
 	    protected void addHitPoints()
 	    {
-	    	playerAlive = checkForDeadPlayers();
-	    	if ( playerAlive )
-	
+	    	if ( isPlayerDead() )
 	    	{
-		    	if ( hitPoints == MAX_HIT_POINTS )
+		    	if ( this.hitPoints == MAX_HIT_POINTS )
 		    	{
 		    		System.out.println("Max Health");
 		    	}
 		    	else 
 		    	{
-		    		hitPoints += 1;    		
+		    		this.hitPoints += 1;    		
 		    	}
-
-	    	}
-	    	
+	    	}	    	
 	    }
-	    private boolean checkForDeadPlayers()
+	    protected boolean isPlayerDead()
 	    {
-	    	if ( this.getHitPoints() <= NO_HIT_POINTS )
+	    	if ( this.hitPoints <= 0 )
 	    	{
 	    		playerAlive = false; 
+	    		return true;
 	    	}
-	    	return playerAlive;
+	    	return false;
 	    }
 	    protected void removeHitPoints()
 	    {
-	    	playerAlive = checkForDeadPlayers();
-	    	if ( playerAlive == true )
+	    	//playerAlive = checkForDeadPlayers();
+	    	if (!isPlayerDead())
 	    	{
-	    		hitPoints -= 5; 
+	    		this.hitPoints -= 5; 
+	    		if (isPlayerDead())
+	    		{
+	    			this.hitPoints = 0;
+	    			playerAlive = false;
+	    			System.out.println(this.getName() + " has died");
+	    		}	
 	    	}
 	    	else 
 	    	{
