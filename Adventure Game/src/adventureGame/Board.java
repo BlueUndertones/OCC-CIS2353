@@ -32,6 +32,7 @@ public class Board extends JPanel implements ActionListener {
 		map = new Map();
 		choosePlayers();
 		playerOnTheLead = myPlayersArray.get(0);
+		currentRoom = new Room ((playerOnTheLead.getTileY()), playerOnTheLead.getTileX() );
 		npc = new NPC("Witch");
 		//saveRandomRoomNumbers ();  //used to generate gold
 		addKeyListener(new Al());
@@ -98,7 +99,7 @@ public class Board extends JPanel implements ActionListener {
 		JPanel NpcInfo = new JPanel(new GridLayout(0,1));
 		
 		JLabel info = new JLabel();
-		info.setText("this is just test");
+		info.setText(currentRoom.toString());
 		NpcInfo.add(info);
 		repaint();
 		return NpcInfo;
@@ -336,7 +337,7 @@ public class Board extends JPanel implements ActionListener {
 	{
 		switch (actionChosen) {
         case 0: 
-            Party.fight(playerOnTheLead,npc);
+        	Party.fight(playerOnTheLead,npc);
             break;
         case 1:
         	myPlayersParty.run();
