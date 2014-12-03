@@ -65,12 +65,13 @@ public class Board extends JPanel implements ActionListener {
 				}
 				else
 				{
-					myPlayersArray.remove(myPlayersArray.get(i));
-					if (myPlayersArray.size() == 0)
-						System.out.println("Game oveeeeeeeeeeeeee");
+					String playerName = myPlayersArray.get(i).getName();
+					myPlayersArray.remove(i);
 					JLabel info = new JLabel();
-					info.setText(myPlayersArray.get(i).getName() + " has Died");
+					info.setText( playerName + " has Died");
 					infoPanel.add(info);
+					if (myPlayersArray.size() == 0)
+						closeGame(gameOverMessage());
 				}
 			}
 		}
@@ -100,6 +101,7 @@ public class Board extends JPanel implements ActionListener {
 		System.out.println("Current Leader: " + playerOnTheLead.getName());
 		int lastPlayer = myPlayersArray.size() -1;
 		int num = 0;
+		System.out.println(myPlayersArray.size());
 		if (myPlayersArray.size() > 0)
 		{
 			//look for and get the next not hidden player tp take the hit and be currentOnlead
@@ -437,4 +439,34 @@ public class Board extends JPanel implements ActionListener {
 		if (myPlayersArray.size() == 0)
 			choosePlayers();
 	}
+	public int gameOverMessage ()
+	{
+		String[] choices = {"OK"};
+	    int actionChosen = JOptionPane.showOptionDialog(
+	                               null                       // Center in window.
+	                             , "Game Over!! \n all your Players are dead \n you're too dumb for this game :("  // Message
+	                             , "Game Over"            // Title in titlebar
+	                             , JOptionPane.YES_NO_OPTION  // Option type
+	                             , JOptionPane.PLAIN_MESSAGE  // messageType
+	                             , null                       // Icon (none)
+	                             , choices                    // Button text as above.
+	                             , "Default"    // Default button's label
+	                           );
+	    
+	    return actionChosen;
+	}
+	
+	public void closeGame (int actionChosen)
+	{
+		switch (actionChosen) {
+        case 0: 
+            System.exit(0); 
+            break;
+        case -1:
+            System.exit(0); 
+        default:
+            JOptionPane.showMessageDialog(null, "Unexpected response " + actionChosen);
+		}
+	}
+	
 }
