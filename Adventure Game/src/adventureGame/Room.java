@@ -161,30 +161,31 @@ public class Room {
          default:
         	 Name = "Not valid.";
       } 
-         roomFilename = "room" + roomNum + ".txt";
-         Description = getRoomFile(roomFilename).toString();
-         return Description;
+      roomFilename = "room" + roomNum + ".txt";
+      Description = getRoomFile(roomFilename);
+      return Description;
    }
    
    public String getRoomFile(String roomFilename)
    {
-      File file = new File(roomFilename);
+	   StringBuilder sb= null;
       String line ="";
       try
       {
-         Scanner scan = new Scanner(file);
+    	 Scanner scan = new Scanner(new File (roomFilename));
                   
          while (scan.hasNextLine())
          {
-            StringBuilder sb = new StringBuilder();
+            sb = new StringBuilder();
             line = scan.nextLine();
-   
                sb.append(line);
          }
          scan.close();
       }
       catch(FileNotFoundException be)
-      {}
+      {
+    	  System.out.println("File not found");
+      }
       return line; 
    }
    
