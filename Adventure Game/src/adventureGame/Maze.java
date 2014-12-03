@@ -14,6 +14,9 @@ public class Maze {
     Board board = new Board();
     static JFrame frame = new JFrame();
     JPanel mainPanel = new JPanel(new BorderLayout());
+    JPanel southPanel = new JPanel (new GridLayout(1,2));
+    JPanel party = new JPanel ();
+    JPanel roomDesc = new JPanel ();
     
 	public static void main(String[] args) {
 		new Maze();
@@ -32,7 +35,21 @@ public class Maze {
 				    	  mainPanel.revalidate();
 				    	  mainPanel.add(board.buildPlayerInfo(),BorderLayout.WEST);
 				    	  mainPanel.revalidate();
-				    	  //frame.revalidate();
+				    	  
+				    	  party.removeAll();
+				    	  party.add(board.buildRoomInfo());
+				    	  party.revalidate();
+				    	  
+				    	  roomDesc.removeAll();
+				  		  roomDesc.add(board.partyPanel());
+				  		  roomDesc.revalidate();
+				    	  
+				    	  southPanel.add(roomDesc);
+				  		  southPanel.add(party);
+				  		  southPanel.revalidate();
+				    
+				    	  mainPanel.add(southPanel,BorderLayout.SOUTH);
+				    	  mainPanel.revalidate();
 				       }
 				    });
 				  }
@@ -40,11 +57,8 @@ public class Maze {
 		
 		frame.setLayout(new GridLayout (1,1));
 		
-		JPanel southPanel = new JPanel (new GridLayout(1,2));
 		
-		JPanel party = new JPanel ();
 		party.add(board.buildRoomInfo());
-		JPanel roomDesc = new JPanel ();
 		roomDesc.add(board.partyPanel());
 		
 		southPanel.add(roomDesc);
