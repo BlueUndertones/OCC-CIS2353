@@ -1,6 +1,8 @@
 package adventureGame;
 import java.util.*;
 
+import javax.print.attribute.standard.Finishings;
+
 
 public class Party
 {
@@ -22,7 +24,7 @@ public class Party
 		}
 	}
 	
-	public static void sleep( )//demario
+	public void sleep( )//demario
 	{
 		
 		Die dice = new Die(2);
@@ -51,6 +53,7 @@ public class Party
 	public static void fight(Player player, NPC npc) //krupa
 	{
 		System.out.println("Fight Begins");
+		System.out.println(findHighestDext(party).toString());
 		boolean isDead = false;
 		Player nextPlayer = null;
 		
@@ -82,9 +85,18 @@ public class Party
 			           }while(!(isDead));
 				}
 			}
-
 	}
-	
+	public static Player findHighestDext(Sequence<Player> myPlayers)
+	{
+		Player highestDex = null;
+		
+		for (int i =0; i < myPlayers.size(); i++)
+		{
+			if (highestDex == null || myPlayers.get(i).getDexterity() > highestDex.getDexterity())
+				highestDex = myPlayers.get(i);
+		}
+		return highestDex;
+	}
 	public static void attack(Player currentPlayer, NPC target)
 	{
 		int chooseAction = 1;
@@ -124,7 +136,7 @@ public class Party
 	}
 
 	
-	public static void search(Room room, Player player) // Heather
+	public void search(Room room, Player player) // Heather
 	{
 		// check player's int
 		// you can only search a room the first time you're visiting it. After
