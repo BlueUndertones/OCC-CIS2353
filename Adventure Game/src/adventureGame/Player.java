@@ -290,14 +290,21 @@ public class Player implements character
   
    public String toString()
    {
+	   String w = "";
+	   String a = "";
+	   String g = "";
+	   if(this.getWeapon() != null)
+		   w = "\n<br>Weapon: " + this.getWeapon();
+	   if (this.getArmor() != null)
+		   a = "\n<br>Armor: " + this.getArmor();
+	   if (this.getGold() != 0)
+		   g = " \n<br>Gold: " + this.getGold();
        String stats = "<html>Player: " + this.getName() +
                        " \n<br>Hit Points: " + this.getHitPoints() +
                        " \n<br>Intelligence: " + this.getIntelligence() +
                        " \n<br>Dexterity: " + this.getDexterity() + 
                        " \n<br>Strength: " + this.getStrength() +
-                       " \n<br>Gold: " + this.getGold() +
-                       "\n<br>Weapon: " + this.getWeapon() +
-	                    "\n<br>Armor: " + this.getArmor() +
+                       g + w + a +
                        "\n<br>-----------------------------</html>";
        return stats;
    } 

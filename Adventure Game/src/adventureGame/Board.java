@@ -26,6 +26,7 @@ public class Board extends JPanel implements ActionListener {
 	//ArrayList <Integer> num = new <Integer> ArrayList () ;
 	//ArrayList <Position> roomsHasGold = new <Position> ArrayList ();
 	Room currentRoom;
+	int fontSize = 0;
 	Sequence <NPC> currentRoomNPCs =  new <NPC> Sequence();
 	static JTextArea info = new JTextArea();
 	
@@ -63,7 +64,7 @@ public class Board extends JPanel implements ActionListener {
 				{
 					JLabel info = new JLabel();
 					info.setText(myPlayersArray.get(i).toString());
-					info.setFont (new Font ("Serif", Font.BOLD, 9));
+					info.setFont (new Font ("Serif", Font.BOLD, 11));
 					infoPanel.add(info);
 				}
 				else
@@ -90,7 +91,7 @@ public class Board extends JPanel implements ActionListener {
 			{
 				JLabel info = new JLabel();
 				info.setText(currentRoomNPCs.get(i).toString());
-				info.setFont (new Font ("Serif", Font.BOLD, 9));
+				info.setFont (new Font ("Serif", Font.BOLD, 11));
 				NpcInfo.add(info);
 			}
 		}
