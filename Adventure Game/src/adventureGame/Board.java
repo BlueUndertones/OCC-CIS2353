@@ -11,8 +11,8 @@ import javax.swing.*;
 
 public class Board extends JPanel implements ActionListener {
 	
-	private final int TILE_WIDTH = 60;
-	private final int TILE_HEIGHT = 60;
+	private final int TILE_WIDTH = 50;
+	private final int TILE_HEIGHT = 50;
 	private Timer timer;
 	private Map map;
 	private Player playerOnTheLead;
@@ -104,13 +104,12 @@ public class Board extends JPanel implements ActionListener {
 		
 		JTextArea info = new JTextArea();
 		info.setText(currentRoom.toString());
-		info.setSize(400, 200);
+		info.setSize(300, 200);
 		info.setLineWrap(true);
 		info.setColumns(10);
 		info.setRows(1);
 		info.setWrapStyleWord(true);
 		NpcInfo.add(info);
-		repaint();
 		return NpcInfo;
 	}
 	public JPanel partyPanel ()

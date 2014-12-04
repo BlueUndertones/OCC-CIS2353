@@ -15,8 +15,8 @@ public class Maze {
     static JFrame frame = new JFrame();
     JPanel mainPanel = new JPanel(new BorderLayout());
     JPanel southPanel = new JPanel (new GridLayout(1,2));
-    JPanel party = new JPanel ();
-    JPanel roomDesc = new JPanel ();
+    JPanel party = new JPanel (new GridLayout (3,1));
+    JPanel roomDesc = new JPanel (new GridLayout (1,3));
     
 	public static void main(String[] args) {
 		new Maze();
@@ -64,20 +64,20 @@ public class Maze {
 		
 		southPanel.add(party);
 		southPanel.add(roomDesc);
-		
+
 		mainPanel.add(board.buildNpcInfo(), BorderLayout.EAST);
 		mainPanel.add(board.buildPlayerInfo(),BorderLayout.WEST);
 		mainPanel.add(southPanel,BorderLayout.SOUTH);
 		
-		JPanel center = new JPanel(new GridLayout(0,1));
-		center.add(board,BorderLayout.CENTER);
+		JPanel center = new JPanel(new GridLayout(1,1));
+		center.add(board);
 		
-		mainPanel.add(center);
+		mainPanel.add(center, BorderLayout.CENTER);
 
 		frame.add(mainPanel);
 			
 		frame.setTitle("Advanture Game");
-		frame.setSize(900, 740);
+		frame.setSize(850, 660);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
