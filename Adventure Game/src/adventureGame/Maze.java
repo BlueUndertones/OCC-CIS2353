@@ -46,6 +46,7 @@ public class Maze {
 				    	    
 				    	  southPanel.add(party);
 				    	  southPanel.add(roomDesc);
+				  		  
 				  		  southPanel.revalidate();
 				    
 				    	  mainPanel.add(southPanel,BorderLayout.SOUTH);

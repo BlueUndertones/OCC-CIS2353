@@ -194,8 +194,8 @@ public class Room {
    */
    public String toString()
    {
-	   String desc = "<html>" + Name +
-                       " \n<br>" + Description + "</html>";
+	   String desc = Name +
+                       " \n" + Description;
       return desc;
    }
 }
