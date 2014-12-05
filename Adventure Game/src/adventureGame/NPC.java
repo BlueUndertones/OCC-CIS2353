@@ -27,7 +27,7 @@ public class NPC extends Player implements character
     
     public NPC ( )
     {
-    	Die dice = new Die(6);
+    	Die dice = new Die(6) ;
 		dice.roll(); 
 		int value = dice.getValue(); 
 		this.setName( getNpcName(value) );
