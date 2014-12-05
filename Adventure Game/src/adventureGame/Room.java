@@ -86,7 +86,6 @@ public class Room {
 		{
 			int i = 0;
 		    int index = findHighestDext(ps);
-		    System.out.println(index);
 		    sortedNPCs.append(ps.get(index));
 		    ps.remove(index);
 		    i++;

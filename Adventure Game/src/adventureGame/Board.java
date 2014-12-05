@@ -358,7 +358,7 @@ public class Board extends JPanel implements ActionListener {
 	{
 		switch (actionChosen) {
         case 0: 
-        	Party.fight(playerOnTheLead ,npc);
+        	myPlayersParty.fight(sortedPlayers ,currentRoom.getNPCs());
             break;
         case 1:
         	myPlayersParty.run();
@@ -486,7 +486,6 @@ public class Board extends JPanel implements ActionListener {
 		{
 			int i = 0;
 		    int index = findHighestDext(ps);
-		    System.out.println(index);
 		    sortedPlayers.append(ps.get(index));
 		    ps.remove(index);
 		    i++;
