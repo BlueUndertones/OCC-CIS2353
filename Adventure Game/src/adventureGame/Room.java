@@ -24,7 +24,7 @@ public class Room {
 	private String Name;
 	private String Description;
    	public Sequence<NPC> NPCs = new <NPC> Sequence();
-
+   	public Sequence <NPC> sortedNPCs = new <NPC> Sequence();
    public Room(int x, int y)
    {
       X = x;
@@ -33,6 +33,7 @@ public class Room {
       setRoomDesc();
       setNPCs();
       setGold();
+      
    }
    
     public int getX() {
@@ -74,8 +75,37 @@ public class Room {
    }
    public Sequence<NPC> getNPCs ()
    {
-	   return NPCs;
+	   sortNPCs(NPCs);
+	   return sortedNPCs;
    }
+   public void sortNPCs(Sequence<NPC> nPCs2)
+	{
+		
+		Sequence<NPC> ps =  nPCs2;
+		while (ps.size() > 0)
+		{
+			int i = 0;
+		    int index = findHighestDext(ps);
+		    System.out.println(index);
+		    sortedNPCs.append(ps.get(index));
+		    ps.remove(index);
+		    i++;
+		}
+	}
+	public int findHighestDext(Sequence<NPC> npcs)
+	{
+		Player highestDex = null;
+		int index = 0;
+		for (int i =0; i < npcs.size(); i++)
+		{
+			if (highestDex == null || npcs.get(i).getDexterity() > highestDex.getDexterity())
+			{
+				highestDex = npcs.get(i);
+				index = i;
+			}
+		}
+		return index;
+	}
    public void clearNPCs()
    {
       NPCs.clear();
