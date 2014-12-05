@@ -200,8 +200,9 @@ public class Player implements character
 				}
 				case 2:
 				{
-					item = new Armor("Armor", "S", 10, 10 );
-					this.weapons = (Weapon) item;
+					armor = new Armor("Armor", "S", 10, 10);
+					//item = new Armor("Armor", "S", 10, 10 );
+					//this.weapons = (Weapon) item;
 					break;
 				}
 				
@@ -308,4 +309,5 @@ public class Player implements character
                        "\n<br>-----------------------------</html>";
        return stats;
    } 
+   
 }
