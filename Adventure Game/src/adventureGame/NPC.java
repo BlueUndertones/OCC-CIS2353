@@ -21,8 +21,12 @@ public class NPC extends Player implements character
         this.setStrength ( numberOfDiceRolls(NUMBER_OF_ROLLS, NUMBER_OF_SIDES) );
         this.setDexterity ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
         this.setIntelligence ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
-        this.setStrength ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
         this.setHitPoints ( numberOfDiceRolls(NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
+     	Die dice = new Die(6) ;
+    	dice.roll(); 
+    	int value = dice.getValue(); 
+        value = dice.getValue();
+        this.setWeapon(value);
     }
     
     public NPC ( )
@@ -34,7 +38,6 @@ public class NPC extends Player implements character
     	this.setStrength ( numberOfDiceRolls(NUMBER_OF_ROLLS, NUMBER_OF_SIDES) );
         this.setDexterity ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
         this.setIntelligence ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
-        this.setStrength ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
         this.setHitPoints ( numberOfDiceRolls(NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
         dice.roll();
         value = dice.getValue();
