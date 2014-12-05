@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -21,7 +23,8 @@ public class Board extends JPanel implements ActionListener {
 	Sequence <Position> roomsVisited = new <Position> Sequence ();
 	Sequence <Position> roomsInvalid = new <Position> Sequence ();
 	Sequence<Player> myPlayersArray = new <Player> Sequence();
-	Party myPlayersParty = new Party(myPlayersArray);
+	Sequence<Player> sortedPlayers = new <Player> Sequence();
+	Party myPlayersParty = new Party(sortedPlayers);
 	//	ArrayList<Player> myPlayersArray = new <Player> ArrayList();
 	//ArrayList <Integer> num = new <Integer> ArrayList () ;
 	//ArrayList <Position> roomsHasGold = new <Position> ArrayList ();
@@ -33,7 +36,8 @@ public class Board extends JPanel implements ActionListener {
 	public Board () {
 		map = new Map();
 		choosePlayers();
-		playerOnTheLead = myPlayersArray.get(0);
+		sortMyPlayers(myPlayersArray);
+		playerOnTheLead = sortedPlayers.get(0);
 		currentRoom = new Room ((playerOnTheLead.getTileY()), playerOnTheLead.getTileX() );
 		npc = new NPC("Witch");
 		//saveRandomRoomNumbers ();  //used to generate gold
@@ -41,6 +45,15 @@ public class Board extends JPanel implements ActionListener {
 		setFocusable(true);
 		timer = new Timer (25, this);
 		timer.start();
+//		Collections.sort(myPlayersArray, new Comparator<Player>() {
+//			@Override
+//			public int compare(Player o1, Player o2) {
+//				final int dex1 = o1.getDexterity();
+//	            final int dex2 = o2.getDexterity();
+//	            return dex1 < dex2 ? -1 : dex1 > dex2 ? 1 : 0;
+//			}
+//	    }
+//		);
 	}
 	
 	/*//save random room numbers to draw the random gold on the maze
@@ -56,25 +69,25 @@ public class Board extends JPanel implements ActionListener {
 	public JPanel buildPlayerInfo ()
 	{
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
-		if (myPlayersArray.size() > 0 )
+		if (sortedPlayers.size() > 0 )
 		{
-			for(int i =0; i < myPlayersArray.size(); i ++)
+			for(int i =0; i < sortedPlayers.size(); i ++)
 			{
-				if (!myPlayersArray.get(i).isPlayerDead())
+				if (!sortedPlayers.get(i).isPlayerDead())
 				{
 					JLabel info = new JLabel();
-					info.setText(myPlayersArray.get(i).toString());
+					info.setText(sortedPlayers.get(i).toString());
 					info.setFont (new Font ("Serif", Font.BOLD, 11));
 					infoPanel.add(info);
 				}
 				else
 				{
-					String playerName = myPlayersArray.get(i).getName();
-					myPlayersArray.remove(i);
+					String playerName = sortedPlayers.get(i).getName();
+					sortedPlayers.remove(i);
 					JLabel info = new JLabel();
 					info.setText( playerName + " has Died");
 					infoPanel.add(info);
-					if (myPlayersArray.size() == 0)
+					if (sortedPlayers.size() == 0)
 						closeGame(gameOverMessage());
 				}
 			}
@@ -345,7 +358,7 @@ public class Board extends JPanel implements ActionListener {
 	{
 		switch (actionChosen) {
         case 0: 
-        	Party.fight(playerOnTheLead,npc);
+        	Party.fight(playerOnTheLead ,npc);
             break;
         case 1:
         	myPlayersParty.run();
@@ -460,5 +473,37 @@ public class Board extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(null, "Unexpected response " + actionChosen);
 		}
 	}
-	
+	public void printSorted (Sequence<Player>sortedPlayers)
+	{
+		for (int i = 0; i < sortedPlayers.size(); i++)
+			System.out.println(sortedPlayers.get(i));
+	}
+	public void sortMyPlayers(Sequence<Player> myPlayers)
+	{
+		
+		Sequence<Player> ps =  myPlayers;
+		while (ps.size() > 0)
+		{
+			int i = 0;
+		    int index = findHighestDext(ps);
+		    System.out.println(index);
+		    sortedPlayers.append(ps.get(index));
+		    ps.remove(index);
+		    i++;
+		}
+	}
+	public int findHighestDext(Sequence<Player> myPlayers)
+	{
+		Player highestDex = null;
+		int index = 0;
+		for (int i =0; i < myPlayers.size(); i++)
+		{
+			if (highestDex == null || myPlayers.get(i).getDexterity() > highestDex.getDexterity())
+			{
+				highestDex = myPlayers.get(i);
+				index = i;
+			}
+		}
+		return index;
+	}
 }
