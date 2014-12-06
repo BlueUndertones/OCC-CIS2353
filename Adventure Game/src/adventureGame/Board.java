@@ -135,48 +135,6 @@ public class Board extends JPanel implements ActionListener {
 		repaint();
 		return NpcInfo;
 	}
-	public void hide()
-	{
-		playerOnTheLead.isHidden = true;
-		int currentPositionX = playerOnTheLead.getTileX();
-		int currentPositionY = playerOnTheLead.getTileY();
-		System.out.println("Current Leader: " + playerOnTheLead.getName());
-		int lastPlayer = myPlayersArray.size() -1;
-		int num = 0;
-		System.out.println(myPlayersArray.size());
-		if (myPlayersArray.size() > 0)
-		{
-			//look for and get the next not hidden player tp take the hit and be currentOnlead
-			for (int i = 0; i < myPlayersArray.size(); i++)
-			{
-				
-				if (!myPlayersArray.get(i).isHidden && myPlayersArray.get(i).getHitPoints() != 0)
-				{
-					playerOnTheLead = myPlayersArray.get(i);
-					playerOnTheLead.setTileY(currentPositionY);
-					playerOnTheLead.setTileX(currentPositionX);
-					playerOnTheLead.removeHitPoints();
-					break;
-				}
-				//if no next player was unhidden then get all the player to get hit
-				if ( myPlayersArray.get(lastPlayer).isHidden == true)
-				{
-					for (int x = 0; x < myPlayersArray.size(); x++)
-					{
-						myPlayersArray.get(i).removeHitPoints();
-					}
-					System.out.println("all your players are dead");
-				}
-			}
-		}
-		else
-		{
-			playerOnTheLead.removeHitPoints();
-		}		
-//		System.out.println(myPlayersArray.get(0).getName() + " "+ myPlayersArray.get(0).getHitPoints());
-//		System.out.println(myPlayersArray.get(1).getName()+ " "+myPlayersArray.get(1).getHitPoints());
-//		System.out.println("Leader Changed to: " +playerOnTheLead.getName());
-	}
 	public class Al extends KeyAdapter
 	{
 		public void keyPressed(KeyEvent e)
