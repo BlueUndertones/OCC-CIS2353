@@ -280,7 +280,7 @@ public class Board extends JPanel implements ActionListener {
 	
 	public int chooseActionWithNPC ()
 	{
-		String[] choices = {"Fight", "Run", "Hide", "Sleep"};
+		String[] choices = {"Fight", "Run"};
 	    int actionChosen = JOptionPane.showOptionDialog(
 	                               null                       // Center in window.
 	                             , currentRoom.getNPCs().size()+ " NPC(s) in This Room, \n What Do you want to do?"  // Message
@@ -321,12 +321,12 @@ public class Board extends JPanel implements ActionListener {
         case 1:
         	myPlayersParty.run();
             break;
-        case 2:
-        	hide();
-            break;
-        case 3:
-        	myPlayersParty.sleep();
-            break;
+//        case 2:
+//        	hide();
+//            break;
+//        case 3:
+//        	myPlayersParty.sleep();
+//            break;
         case -1:
             System.exit(0); 
         default:
