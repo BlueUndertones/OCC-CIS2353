@@ -15,8 +15,8 @@ public class Maze {
     static JFrame frame = new JFrame();
     JPanel mainPanel = new JPanel(new BorderLayout());
     JPanel southPanel = new JPanel (new GridLayout(1,2));
-    JPanel party = new JPanel (new GridLayout (3,1));
-    JPanel roomDesc = new JPanel (new GridLayout (1,3));
+    JPanel party = new JPanel (new GridLayout (2,1));
+    JPanel roomDesc = new JPanel (new GridLayout (1,1));
     
 	public static void main(String[] args) {
 		new Maze();
@@ -37,6 +37,7 @@ public class Maze {
 				    	  mainPanel.revalidate();
 				    	   	  
 				    	  party.removeAll();
+				    	  party.add(board.fightPanel());
 				    	  party.add(board.partyPanel());
 				    	  party.revalidate();
 				    	  
@@ -58,7 +59,7 @@ public class Maze {
 		
 		frame.setLayout(new GridLayout (1,1));
 		
-		
+		party.add(board.fightPanel());
 		party.add(board.buildRoomInfo());
 		roomDesc.add(board.partyPanel());
 		
