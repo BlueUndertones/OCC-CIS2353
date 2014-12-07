@@ -131,6 +131,7 @@ public class Board extends JPanel implements ActionListener {
 		
 		//info.setText("this is panel for the party actions");
 		info.setSize(300, 200);
+		info.setFont (new Font ("Serif", Font.BOLD, 16));
 		NpcInfo.add(info);
 		repaint();
 		return NpcInfo;
