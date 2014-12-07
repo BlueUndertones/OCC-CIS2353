@@ -117,7 +117,12 @@ public class Player implements character
 	    
 	    public void setHitPoints( int hitPoints  )
 	    {
-	        this.hitPoints = hitPoints;
+	    	if (this.hitPoints <=0){
+	    		this.hitPoints = 0;
+	    		playerAlive = false;
+	    	}
+	    	else	
+	    		this.hitPoints = hitPoints;
 	    }
 	    protected void addHitPoints()
 	    {
