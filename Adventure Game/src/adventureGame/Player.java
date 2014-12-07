@@ -117,7 +117,7 @@ public class Player implements character
 	    
 	    public void setHitPoints( int hitPoints  )
 	    {
-	    	if (this.hitPoints <=0){
+	    	if (hitPoints <=0){
 	    		this.hitPoints = 0;
 	    		playerAlive = false;
 	    	}
@@ -322,7 +322,7 @@ public class Player implements character
 		   a = "\n<br>Armor: " + this.getArmor();
 	   if (this.getGold() != 0)
 		   g = " \n<br>Gold: " + this.getGold();
-       String stats = "<html>Player: " + this.getName() +
+       String stats = "<html>" + this.getName() +
                        " \n<br>Hit Points: " + this.getHitPoints() +
                        " \n<br>Intelligence: " + this.getIntelligence() +
                        " \n<br>Dexterity: " + this.getDexterity() + 
