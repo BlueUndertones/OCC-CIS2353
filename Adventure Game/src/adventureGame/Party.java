@@ -50,89 +50,112 @@ public class Party
 	}
 
 
-	public static void fight(Player player, NPC npc) //krupa
+	public void fight(Sequence<Player> sortedPlayers, Sequence<NPC> sortedNPC) //krupa
 	{
 		System.out.println("Fight Begins");
-		System.out.println(findHighestDext(party).toString());
 		boolean isDead = false;
-		Player nextPlayer = null;
-		
-		for(int i = 0; i< party.size(); i++)
+		Player fighterPlayer, targetPlayer;
+		NPC fighterNPC, targetNPC;
+		int hitPoints;
+		for(int playerIndex = 0; playerIndex < sortedPlayers.size(); playerIndex++)
+		{
+			for(int npcIndex = 0; npcIndex < sortedNPC.size(); npcIndex++)
 			{
-				player = (Player) party.get(i);
-				
-				if(party.size()>i+1)
+				if(sortedPlayers.get(playerIndex).getDexterity() >= sortedNPC.get(npcIndex).getDexterity())
 				{
-					nextPlayer = (Player) party.get(i+1);
+					fighterPlayer = sortedPlayers.get(playerIndex);
+					targetNPC = sortedNPC.get(npcIndex);
+					hitPoints = targetNPC.getHitPoints();
+					do{
+						  attack(fighterPlayer,sortedNPC); 
+						  hitPoints-- ;
+						  targetNPC.setHitPoints(hitPoints);
+						  if(hitPoints == 0)
+						    {
+						      isDead = true;
+						     if(targetNPC.getWeapon() != null)
+						     {
+						    	 if(Board.grabWeapon() == "Yes")
+						    	 fighterPlayer.setWeapon(targetNPC.getWeapon());
+						     }
+						      npcIndex++;
+						    }
+					  }while(!(isDead));
 				}
-				if(player.getDexterity() > nextPlayer.getDexterity())
+				if(sortedPlayers.get(playerIndex).getDexterity() < sortedNPC.get(npcIndex).getDexterity())
 				{
-		           do{
-		        	  attack(player,npc); 
-		              if(player.getHitPoints() == 0)
-		              {
-		            	  isDead = true;
-		              }
-		           }while(!(isDead));
-				}else
-				{
-					 do{
-			        	  attack(nextPlayer,npc); 
-			              if(player.getHitPoints() == 0)
-			              {
-			            	  isDead = true;
-			              }
-			           }while(!(isDead));
+					targetPlayer = sortedPlayers.get(playerIndex);
+					fighterNPC = sortedNPC.get(npcIndex);
+					hitPoints = targetPlayer.getHitPoints();
+					do{
+						 // attack(fighterNPC,sortedPlayers); 
+						  hitPoints-- ;
+						  targetPlayer.setHitPoints(hitPoints);
+						  if(hitPoints == 0)
+						    {
+						      isDead = true;
+						      playerIndex++;
+						    }
+					  }while(!(isDead));
 				}
 			}
-	}
-	public static Player findHighestDext(Sequence<Player> myPlayers)
-	{
-		Player highestDex = null;
-		
-		for (int i =0; i < myPlayers.size(); i++)
-		{
-			if (highestDex == null || myPlayers.get(i).getDexterity() > highestDex.getDexterity())
-				highestDex = myPlayers.get(i);
 		}
-		return highestDex;
 	}
-	public static void attack(Player currentPlayer, NPC target)
+	
+	public static void attack(Player fighterPlayer, Sequence<NPC> sortedTargetNPC)
 	{
-		int chooseAction = 1;
 		Weapon currentWeapon = null;
 		String useWeapon = "";
 		int totalDamage;
-		int armorDamage = currentPlayer.getArmor().getDamage();
-		switch(chooseAction)
+		int armorDamage = 0;
+		int weaponDamage = 0;
+		String selectedAction;
+		selectedAction = Board.chooseFightActions();
+		if(selectedAction == "Melee Attack")
 		{
-		case 1:
-			System.out.println("You have selected Melee Attack");
-			System.out.println("Do you want to use your weapon or your fists?");
-			if(useWeapon == "weapon")
+			if(fighterPlayer.getWeapon() != null)
 			{
-				currentPlayer.getWeapon();
+				currentWeapon = (Weapon) fighterPlayer.getWeapon();	
+				Board.info.setText("You can use weapon to fight");
+			}else
+			{
+				Board.info.setText("You can use your fists to fight");
 			}
 			
-		case 2:
-			System.out.println("You have selected range Attack");
-			currentPlayer.getWeapon();
-			
-	    case 3:
-		    System.out.println("You have selected Spell cast");
-	    case 4:
-	    	System.out.println("You have selected memorize spell");
-	    	if(currentPlayer.getIntelligence()>=10)
-	    	{
-	    		System.out.println("Some spells to memorize");
-	    	}
-	    	else
-	    		System.out.println("You can't memorize spell");
-	    default:
-			System.out.println("You have not selected any actions");	
 		}
-		int weaponDamage = currentWeapon.getDamage();
-	    totalDamage = currentPlayer.getStrength()/3 + weaponDamage - armorDamage;
+		if(selectedAction == "Range Attack")
+		{
+			Board.info.setText("You have selected Range Attack");
+		}
+		if(selectedAction == "Spell Cast")
+		{
+			Board.info.setText("You have selected Spell Cast");
+		}
+		if(selectedAction == "Memorize Spell")
+		{
+			Board.info.setText("You have selected Memorize Spell");
+		}
+	}
+
+	
+	public static int calculateTotalDamage(Player currentPlayer)
+	{ 
+		int totalDamage = 0;
+		int weaponDamage = 0,armorDamage=0 ;
+		Weapon currentWeapon = null;
+		currentWeapon = (Weapon) currentPlayer.getWeapon();
+		Armor currentArmor = null;
+		currentArmor = currentPlayer.getArmor();
+		if(currentWeapon != null)
+		{
+			weaponDamage = currentWeapon.getDamage() + 1;
+		}
+		if(currentArmor != null)
+		{
+			armorDamage = currentArmor.getDamage() + 1;
+		}
+		totalDamage = currentPlayer.getStrength()/3 + weaponDamage - armorDamage;
+		return totalDamage;
 	}
 
 	
