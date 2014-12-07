@@ -31,7 +31,8 @@ public class Board extends JPanel implements ActionListener {
 	Room currentRoom;
 	int fontSize = 0;
 	Sequence <NPC> currentRoomNPCs =  new <NPC> Sequence();
-	static JTextArea info = new JTextArea();
+	static JTextArea info2 = new JTextArea();
+	static JTextArea info1 = new JTextArea();
 	
 	public Board () {
 		map = new Map();
@@ -129,10 +130,10 @@ public class Board extends JPanel implements ActionListener {
 		
 		JTextArea info = new JTextArea();
 		info.setText(currentRoom.toString());
-		info.setSize(300, 200);
+		//info.setSize(300, 100);
 		info.setLineWrap(true);
-		info.setColumns(10);
-		info.setRows(1);
+		//info.setColumns(10);
+		//info.setRows(1);
 		info.setWrapStyleWord(true);
 		NpcInfo.add(info);
 		return NpcInfo;
@@ -140,11 +141,16 @@ public class Board extends JPanel implements ActionListener {
 	public JPanel partyPanel ()
 	{
 		JPanel NpcInfo = new JPanel();
-		
-		//info.setText("this is panel for the party actions");
-		info.setSize(300, 200);
-		info.setFont (new Font ("Serif", Font.BOLD, 16));
-		NpcInfo.add(info);
+		info2.setFont (new Font ("Serif", Font.BOLD, 16));
+		NpcInfo.add(info2);
+		repaint();
+		return NpcInfo;
+	}
+	public JPanel fightPanel ()
+	{
+		JPanel NpcInfo = new JPanel();
+		info1.setFont (new Font ("Serif", Font.BOLD, 16));
+		NpcInfo.add(info1);
 		repaint();
 		return NpcInfo;
 	}
