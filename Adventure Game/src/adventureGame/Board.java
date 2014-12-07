@@ -102,10 +102,22 @@ public class Board extends JPanel implements ActionListener {
 		{
 			for(int i =0; i < currentRoomNPCs.size(); i ++)
 			{
-				JLabel info = new JLabel();
-				info.setText(currentRoomNPCs.get(i).toString());
-				info.setFont (new Font ("Serif", Font.BOLD, 11));
-				NpcInfo.add(info);
+				if (!currentRoomNPCs.get(i).isPlayerDead())
+				{
+					JLabel info = new JLabel();
+					info.setText(currentRoomNPCs.get(i).toString());
+					info.setFont (new Font ("Serif", Font.BOLD, 11));
+					NpcInfo.add(info);
+				}
+				else
+				{
+					String npc = currentRoomNPCs.get(i).getName();
+					currentRoomNPCs.remove(i);
+					JLabel info = new JLabel();
+					info.setText( npc + " has Died");
+					NpcInfo.add(info);
+
+				}
 			}
 		}
 		repaint();
