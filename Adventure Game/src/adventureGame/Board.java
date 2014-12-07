@@ -35,7 +35,7 @@ public class Board extends JPanel implements ActionListener {
 	
 	public Board () {
 		map = new Map();
-		choosePlayers();
+		choosePlayers();		
 		sortMyPlayers(myPlayersArray);
 		playerOnTheLead = sortedPlayers.get(0);
 		currentRoom = new Room ((playerOnTheLead.getTileY()), playerOnTheLead.getTileX() );
@@ -402,6 +402,82 @@ public class Board extends JPanel implements ActionListener {
 			System.exit(0);
 		if (myPlayersArray.size() == 0)
 			choosePlayers();
+	}
+	
+	public static String chooseFightActions()
+	{
+		String action = " ";
+		
+		JRadioButton  melee = new JRadioButton ("Melee Attack");
+		JRadioButton  range = new JRadioButton ("Range Attack");
+		JRadioButton  spellCast = new JRadioButton ("Spell Cast");
+		JRadioButton  memoriseSpell = new JRadioButton ("Memorize Spell");
+	  
+		ButtonGroup group = new ButtonGroup();
+	    group.add(melee);
+	    group.add(range);
+	    group.add(spellCast);
+	    group.add(memoriseSpell);
+		
+		Object[] array = {
+		        new JLabel("Select any action:"),
+		        melee,
+		        range,
+		        spellCast,
+		        memoriseSpell,  
+		};
+		
+	    int res = JOptionPane.showConfirmDialog(null, array, "Select Your Action", JOptionPane.OK_CANCEL_OPTION);
+
+		if (melee.isSelected()) { 
+			action = "Melee Attack";
+		}
+		
+		if (range.isSelected()) {
+			action = "Range Attack"; 
+		}
+		
+		if (spellCast.isSelected()) {
+			action = "Spell Cast"; 
+		}
+		if (memoriseSpell.isSelected()) { 
+			action = "Memorize Spell"; 
+		}
+		if (res == JOptionPane.CANCEL_OPTION)
+			System.exit(0);
+		
+		return action;
+	}
+	
+	public static String grabWeapon ()
+	{
+		String[] selectedChoices = {"Yes","No"};
+		String resString = "";
+	    int choices = JOptionPane.showOptionDialog(
+	                               null                       
+	                             , "Monster killed and dropped the weapon, \n do you want to grab it?"  
+	                             , "Choose Action"            
+	                             , JOptionPane.YES_NO_OPTION  
+	                             , JOptionPane.PLAIN_MESSAGE  
+	                             , null                       
+	                             , selectedChoices                 
+	                             , "Default"    
+	                           );
+	    if(choices == 0)
+	    {
+	    	resString = "Yes";
+	    }
+	    else
+	    	resString = "No";
+	    
+	    return resString;
+	}
+
+	public static void randomNPCActionMessages()
+	{
+		String[] npcActionMessages = null;
+		npcActionMessages[0] = "NPC attacks you with Sword";
+		npcActionMessages[1] = "NPC attacks you with fists";
 	}
 	public int gameOverMessage ()
 	{
