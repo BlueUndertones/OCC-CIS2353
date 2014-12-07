@@ -69,7 +69,7 @@ public class Party
 					hitPoints = targetNPC.getHitPoints();
 					do{
 						  attack(fighterPlayer,sortedNPC); 
-						  hitPoints-- ;
+						  hitPoints = calculateTotalDamage(targetNPC) ;
 						  targetNPC.setHitPoints(hitPoints);
 						  if(hitPoints == 0)
 						    {
@@ -104,8 +104,8 @@ public class Party
 							  hitPoints = targetPlayer.getHitPoints();
 						  }else
 						  {
-						  hitPoints-- ;
-						  targetPlayer.setHitPoints(hitPoints);
+						    hitPoints = calculateTotalDamage(targetPlayer) ; ;
+						    targetPlayer.setHitPoints(hitPoints);
 						  }
 						  if(hitPoints == 0)
 						    {
@@ -176,7 +176,7 @@ public class Party
 		{
 			armorDamage = currentArmor.getDamage() + 1;
 		}
-		totalDamage = currentPlayer.getStrength()/3 + weaponDamage - armorDamage;
+		totalDamage = (int) (Math.ceil(currentPlayer.getStrength()/3) + weaponDamage - armorDamage);
 		return totalDamage;
 	}
 
