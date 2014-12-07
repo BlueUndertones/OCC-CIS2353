@@ -91,16 +91,34 @@ public class Party
 					targetPlayer = sortedPlayers.get(playerIndex);
 					fighterNPC = sortedNPC.get(npcIndex);
 					hitPoints = targetPlayer.getHitPoints();
+					String randomAction ="";
 					do{
-						 // attack(fighterNPC,sortedPlayers); 
+						Die dice = new Die(6) ;
+						dice.roll(); 
+						int value = dice.getValue(); 
+						randomAction = NPC.randomNPCActionMessages(value);
+						Board.info.setText(randomAction);
+						  if(targetPlayer.getArmor()!= null)
+						  {
+							  targetPlayer.setArmor(targetPlayer.getArmor());
+							  hitPoints = targetPlayer.getHitPoints();
+						  }else
+						  {
 						  hitPoints-- ;
 						  targetPlayer.setHitPoints(hitPoints);
+						  }
 						  if(hitPoints == 0)
 						    {
 						      isDead = true;
+						      sortedPlayers.remove(playerIndex);
 						      playerIndex++;
 						    }
+						  if(sortedPlayers.size()==0)
+						  {
+							  Board.gameOverMessage();
+						  }
 					  }while(!(isDead));
+					 
 				}
 			}
 		}

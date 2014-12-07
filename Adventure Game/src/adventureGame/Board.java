@@ -473,13 +473,8 @@ public class Board extends JPanel implements ActionListener {
 	    return resString;
 	}
 
-	public static void randomNPCActionMessages()
-	{
-		String[] npcActionMessages = null;
-		npcActionMessages[0] = "NPC attacks you with Sword";
-		npcActionMessages[1] = "NPC attacks you with fists";
-	}
-	public int gameOverMessage ()
+	
+	public static int gameOverMessage ()
 	{
 		String[] choices = {"OK"};
 	    int actionChosen = JOptionPane.showOptionDialog(

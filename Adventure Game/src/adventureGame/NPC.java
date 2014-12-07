@@ -90,6 +90,53 @@ public class NPC extends Player implements character
 		return npcName;
 	}
 
+	public static String randomNPCActionMessages(int npcValue )
+	{
+		String npcActionMessages = "";
+		
+		switch ( npcValue )
+		{
+		
+			case 1:
+			{
+				npcActionMessages = "NPC attacks you with Sword";
+				break;	
+			}
+		
+			case 2:
+			{
+				npcActionMessages = "NPC attacks you with Knife";
+				break;	
+			}
+			case 3:
+			{
+				npcActionMessages = "NPC attacks you with Machine gun";
+				break;	
+			}
+			
+			case 4:
+			{
+				npcActionMessages = "NPC attacks you with Two Swords";
+				break;	
+			}
+			case 5:
+			{
+				npcActionMessages = "NPC attacks you with Sniper";;
+				break;
+			}
+			case 6:
+			{
+				npcActionMessages = "NPC gives you spell to memorize";
+				break;
+			}
+			default:
+			{
+				
+			}
+		}
+		return npcActionMessages;
+	}
+	
     public String toString()
     {
     	String w="";
