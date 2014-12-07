@@ -78,11 +78,13 @@ public class Party
 						    	 if(Board.grabWeapon() == "Yes")
 						    	 fighterPlayer.setWeapon(targetNPC.getWeapon());
 						     }
+						     sortedNPC.remove(npcIndex);
 						      npcIndex++;
 						    }
 					  }while(!(isDead));
+					
 				}
-				if(sortedPlayers.get(playerIndex).getDexterity() < sortedNPC.get(npcIndex).getDexterity())
+				else
 				{
 					targetPlayer = sortedPlayers.get(playerIndex);
 					fighterNPC = sortedNPC.get(npcIndex);
