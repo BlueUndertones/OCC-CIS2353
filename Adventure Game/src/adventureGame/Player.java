@@ -312,7 +312,7 @@ public class Player implements character
 	   String a = "";
 	   String g = "";
 	   if(this.getWeapon() != null)
-		   w = "\n<br>Weapon: " + this.getWeapon();
+		   w = "\n<br>Weapon: " + this.getWeapon().getName();
 	   if (this.getArmor() != null)
 		   a = "\n<br>Armor: " + this.getArmor();
 	   if (this.getGold() != 0)

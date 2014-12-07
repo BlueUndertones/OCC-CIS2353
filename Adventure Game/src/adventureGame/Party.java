@@ -57,6 +57,7 @@ public class Party
 		Player fighterPlayer, targetPlayer;
 		NPC fighterNPC, targetNPC;
 		int hitPoints;
+		Weapon currentWeapon = null;
 		for(int playerIndex = 0; playerIndex < sortedPlayers.size(); playerIndex++)
 		{
 			for(int npcIndex = 0; npcIndex < sortedNPC.size(); npcIndex++)
@@ -76,7 +77,8 @@ public class Party
 						     if(targetNPC.getWeapon() != null)
 						     {
 						    	 if(Board.grabWeapon() == "Yes")
-						    	 fighterPlayer.setWeapon(targetNPC.getWeapon());
+						    	 currentWeapon= targetNPC.getWeapon();
+						    	 fighterPlayer.setWeapon(currentWeapon);
 						     }
 						     sortedNPC.remove(npcIndex);
 						      npcIndex++;
