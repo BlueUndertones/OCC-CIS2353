@@ -46,7 +46,7 @@ public class Map
 		    	{
 		    		walls.add (new Position(i,j));
 		    	}
-		    	if (grid [i][j] != WALL && grid [i][j] != CORRIDOR)
+		    	if (grid [i][j] != WALL && grid [i][j] != CORRIDOR && grid [i][j] != 9 )
 		        	throw new NumberFormatException ("At position (" + i + ", " + j + "), " +
 		            	grid [i][j] + " should be " +
 		                				WALL + " or " + CORRIDOR + ".");

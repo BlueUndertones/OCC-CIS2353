@@ -141,7 +141,7 @@ public class Board extends JPanel implements ActionListener {
 	public JPanel partyPanel ()
 	{
 		JPanel NpcInfo = new JPanel();
-		info2.setFont (new Font ("Serif", Font.BOLD, 16));
+		info2.setFont (new Font ("Serif", Font.BOLD, 14));
 		NpcInfo.add(info2);
 		repaint();
 		return NpcInfo;
@@ -267,6 +267,8 @@ public class Board extends JPanel implements ActionListener {
 				//g.setColor(Color.gray);
 				//g.fillRect(y * TILE_WIDTH+1, x * TILE_HEIGHT +1,  TILE_WIDTH, TILE_HEIGHT);
             	 g.drawImage(drawImage("tile.jpg"), y * TILE_WIDTH+1, x * TILE_HEIGHT +1, TILE_WIDTH, TILE_HEIGHT, null);
+            	 if (map.grid[x][y] == 9)
+            		 g.drawImage(drawImage("end.png"), y * TILE_WIDTH+1, x * TILE_HEIGHT +1, TILE_WIDTH, TILE_HEIGHT, null);
 			}
 		}
 		for (int index =0; index < roomsVisited.size(); index++)
@@ -333,6 +335,7 @@ public class Board extends JPanel implements ActionListener {
 	
 	public void doActionWithNPC (int actionChosen)
 	{
+		boolean f = false;
 		switch (actionChosen) {
         case 0: 
         	myPlayersParty.fight(sortedPlayers ,currentRoom.getNPCs());
