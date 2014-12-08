@@ -192,39 +192,39 @@ public class Player implements character
 			
 				case 0:
 				{
-					item = new Weapon("Sword", "S", 10, 3 );
+					item = new Weapon("Sword", "S", 2, 3 );
 					this.weapons = (Weapon) item;
 					break;	
 				}
 			
 				case 1:
 				{
-					item= new Weapon("Two Swords", "S", 10, 1 );
+					item= new Weapon("Master Sword", "S", 5, 1 );
 					this.weapons = (Weapon) item;
 					break;	
 				}
 				case 2:
 				{
-					item = new Weapon("Knife", "S", 10, 1);
+					item = new Weapon("Knife", "S", 4, 1);
 					//item = new Armor("Armor", "S", 10, 10 );
 					//this.weapons = (Weapon) item;
 					break;
 				}
 				case 3:
 				{
-					item= new Weapon("Machine gun", "S", 10, 3 );
+					item= new Weapon("Machine gun", "S", 6, 3 );
 					this.weapons = (Weapon) item;
 					break;	
 				}
 				case 4:
 				{
-					item= new Weapon("Sniper", "S", 10, 2 );
+					item= new Weapon("Sniper", "S", 3, 2 );
 					this.weapons = (Weapon) item;
 					break;	
 				}
 				case 5:
 				{
-					item= new Weapon("Two Swords", "S", 10, 2 );
+					item= new Weapon("Hammer", "S", 10, 2 );
 					this.weapons = (Weapon) item;
 					break;	
 				}
