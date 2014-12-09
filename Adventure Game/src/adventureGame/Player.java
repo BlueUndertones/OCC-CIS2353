@@ -224,7 +224,7 @@ public class Player implements character
 				}
 				case 5:
 				{
-					item= new Weapon("Hammer", "S", 10, 2 );
+					item= new Weapon("Hammer", "S", 2, 2 );
 					this.weapons = (Weapon) item;
 					break;	
 				}
@@ -233,7 +233,6 @@ public class Player implements character
 					
 				}
 			}
-
 		}
 	    
 	    public void setArmor( Armor armor )

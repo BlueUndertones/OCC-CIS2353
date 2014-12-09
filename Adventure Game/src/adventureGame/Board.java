@@ -342,6 +342,7 @@ public class Board extends JPanel implements ActionListener {
             break;
         case 1:
         	myPlayersParty.run();
+        	roomsVisited.remove(roomsVisited.size()-1);
             break;
 //        case 2:
 //        	hide();
