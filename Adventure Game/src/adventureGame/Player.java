@@ -23,13 +23,15 @@ public class Player implements character
    public boolean isHidden = false;
    private boolean playerAlive = true;
    private boolean haveArmor = false, haveWeapon = false;
-   
-	public Player( String name )
+	
+   public Player( String name )
    {
        setName(name);
        setStrength( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
        setDexterity ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
        setIntelligence ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
+       setArmor(numberOfDiceRolls(1,6));
+       
        //setHitPoints (  );
        tileX= 0;
 		tileY = 1;
@@ -120,6 +122,10 @@ public class Player implements character
 	    	if (hitPoints <=0){
 	    		this.hitPoints = 0;
 	    		playerAlive = false;
+	    	}
+	    	if(hitPoints > MAX_HIT_POINTS)
+	    	{
+	    		this.hitPoints = MAX_HIT_POINTS;
 	    	}
 	    	else	
 	    		this.hitPoints = hitPoints;
@@ -235,7 +241,60 @@ public class Player implements character
 			}
 
 		}
-	    
+
+	    public Armor setArmor(int npcValue )
+		{
+	    	Items item;
+			
+			switch ( npcValue )
+			{
+			   
+				case 0:
+				{
+					item = new Armor("Great Helm", "covers head", 2, 3 );
+					this.armor = (Armor) item;
+					break;	
+				}
+			
+				case 1:
+				{
+					item= new Armor("Gorget", "Protect neck", 5, 1 );
+					this.armor = (Armor) item;
+					break;	
+				}
+				case 2:
+				{
+					item = new Armor("Armet", "Covers full", 10, 1);
+					this.armor = (Armor) item;
+					break;
+				}
+				case 3:
+				{
+					item= new Armor("Close Helmet", "Covers head", 4, 3 );
+					this.armor = (Armor) item;
+					break;	
+				}
+				case 4:
+				{
+					item= new Armor("Gauntlet", "Gloves that covers fingers to the forearms", 3, 2 );
+					this.armor = (Armor) item;
+					break;	
+				}
+				case 5:
+				{
+					item= new Armor("Solleret", "Covers Foot", 1, 2 );
+					this.armor = (Armor) item;
+					break;	
+				}
+				default:
+				{
+					
+				}
+			}
+
+			return armor;
+		}
+
 	    public void setArmor( Armor armor )
 	    {
 	    	if (haveArmor)
@@ -317,9 +376,9 @@ public class Player implements character
 	   String a = "";
 	   String g = "";
 	   if(this.getWeapon() != null)
-		   w = "\n<br>Weapon: " + this.getWeapon().getName();
+		   w = "\n<br>Weapon: " + this.getWeapon().getItemName();
 	   if (this.getArmor() != null)
-		   a = "\n<br>Armor: " + this.getArmor();
+		   a = "\n<br>Armor: " + this.getArmor().getItemName();
 	   if (this.getGold() != 0)
 		   g = " \n<br>Gold: " + this.getGold();
        String stats = "<html>" + this.getName() +

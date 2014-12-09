@@ -33,7 +33,7 @@ public class Party
 		
 		if ( value == 1 )
 		{
-			Board.info.setText("While you were sleeping your party was attacked!");
+			Board.info2.setText("While you were sleeping your party was attacked!");
 			//System.out.println("While you were sleeping your party was attacked!");
 			//fight();//party.
 		}
@@ -56,7 +56,7 @@ public class Party
 		boolean isDead = false;
 		Player fighterPlayer, targetPlayer;
 		NPC fighterNPC, targetNPC;
-		int hitPoints;
+		int hitPoints, totalDamage;
 		Weapon currentWeapon = null;
 		for(int playerIndex = 0; playerIndex < sortedPlayers.size(); playerIndex++)
 		{
@@ -69,9 +69,10 @@ public class Party
 					hitPoints = targetNPC.getHitPoints();
 					do{
 						  attack(fighterPlayer,sortedNPC); 
-						  hitPoints = calculateTotalDamage(targetNPC) ;
+						  totalDamage = calculateTotalDamageForNPC(fighterPlayer, targetNPC ) ;
+						  hitPoints = hitPoints - totalDamage;
 						  targetNPC.setHitPoints(hitPoints);
-						  if(hitPoints == 0)
+						  if( hitPoints <= 0)
 						    {
 						      isDead = true;
 						     if(targetNPC.getWeapon() != null)
@@ -92,33 +93,30 @@ public class Party
 					fighterNPC = sortedNPC.get(npcIndex);
 					hitPoints = targetPlayer.getHitPoints();
 					String randomAction ="";
-					do{
+					
 						Die dice = new Die(6) ;
 						dice.roll(); 
 						int value = dice.getValue(); 
 						randomAction = NPC.randomNPCActionMessages(value);
-						Board.info.setText(randomAction);
-						  if(targetPlayer.getArmor()!= null)
-						  {
-							  targetPlayer.setArmor(targetPlayer.getArmor());
-							  hitPoints = targetPlayer.getHitPoints();
-						  }else
-						  {
-						    hitPoints = calculateTotalDamage(targetPlayer) ; ;
-						    targetPlayer.setHitPoints(hitPoints);
-						  }
-						  if(hitPoints == 0)
+						Board.info1.setText(randomAction);
+						totalDamage = calculateTotalDamageForPlayer(targetPlayer,fighterNPC)  ;
+						hitPoints = hitPoints-totalDamage;
+						targetPlayer.setHitPoints(hitPoints);
+						  
+						  if(hitPoints <= 0)
 						    {
 						      isDead = true;
 						      sortedPlayers.remove(playerIndex);
 						      playerIndex++;
 						    }
+						  if(hitPoints > 20)
+						  {
+							  playerIndex++;
+						  }
 						  if(sortedPlayers.size()==0)
 						  {
 							  Board.gameOverMessage();
 						  }
-					  }while(!(isDead));
-					 
 				}
 			}
 		}
@@ -127,10 +125,6 @@ public class Party
 	public static void attack(Player fighterPlayer, Sequence<NPC> sortedTargetNPC)
 	{
 		Weapon currentWeapon = null;
-		String useWeapon = "";
-		int totalDamage;
-		int armorDamage = 0;
-		int weaponDamage = 0;
 		String selectedAction;
 		selectedAction = Board.chooseFightActions();
 		if(selectedAction == "Melee Attack")
@@ -138,49 +132,68 @@ public class Party
 			if(fighterPlayer.getWeapon() != null)
 			{
 				currentWeapon = (Weapon) fighterPlayer.getWeapon();	
-				Board.info.setText("You can use weapon to fight");
+				Board.info1.setText("You can use weapon to fight");
 			}else
 			{
-				Board.info.setText("You can use your fists to fight");
+				Board.info1.setText("You can use your fists to fight");
 			}
 			
 		}
 		if(selectedAction == "Range Attack")
 		{
-			Board.info.setText("You have selected Range Attack");
+			Board.info1.setText("You have selected Range Attack");
 		}
 		if(selectedAction == "Spell Cast")
 		{
-			Board.info.setText("You have selected Spell Cast");
+			Board.info1.setText("You have selected Spell Cast");
 		}
 		if(selectedAction == "Memorize Spell")
 		{
-			Board.info.setText("You have selected Memorize Spell");
+			Board.info1.setText("You have selected Memorize Spell");
 		}
 	}
 
 	
-	public static int calculateTotalDamage(Player currentPlayer)
+	public static int calculateTotalDamageForNPC(Player fighterPlayer, NPC targetNPC )
 	{ 
 		int totalDamage = 0;
 		int weaponDamage = 0,armorDamage=0 ;
 		Weapon currentWeapon = null;
-		currentWeapon = (Weapon) currentPlayer.getWeapon();
+		currentWeapon = (Weapon) fighterPlayer.getWeapon();
 		Armor currentArmor = null;
-		currentArmor = currentPlayer.getArmor();
+		currentArmor = targetNPC.getArmor();
 		if(currentWeapon != null)
 		{
-			weaponDamage = currentWeapon.getDamage() + 1;
+			weaponDamage = currentWeapon.getDamage();
 		}
 		if(currentArmor != null)
 		{
-			armorDamage = currentArmor.getDamage() + 1;
+			armorDamage = currentArmor.getDamage();
 		}
-		totalDamage = (int) (Math.ceil(currentPlayer.getStrength()/3) + weaponDamage - armorDamage);
+		totalDamage = (int) (Math.ceil((targetNPC.getStrength()/3) + weaponDamage - armorDamage));
 		return totalDamage;
 	}
 
-	
+	public static int calculateTotalDamageForPlayer(Player targetPlayer, NPC fighterNPC )
+	{ 
+		int totalDamage = 0;
+		int weaponDamage = 0,armorDamage=0 ;
+		Weapon currentWeapon = null;
+		currentWeapon = (Weapon) fighterNPC.getWeapon();
+		Armor currentArmor = null;
+		currentArmor = targetPlayer.getArmor();
+		if(currentWeapon != null)
+		{
+			weaponDamage = currentWeapon.getDamage();
+		}
+		if(currentArmor != null)
+		{
+			armorDamage = currentArmor.getDamage();
+		}
+		totalDamage = (int) (Math.ceil((targetPlayer.getStrength()/3) + weaponDamage - armorDamage));
+		return totalDamage;
+	}
+
 	public void search(Room room, Player player) // Heather
 	{
 		// check player's int
@@ -197,7 +210,7 @@ public class Party
 		int roomInt = intDie.roll();
 		if (playerInt > roomInt) { // ? what about >= ?
 			int goldFound = room.getGold();
-			Board.info.setText(player.getName() + " has found " + goldFound + " gold pieces.");
+			Board.info2.setText(player.getName() + " has found " + goldFound + " gold pieces.");
 			//System.out.println(player.getName() + " has found " + goldFound + " gold pieces.");
 			// gold = playerGold + goldFound;
 			player.setGold(player.getGold()+ goldFound);
@@ -209,7 +222,7 @@ public class Party
 			// return nothing found..
 //			System.out.println("room gold is " +roomInt);
 //			System.out.println("intele is " + player.getIntelligence());
-			Board.info.setText("your intelligence is too low to find Gold!");
+			Board.info2.setText("your intelligence is too low to find Gold!");
 			//System.out.println("There is nothing to find here.");
 		}
 		isSearched = true;
@@ -228,7 +241,7 @@ public class Party
 		
 		if ( value == 1 )
 		{
-			Board.info.setText("While you were running your party was attacked!");
+			Board.info2.setText("While you were running your party was attacked!");
 			//System.out.println("While you were running your party was attacked!");
 			for ( int i = 0; i < party.size(); i++ )
 			{
@@ -240,7 +253,7 @@ public class Party
 		}
 		else
 		{
-			Board.info.setText("You escape before the enemy could attack!");
+			Board.info2.setText("You escape before the enemy could attack!");
 //			System.out.println("You escape before the enemy could attack!");
 		}
 	}

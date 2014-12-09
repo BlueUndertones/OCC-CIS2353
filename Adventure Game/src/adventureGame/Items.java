@@ -8,8 +8,8 @@ public class Items {
 	
 	public Items(String name,String desc)
 	{
-		name= itemName;
-		desc = description;
+		itemName = name;
+		description = desc;
 	}
 
 	public String getItemName() {

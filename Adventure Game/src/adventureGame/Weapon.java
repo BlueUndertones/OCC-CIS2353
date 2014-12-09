@@ -1,25 +1,26 @@
 package adventureGame;
 public class Weapon extends Items {
 
-	private int damage = 0;
-	private int durability = 0;
-	private String name  ="";
+	private int damage ;
+	private int durability ;
 	public Weapon(String name, String desc, int dmg, int dur) {
 		super(name, desc);
-		this.name = name;
-		setDamage(dmg+1);
+		setDamage(dmg);
 		setDurability(dur);
 	}
-	public String getName ()
-	{
-		return this.name;
-	}
+	
 	public int getDamage() {
 		return damage;
 	}
 
 	public void setDamage(int damage) {
+		if(damage >= 0)
+		{
 		this.damage = damage;
+		}else
+		{
+			throw new IllegalArgumentException(damage+ "must be greater than 0");
+		}
 	}
 
 	public int getDurability() {

@@ -42,6 +42,7 @@ public class NPC extends Player implements character
         dice.roll();
         value = dice.getValue();
         this.setWeapon(value);
+        this.setArmor(value);
     }
 	public static String getNpcName(int npcValue )
 	{
@@ -141,7 +142,7 @@ public class NPC extends Player implements character
     {
     	String w="";
     	if(this.getWeapon() != null)
- 		   w = "\n<br>Weapon: " + this.getWeapon().getName();
+ 		   w = "\n<br>Weapon: " + this.getWeapon().getItemName();
         String stats = "<html>" +this.getName() +
                         " \n<br>Hit Points: " + this.getHitPoints()+
                         " \n<br>Intelligence: " + this.getIntelligence() +
