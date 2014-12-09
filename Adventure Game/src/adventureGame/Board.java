@@ -17,13 +17,13 @@ public class Board extends JPanel implements ActionListener {
 	private final int TILE_HEIGHT = 50;
 	private Timer timer;
 	private Map map;
-	private static Player playerOnTheLead;
+	private Player playerOnTheLead;
 	private NPC npc;
 	Random ran = new Random ();
 	Sequence <Position> roomsVisited = new <Position> Sequence ();
 	Sequence <Position> roomsInvalid = new <Position> Sequence ();
 	Sequence<Player> myPlayersArray = new <Player> Sequence();
-	static Sequence<Player> sortedPlayers = new <Player> Sequence();
+	Sequence<Player> sortedPlayers = new <Player> Sequence();
 	Party myPlayersParty = new Party(sortedPlayers);
 	//	ArrayList<Player> myPlayersArray = new <Player> ArrayList();
 	//ArrayList <Integer> num = new <Integer> ArrayList () ;
