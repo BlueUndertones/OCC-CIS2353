@@ -141,14 +141,17 @@ public class NPC extends Player implements character
     public String toString()
     {
     	String w="";
+    	String a = "";
     	if(this.getWeapon() != null)
  		   w = "\n<br>Weapon: " + this.getWeapon().getItemName();
+    	if (this.getArmor() != null)
+ 		   a = "\n<br>Armor: " + this.getArmor().getItemName();
         String stats = "<html>" +this.getName() +
                         " \n<br>Hit Points: " + this.getHitPoints()+
                         " \n<br>Intelligence: " + this.getIntelligence() +
                         " \n<br>Dexterity: " + this.getDexterity() + 
                         " \n<br>Strength: " + this.getStrength()+
-                        w+
+                        w + a +
                         "\n<br>-----------------------------</html>";
         return stats;
     }
