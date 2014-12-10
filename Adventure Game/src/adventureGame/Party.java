@@ -454,6 +454,30 @@ public class Party
 	    
 	    return resString;
 	}
+	
+	public static String consumePotion ()
+	   {
+	      String[] selectedChoices = {"Yes","No"};
+	      String resString = "";
+	      int choices = JOptionPane.showOptionDialog(
+	                                     null                       
+	                                   ," You are going to die,do you want to consume potion?"  
+	                                   , "Choose Action"            
+	                                   , JOptionPane.YES_NO_OPTION  
+	                                   , JOptionPane.PLAIN_MESSAGE  
+	                                   , null                       
+	                                   , selectedChoices                 
+	                                   , "Default"    
+	                                 );
+	      if(choices == 0)
+	      {
+	         resString = "Yes";
+	      }
+	      else
+	         resString = "No";
+	          
+	      return resString;
+	   }
 	public void search(Room room, Player player) // Heather
 	{
 		int playerInt = player.getIntelligence();
