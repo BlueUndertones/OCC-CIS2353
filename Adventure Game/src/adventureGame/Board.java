@@ -37,6 +37,7 @@ public class Board extends JPanel implements ActionListener {
 		sortMyPlayers(myPlayersArray);
 		playerOnTheLead = sortedPlayers.get(0);
 		currentRoom = new Room ((playerOnTheLead.getTileY()), playerOnTheLead.getTileX() );
+		roomsVisited.append(new Position ((playerOnTheLead.getTileY()), playerOnTheLead.getTileX()));
 		npc = new NPC("Witch");
 		addKeyListener(new Al());
 		setFocusable(true);
@@ -84,7 +85,7 @@ public class Board extends JPanel implements ActionListener {
 				{
 					JLabel info = new JLabel();
 					info.setText(currentRoomNPCs.get(i).toString());
-					info.setFont (new Font ("Serif", Font.BOLD, 9));
+					info.setFont (new Font ("Serif", Font.BOLD, 10));
 					NpcInfo.add(info);
 				}
 				else
