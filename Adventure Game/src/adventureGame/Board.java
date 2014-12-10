@@ -342,7 +342,7 @@ public class Board extends JPanel implements ActionListener {
 	{
 		switch (actionChosen) {
         case 0:
-        	myPlayersParty.sleep();
+        	myPlayersParty.sleep(sortedPlayers, currentRoom.getNPCs());
             break;
         case 1:
         	myPlayersParty.search(new Room(playerOnTheLead.getTileX(), playerOnTheLead.getTileY()), playerOnTheLead );

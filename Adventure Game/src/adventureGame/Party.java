@@ -22,7 +22,7 @@ public class Party
 		}
 	}
 	
-	public void sleep( )//demario
+	public void sleep(Sequence<Player> players, Sequence<NPC> NPCs)//demario
 	{
 		
 		Die dice = new Die(2);
@@ -32,6 +32,7 @@ public class Party
 		if ( value == 1 )
 		{
 			Board.info2.setText("While you were sleeping your party was attacked!");
+			fight(players, NPCs);
 		}
 		else
 		{

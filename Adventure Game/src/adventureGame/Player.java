@@ -132,7 +132,7 @@ public class Player implements character
 	    }
 	    protected void addHitPoints()
 	    {
-	    	if ( isPlayerDead() )
+	    	if (! isPlayerDead() )
 	    	{
 		    	if ( this.hitPoints == MAX_HIT_POINTS )
 		    	{
