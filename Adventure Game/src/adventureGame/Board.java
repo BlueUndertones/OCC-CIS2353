@@ -151,6 +151,10 @@ public class Board extends JPanel implements ActionListener {
             			playerOnTheLead.move(0, -1);
             			
             	}
+            	else if(map.grid[playerOnTheLead.getTileY()-1][playerOnTheLead.getTileX()] == 9)
+            	{
+            		finishedGame(gameFinishedMessage());
+            	}
             	else {
             		roomsInvalid.append(new Position ((playerOnTheLead.getTileY()-1), playerOnTheLead.getTileX()));
             	}	
@@ -170,6 +174,10 @@ public class Board extends JPanel implements ActionListener {
             		}
             		else
             			playerOnTheLead.move(0, 1);
+            	}
+            	else if(map.grid[playerOnTheLead.getTileY()+1][playerOnTheLead.getTileX()] == 9)
+            	{
+            		finishedGame(gameFinishedMessage());
             	}
             	else {
             		roomsInvalid.append(new Position ((playerOnTheLead.getTileY()+1), playerOnTheLead.getTileX()));
@@ -191,6 +199,10 @@ public class Board extends JPanel implements ActionListener {
             		else
             			playerOnTheLead.move(-1, 0);
             	}
+            	else if(map.grid[playerOnTheLead.getTileY()][playerOnTheLead.getTileX()-1] == 9)
+            	{
+            		finishedGame(gameFinishedMessage());
+            	}
             	else {
             		roomsInvalid.append(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTileX()-1));
             	}
@@ -210,6 +222,10 @@ public class Board extends JPanel implements ActionListener {
             		}
             		else
             			playerOnTheLead.move(1, 0);
+            	}
+            	else if(map.grid[playerOnTheLead.getTileY()][playerOnTheLead.getTileX()+1] == 9)
+            	{
+            		finishedGame(gameFinishedMessage());
             	}
             	else {
             		roomsInvalid.append(new Position (playerOnTheLead.getTileY(), playerOnTheLead.getTileX()+1));
@@ -433,31 +449,6 @@ public class Board extends JPanel implements ActionListener {
 		return action;
 	}
 	
-	public static String grabWeapon (NPC deadPlayer)
-	{
-		String[] selectedChoices = {"Yes","No"};
-		String resString = "";
-	    int choices = JOptionPane.showOptionDialog(
-	                               null                       
-	                             , deadPlayer.getName() + " was killed and dropped the weapon, \n do you want to grab it?"  
-	                             , "Choose Action"            
-	                             , JOptionPane.YES_NO_OPTION  
-	                             , JOptionPane.PLAIN_MESSAGE  
-	                             , null                       
-	                             , selectedChoices                 
-	                             , "Default"    
-	                           );
-	    if(choices == 0)
-	    {
-	    	resString = "Yes";
-	    }
-	    else
-	    	resString = "No";
-	    
-	    return resString;
-	}
-
-	
 	public static int gameOverMessage ()
 	{
 		String[] choices = {"OK"};
@@ -476,6 +467,35 @@ public class Board extends JPanel implements ActionListener {
 	}
 	
 	public void closeGame (int actionChosen)
+	{
+		switch (actionChosen) {
+        case 0: 
+            System.exit(0); 
+            break;
+        case -1:
+            System.exit(0); 
+        default:
+            JOptionPane.showMessageDialog(null, "Unexpected response " + actionChosen);
+		}
+	}
+	public static int gameFinishedMessage ()
+	{
+		String[] choices = {"OK"};
+	    int actionChosen = JOptionPane.showOptionDialog(
+	                               null                       // Center in window.
+	                             , "YAAAAAY Congratulations!!! \n you finished the Adventure Game"  // Message
+	                             , "Game Over"            // Title in titlebar
+	                             , JOptionPane.YES_NO_OPTION  // Option type
+	                             , JOptionPane.PLAIN_MESSAGE  // messageType
+	                             , null                       // Icon (none)
+	                             , choices                    // Button text as above.
+	                             , "Default"    // Default button's label
+	                           );
+	    
+	    return actionChosen;
+	}
+	
+	public void finishedGame (int actionChosen)
 	{
 		switch (actionChosen) {
         case 0: 
