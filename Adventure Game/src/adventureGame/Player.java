@@ -191,7 +191,10 @@ public class Player implements character
 	    }
 	    public void setSpells(int spells) 
 	    {
-	    	this.spells = spells;
+	    	if (spells < 0)
+	    		this.spells = 0;
+	    	else
+	    		this.spells = spells;
 	    }
 	    public void setWeapon(int npcValue )
 		{

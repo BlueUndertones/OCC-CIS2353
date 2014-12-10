@@ -25,9 +25,6 @@ public class Board extends JPanel implements ActionListener {
 	Sequence<Player> myPlayersArray = new <Player> Sequence();
 	Sequence<Player> sortedPlayers = new <Player> Sequence();
 	Party myPlayersParty = new Party(sortedPlayers);
-	//	ArrayList<Player> myPlayersArray = new <Player> ArrayList();
-	//ArrayList <Integer> num = new <Integer> ArrayList () ;
-	//ArrayList <Position> roomsHasGold = new <Position> ArrayList ();
 	static Room currentRoom;
 	int fontSize = 0;
 	Sequence <NPC> currentRoomNPCs =  new <NPC> Sequence();
@@ -41,32 +38,12 @@ public class Board extends JPanel implements ActionListener {
 		playerOnTheLead = sortedPlayers.get(0);
 		currentRoom = new Room ((playerOnTheLead.getTileY()), playerOnTheLead.getTileX() );
 		npc = new NPC("Witch");
-		//saveRandomRoomNumbers ();  //used to generate gold
 		addKeyListener(new Al());
 		setFocusable(true);
 		timer = new Timer (25, this);
 		timer.start();
-//		Collections.sort(myPlayersArray, new Comparator<Player>() {
-//			@Override
-//			public int compare(Player o1, Player o2) {
-//				final int dex1 = o1.getDexterity();
-//	            final int dex2 = o2.getDexterity();
-//	            return dex1 < dex2 ? -1 : dex1 > dex2 ? 1 : 0;
-//			}
-//	    }
-//		);
 	}
 	
-	/*//save random room numbers to draw the random gold on the maze
-	public void saveRandomRoomNumbers ()
-	{
-		//loop through walk through rooms and get random rooms
-		for (int i =0; i < 10; i++)
-			num.add (ran.nextInt(map.rooms.size()));
-		//save above random room numbers to have gold in an array list
-		for (int i =0; i < num.size(); i++)
-			roomsHasGold.add(new Position (map.rooms.get(num.get(i)).getRow(), map.rooms.get(num.get(i)).getColumn()));
-	}*/
 	public JPanel buildPlayerInfo ()
 	{
 		JPanel infoPanel = new JPanel(new GridLayout(0,1));
@@ -130,10 +107,7 @@ public class Board extends JPanel implements ActionListener {
 		
 		JTextArea info = new JTextArea();
 		info.setText(currentRoom.toString());
-		//info.setSize(300, 100);
 		info.setLineWrap(true);
-		//info.setColumns(10);
-		//info.setRows(1);
 		info.setWrapStyleWord(true);
 		NpcInfo.add(info);
 		return NpcInfo;
@@ -262,10 +236,6 @@ public class Board extends JPanel implements ActionListener {
         {
              for (int y = 0; y < map.grid [0].length; y++)
              {
-				//g.setColor(Color.white);
-				//g.fillRect(y * TILE_WIDTH, x * TILE_HEIGHT,  TILE_WIDTH, TILE_HEIGHT);
-				//g.setColor(Color.gray);
-				//g.fillRect(y * TILE_WIDTH+1, x * TILE_HEIGHT +1,  TILE_WIDTH, TILE_HEIGHT);
             	 g.drawImage(drawImage("tile.jpg"), y * TILE_WIDTH+1, x * TILE_HEIGHT +1, TILE_WIDTH, TILE_HEIGHT, null);
             	 if (map.grid[x][y] == 9)
             		 g.drawImage(drawImage("end.png"), y * TILE_WIDTH+1, x * TILE_HEIGHT +1, TILE_WIDTH, TILE_HEIGHT, null);
@@ -344,12 +314,6 @@ public class Board extends JPanel implements ActionListener {
         	myPlayersParty.run();
         	roomsVisited.remove(roomsVisited.size()-1);
             break;
-//        case 2:
-//        	hide();
-//            break;
-//        case 3:
-//        	myPlayersParty.sleep();
-//            break;
         case -1:
             System.exit(0); 
         default:
@@ -368,8 +332,6 @@ public class Board extends JPanel implements ActionListener {
         	break;
         case 2:
         	break;
-        //case -1:
-            //System.exit(0); 
         default:
             JOptionPane.showMessageDialog(null, "Unexpected response " + actionChosen);
 		}
@@ -524,11 +486,6 @@ public class Board extends JPanel implements ActionListener {
         default:
             JOptionPane.showMessageDialog(null, "Unexpected response " + actionChosen);
 		}
-	}
-	public void printSorted (Sequence<Player>sortedPlayers)
-	{
-		for (int i = 0; i < sortedPlayers.size(); i++)
-			System.out.println(sortedPlayers.get(i));
 	}
 	public void sortMyPlayers(Sequence<Player> myPlayers)
 	{
