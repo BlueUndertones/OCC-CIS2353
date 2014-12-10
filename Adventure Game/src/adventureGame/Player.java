@@ -23,7 +23,8 @@ public class Player implements character
    public boolean isHidden = false;
    private boolean playerAlive = true;
    private boolean haveArmor = false, haveWeapon = false;
-	
+   private int spells = 0;
+   
    public Player( String name )
    {
        setName(name);
@@ -183,6 +184,14 @@ public class Player implements character
 		        this.haveWeapon = true;
 		    }
 	        
+	    }
+	    public int getSpells() 
+	    {
+	    	return spells;
+	    }
+	    public void setSpells(int spells) 
+	    {
+	    	this.spells = spells;
 	    }
 	    public void setWeapon(int npcValue )
 		{
@@ -369,18 +378,22 @@ public class Player implements character
 	   String w = "";
 	   String a = "";
 	   String g = "";
+	   String s = "";
 	   if(this.getWeapon() != null)
 		   w = "\n<br>Weapon: " + this.getWeapon().getItemName();
 	   if (this.getArmor() != null)
 		   a = "\n<br>Armor: " + this.getArmor().getItemName();
 	   if (this.getGold() != 0)
 		   g = " \n<br>Gold: " + this.getGold();
+	   if (this.getSpells() != 0)
+		   s = " \n<br>Spells: " + this.getSpells();
+	   
        String stats = "<html>" + this.getName() +
                        " \n<br>Hit Points: " + this.getHitPoints() +
                        " \n<br>Intelligence: " + this.getIntelligence() +
                        " \n<br>Dexterity: " + this.getDexterity() + 
                        " \n<br>Strength: " + this.getStrength() +
-                       g + w + a +
+                       g + w + a + s+
                        "\n<br>-----------------------------</html>";
        return stats;
    } 
