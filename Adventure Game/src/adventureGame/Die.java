@@ -32,7 +32,7 @@ public class Die
    {
       
       // Get a random value for the die.
-      value = rand.nextInt(sides) + 1;
+      value = rand.nextInt(sides);
       return value;
    }
    
