@@ -78,7 +78,7 @@ public class Maze {
 		frame.add(mainPanel);
 			
 		frame.setTitle("Advanture Game");
-		frame.setSize(780, 680);
+		frame.setSize(780, 700);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
