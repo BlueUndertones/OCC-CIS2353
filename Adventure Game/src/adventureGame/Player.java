@@ -30,7 +30,6 @@ public class Player implements character
        setStrength( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
        setDexterity ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
        setIntelligence ( numberOfDiceRolls( NUMBER_OF_ROLLS, NUMBER_OF_SIDES ) );
-       setArmor(numberOfDiceRolls(1,6));
        
        //setHitPoints (  );
        tileX= 0;
@@ -158,7 +157,7 @@ public class Player implements character
 	    	//playerAlive = checkForDeadPlayers();
 	    	if (!isPlayerDead())
 	    	{
-	    		this.hitPoints -= 5; 
+	    		this.hitPoints -= 3; 
 	    		if (isPlayerDead())
 	    		{
 	    			this.hitPoints = 0;
@@ -178,11 +177,7 @@ public class Player implements character
 	        
 	    public void setWeapon ( Weapon weapon )
 	    {
-	    	if (haveWeapon)
-	    	{
-	    		System.out.println("Cant pick up weapon");
-	    	}
-	    	else
+	    	if (!haveWeapon)
 	    	{
 	    		this.weapons = weapon;
 		        this.haveWeapon = true;
@@ -205,7 +200,7 @@ public class Player implements character
 			
 				case 1:
 				{
-					item= new Weapon("Master Sword", "S", 5, 1 );
+					item= new Weapon("Master Sword", "S", 3, 1 );
 					this.weapons = (Weapon) item;
 					break;	
 				}
@@ -218,7 +213,7 @@ public class Player implements character
 				}
 				case 3:
 				{
-					item= new Weapon("Machine gun", "S", 6, 3 );
+					item= new Weapon("Machine gun", "S", 4, 3 );
 					this.weapons = (Weapon) item;
 					break;	
 				}
@@ -257,25 +252,25 @@ public class Player implements character
 			
 				case 1:
 				{
-					item= new Armor("Gorget", "Protect neck", 5, 1 );
+					item= new Armor("Gorget", "Protect neck", 2, 1 );
 					this.armor = (Armor) item;
 					break;	
 				}
 				case 2:
 				{
-					item = new Armor("Armet", "Covers full", 10, 1);
+					item = new Armor("Armet", "Covers full", 2, 1);
 					this.armor = (Armor) item;
 					break;
 				}
 				case 3:
 				{
-					item= new Armor("Close Helmet", "Covers head", 4, 3 );
+					item= new Armor("Close Helmet", "Covers head", 2, 3 );
 					this.armor = (Armor) item;
 					break;	
 				}
 				case 4:
 				{
-					item= new Armor("Gauntlet", "Gloves that covers fingers to the forearms", 3, 2 );
+					item= new Armor("Gauntlet", "Gloves that covers fingers to the forearms", 2, 2 );
 					this.armor = (Armor) item;
 					break;	
 				}
