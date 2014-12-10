@@ -107,7 +107,7 @@ public class Board extends JPanel implements ActionListener {
 				{
 					JLabel info = new JLabel();
 					info.setText(currentRoomNPCs.get(i).toString());
-					info.setFont (new Font ("Serif", Font.BOLD, 11));
+					info.setFont (new Font ("Serif", Font.BOLD, 9));
 					NpcInfo.add(info);
 				}
 				else
@@ -471,13 +471,13 @@ public class Board extends JPanel implements ActionListener {
 		return action;
 	}
 	
-	public static String grabWeapon ()
+	public static String grabWeapon (NPC deadPlayer)
 	{
 		String[] selectedChoices = {"Yes","No"};
 		String resString = "";
 	    int choices = JOptionPane.showOptionDialog(
 	                               null                       
-	                             , "Monster killed and dropped the weapon, \n do you want to grab it?"  
+	                             , deadPlayer.getName() + " was killed and dropped the weapon, \n do you want to grab it?"  
 	                             , "Choose Action"            
 	                             , JOptionPane.YES_NO_OPTION  
 	                             , JOptionPane.PLAIN_MESSAGE  
