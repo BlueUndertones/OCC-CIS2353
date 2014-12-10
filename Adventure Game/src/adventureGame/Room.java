@@ -151,37 +151,37 @@ public class Room {
       int roomNum = d.roll();
       switch(roomNum)
       {
-         case 1:
+         case 0:
          {
             roomNum = 1;
             Name = "Slime Cavern";
             break;
          }
-         case 2:
+         case 1:
          {
             roomNum = 2;
             Name = "Mess Hall";
             break;
          } 
-         case 3:
+         case 2:
          {
             roomNum = 3;
             Name = "Hallway";
             break;
          } 
-         case 4:
+         case 3:
          {
             roomNum = 4;
             Name = "Mist Cavern";
             break;
          } 
-         case 5:
+         case 4:
          {
             roomNum = 5;
             Name = "Sleeping Quarters";
             break;
          } 
-         case 6:
+         case 5:
          {
             roomNum = 6;
             Name = "Cellar";
