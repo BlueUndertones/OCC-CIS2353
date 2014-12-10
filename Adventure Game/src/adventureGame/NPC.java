@@ -27,6 +27,7 @@ public class NPC extends Player implements character
     	int value = dice.getValue(); 
         value = dice.getValue();
         this.setWeapon(value);
+        this.setArmor(dice.roll());
     }
     
     public NPC ( )
