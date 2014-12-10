@@ -1,7 +1,6 @@
 package adventureGame;
 import java.util.*;
-
-import javax.print.attribute.standard.Finishings;
+import javax.swing.JOptionPane;
 
 
 public class Party
@@ -15,8 +14,7 @@ public class Party
 	{
 		if (party.size() < MIN_PARTY_SIZE|| party.size() > MAX_PARTY_SIZE  )
 		{
-			throw new IndexOutOfBoundsException( party.size() + " Must be "
-												+ "larger than 0 and less than 6");
+			throw new IndexOutOfBoundsException( party.size() + " Must be larger than 0 and less than 6");
 		}
 		else 
 		{
@@ -34,8 +32,6 @@ public class Party
 		if ( value == 1 )
 		{
 			Board.info2.setText("While you were sleeping your party was attacked!");
-			//System.out.println("While you were sleeping your party was attacked!");
-			//fight();//party.
 		}
 		else
 		{
@@ -44,196 +40,436 @@ public class Party
 				Player p;				
 				p = (Player) party.get(i);
 				p.addHitPoints();
+				Board.info2.setText("You slept well! you got more hitpoints");
 				//System.out.println(p);
 			}
 		}
 	}
 
-
-	public void fight(Sequence<Player> sortedPlayers, Sequence<NPC> sortedNPC) //krupa
+	public void fight(Sequence<Player> players, Sequence<NPC> NPCs) 
 	{
-		System.out.println("Fight Begins");
-		boolean isDead = false;
-		Player fighterPlayer, targetPlayer;
-		NPC fighterNPC, targetNPC;
-		int hitPoints, totalDamage;
-		Weapon currentWeapon = null;
-		for(int playerIndex = 0; playerIndex < sortedPlayers.size(); playerIndex++)
+		int count =0;
+
+		while (NPCs.size() > 0)
 		{
-			for(int npcIndex = 0; npcIndex < sortedNPC.size(); npcIndex++)
-			{
-				if(sortedPlayers.get(playerIndex).getDexterity() >= sortedNPC.get(npcIndex).getDexterity())
+			for (int i = 0; i < players.size(); i++) {
+
+				//players to attack NPCs
+				if (NPCs.size() == 1 && !(NPCs.get(0).getHitPoints() <= 0))
 				{
-					fighterPlayer = sortedPlayers.get(playerIndex);
-					targetNPC = sortedNPC.get(npcIndex);
-					hitPoints = targetNPC.getHitPoints();
-					do{
-						  attack(fighterPlayer,sortedNPC); 
-						  totalDamage = calculateTotalDamageForNPC(fighterPlayer, targetNPC ) ;
-						  hitPoints = hitPoints - totalDamage;
-						  targetNPC.setHitPoints(hitPoints);
-						  if( hitPoints <= 0)
-						    {
-						      isDead = true;
-						     if(targetNPC.getWeapon() != null)
-						     {
-						    	 if(Board.grabWeapon() == "Yes")
-						    	 currentWeapon= targetNPC.getWeapon();
-						    	 fighterPlayer.setWeapon(currentWeapon);
-						     }
-						     sortedNPC.remove(npcIndex);
-						      npcIndex++;
-						    }
-					  }while(!(isDead));
-					
+					playerAttack(players.get(i), NPCs.get(0));
+					if (NPCs.get(0).getHitPoints() <= 0)
+					{	
+						NPCs.remove(0);
+						break;
+					}
+				}
+				if (NPCs.size() > 1)
+				{
+					Random ran = new Random();
+					int x = ran.nextInt(NPCs.size()-1);
+					playerAttack(players.get(i), NPCs.get(x));
+				}
+				
+				//NPCs to attack Players
+				if (count > NPCs.size()-1)
+					count = 0;
+				if (players.size() == 1)
+					NPCAttack(NPCs.get(count), players.get(0));
+				else
+				{
+					Random ran2 = new Random();
+					int y = ran2.nextInt(players.size()-1);
+					NPCAttack(NPCs.get(count), players.get(y));
+					count++;
+				}
+			}
+			if(NPCs.size() == 0)
+				break;
+			if (players.size() == 1 && players.get(0).getHitPoints() == 0)
+				break;
+		}
+	}
+	
+	public void NPCAttack(NPC currentNPC, Player target)
+	{
+		Die dice2 = new Die(4);
+		int value2 = dice2.roll();
+ 
+		if (currentNPC.getWeapon() != null && value2 == 2)
+		{
+			if (isTargetGonnaDieByWeapon(target, currentNPC))
+			{
+				Board.info2.setText(currentNPC.getName()+" hit"+ target.getName()+ " >>>>  " + target.getName() + " is Dead  <<<<");
+				target.setHitPoints(calcDamage (target, currentNPC ));
+			}
+			else
+			{
+				Board.info2.setText(target.getName() + " got hit by: " + currentNPC.getName()+ "'s " + currentNPC.getWeapon().getItemName());
+				target.setHitPoints(calcDamage (target, currentNPC ));
+			}
+		}
+		if (currentNPC.getWeapon() != null && value2 == 1)
+		{
+			if (isTargetGonnaDieByWeapon(target, currentNPC))
+			{
+				Board.info2.setText(currentNPC.getName()+" casted a spell, "+ target.getName()+ " >>>>  " + target.getName() + " is Dead  <<<<");
+				target.setHitPoints(calcDamage (target, currentNPC ));
+			}
+			else
+			{
+				if (memorizeSpell(currentNPC).equals("Yes") && canMemorizeSpell (target))
+					target.setSpells(target.getSpells()+1);
+				else
+				{
+					Board.info1.setText(target.getName() + " you're too stupid to memroze this spell");
+					Board.info2.setText(target.getName() + " got hit by: " + currentNPC.getName()+ "'s " + currentNPC.getWeapon().getItemName());
+					target.setHitPoints(calcDamage (target, currentNPC ));
+				}
+			}
+		}
+		if (currentNPC.getWeapon() == null && value2 == 1)
+		{
+			if (memorizeSpell(currentNPC).equals("Yes") && canMemorizeSpell (target))
+				target.setSpells(target.getSpells()+1);
+			else
+			{
+				Board.info1.setText(target.getName() + " you're too stupid to memroze this spell");
+				Board.info2.setText(target.getName() + " got hit by: " + currentNPC.getName()+ "'s " + currentNPC.getWeapon().getItemName());
+				target.setHitPoints(calcDamage (target, currentNPC ));
+			}
+		}
+		else
+		{
+			Die dice = new Die(20);
+			dice.roll(); 
+			int value = dice.getValue();
+			if (value > target.getDexterity())
+			{
+				if (isTargetGonnaDie(target, currentNPC))
+				{
+					Board.info2.setText(currentNPC.getName()+" hit"+ target.getName()+ " >>>  " + target.getName() + " is Dead  <<<");
+					target.setHitPoints(calcDamage (target, currentNPC ));
 				}
 				else
 				{
-					targetPlayer = sortedPlayers.get(playerIndex);
-					fighterNPC = sortedNPC.get(npcIndex);
-					hitPoints = targetPlayer.getHitPoints();
-					String randomAction ="";
-					
-						Die dice = new Die(6) ;
+					Board.info2.setText(target.getName() + " got hit by " + currentNPC.getName());
+					target.setHitPoints(calcDamage (target, currentNPC ));	
+				}
+			}
+			else
+				Board.info2.setText(currentNPC.getName() + " couldn't hit " + target.getName());
+		}
+	}
+	
+	public void playerAttack(Player currentPlayer, NPC target)
+	{	
+		if (!currentPlayer.isPlayerDead())
+		{
+			switch (chooseAction (currentPlayer)) {
+			
+				case 0: //meele attack
+					if (currentPlayer.getWeapon() != null)
+					{
+						//choose what to use fists or weapon
+						switch (fistOrWeapon(currentPlayer)) {
+						case 0: //weapon chosen
+							if (isTargetGonnaDieByWeapon(target, currentPlayer))
+							{
+								currentPlayer.setWeapon(target.getWeapon());
+								target.setHitPoints(calcDamage (target, currentPlayer ));
+							    Board.info1.setText(currentPlayer.getName() + " Killed " + target.getName() + " and took his " + target.getWeapon().getItemName());
+							    	
+							}
+							else
+							{
+								target.setHitPoints(calcDamage (target, currentPlayer ));
+								setHitText(currentPlayer, target);
+							}
+						break;	
+						case 1: //fists chosen
+							if (isTargetGonnaDie(target, currentPlayer))
+							{
+								currentPlayer.setWeapon(target.getWeapon());
+								target.setHitPoints(calcDamage (target, currentPlayer ));
+								Board.info1.setText(currentPlayer.getName() + " Killed " + target.getName() + " and took his " + target.getWeapon().getItemName());
+							}
+							else
+							{
+								target.setHitPoints(calcDamage (target, currentPlayer ));
+								setHitText(currentPlayer, target);
+							}
+						break;
+						}
+					}
+					else
+					{
+						Die dice = new Die(20);
 						dice.roll(); 
-						int value = dice.getValue(); 
-						randomAction = NPC.randomNPCActionMessages(value);
-						Board.info1.setText(randomAction);
-						totalDamage = calculateTotalDamageForPlayer(targetPlayer,fighterNPC)  ;
-						hitPoints = hitPoints-totalDamage;
-						targetPlayer.setHitPoints(hitPoints);
-						  
-						  if(hitPoints <= 0)
-						    {
-						      isDead = true;
-						      sortedPlayers.remove(playerIndex);
-						      playerIndex++;
-						    }
-						  if(hitPoints > 20)
-						  {
-							  playerIndex++;
-						  }
-						  if(sortedPlayers.size()==0)
-						  {
-							  Board.gameOverMessage();
-						  }
+						int value = dice.getValue();
+						if (value > target.getDexterity())
+						{
+							if (isTargetGonnaDie(target, currentPlayer))
+							{
+								setKilledText(currentPlayer, target);
+								target.setHitPoints(calcDamage (target, currentPlayer ));
+							}
+							else
+							{
+								setHitText(currentPlayer, target);
+								target.setHitPoints(calcDamage (target, currentPlayer ));
+							}
+						}
+						else
+							setMissedText(currentPlayer, target);
+					}
+					break;
+					
+				case 1: //range attack
+					if (currentPlayer.getWeapon() != null)
+					{
+						Die dice = new Die(15);
+						dice.roll(); 
+						int value = dice.getValue();
+						if (value > target.getDexterity())
+						{
+							if (isTargetGonnaDieByWeapon(target, currentPlayer))
+							{
+								currentPlayer.setWeapon(target.getWeapon());
+								target.setHitPoints(calcDamage (target, currentPlayer ));
+								Board.info1.setText(currentPlayer.getName() + " Killed " + target.getName() + " and took his " + target.getWeapon().getItemName());	
+							}
+							else
+							{
+								target.setHitPoints(calcDamage (target, currentPlayer ));
+								setHitText(currentPlayer, target);
+							}
+						}
+						else
+							setMissedText(currentPlayer, target);
+					}
+					else
+					{
+						Board.info1.setText(currentPlayer.getName()+" don't have a weapon, choose again");
+						playerAttack(currentPlayer, target);
+					}
+					
+					break;
+					
+				case 2: //cast spell
+					if (currentPlayer.getSpells() != 0)
+					{
+						if (target.getWeapon() != null) //is dying and he has weapon
+						{
+							if (isTargetGonnaDie(target, currentPlayer))
+							{
+								currentPlayer.setWeapon(target.getWeapon());
+								target.setHitPoints(calcDamage (target, currentPlayer ));
+								Board.info1.setText(currentPlayer.getName()+ " Killed " + target.getName() + " and took his " + target.getWeapon().getItemName());
+								currentPlayer.setSpells(currentPlayer.getSpells()-1);
+							}
+							else
+							{
+								Board.info1.setText(currentPlayer.getName()+ " casted a spell on " + target.getName());
+								target.setHitPoints(calcDamage (target, currentPlayer ));
+								currentPlayer.setSpells(currentPlayer.getSpells()-1);
+							}
+						}
+						else
+						{
+							if (isTargetGonnaDie(target, currentPlayer))
+							{
+								Board.info1.setText(currentPlayer.getName()+ " casted a spell and Killed " + target.getName());
+								target.setHitPoints(calcDamage (target, currentPlayer ));
+								currentPlayer.setSpells(currentPlayer.getSpells()-1);
+							}
+							else
+							{
+								Board.info1.setText(currentPlayer.getName()+" casted a spell on " + target.getName());
+								target.setHitPoints(calcDamage (target, currentPlayer ));	
+								currentPlayer.setSpells(currentPlayer.getSpells()-1);
+							}
+						}
+					}
+					else
+					{
+						Board.info1.setText(currentPlayer.getName()+" you didn't memorize any spells Choose again!");
+						playerAttack(currentPlayer, target);
+					}
+					break;
+					
+				case 3: //hide
+					hide(currentPlayer);
+					break;
+					
+				case -1:
+					System.exit(0);
+				default:
+					Board.info1.setText("You have not selected any actions");
+			}
+		}
+	}
+	public void hide(Player currentPlayer)
+	{
+		Player playerOnTheLead = null;
+		currentPlayer.isHidden = true;
+		int lastPlayer = party.size() -1;
+		if (party.size() > 1)
+		{
+			//look for and get the next not hidden player tp take the hit and be currentOnlead
+			for (int i = 0; i < party.size(); i++)
+			{	
+				if (!((Player)party.get(i)).isHidden && ((Player) party.get(i)).getHitPoints() != 0)
+				{
+					playerOnTheLead = (Player) party.get(i);
+					playerOnTheLead.setTileY(Board.currentRoom.getY());
+					playerOnTheLead.setTileX(Board.currentRoom.getX());
+					playerOnTheLead.removeHitPoints();
+					Board.info1.setText(currentPlayer.getName() +" hide, " + playerOnTheLead.getName()+" you just got hit");
+					break;
+				}
+				//if no next player was unhidden then get all the player to get hit
+				if ( ((Player)party.get(lastPlayer)).isHidden == true)
+				{
+					for (int x = 0; x < party.size(); x++)
+					{
+						((Player) party.get(i)).removeHitPoints();
+						Board.info2.setText("Everybody got hit, because all are trying to hide");
+					}
 				}
 			}
 		}
+		else
+		{
+			playerOnTheLead = (Player) party.get(0);
+			Board.info1.setText("None to hide behind, " + playerOnTheLead.getName()+", you just got hit");
+			playerOnTheLead.removeHitPoints();
+		}		
 	}
-	
-	public static void attack(Player fighterPlayer, Sequence<NPC> sortedTargetNPC)
+	public int calcDamage (Player target, Player currentPlayer )
+	{	
+		int armor = 0;
+		int weaponDamage = 0;
+		
+		if (target.getArmor() != null)
+			armor = target.getArmor().getDamage();
+		if (currentPlayer.getWeapon() != null)
+			weaponDamage = currentPlayer.getWeapon().getDamage();
+		
+		int deduction = (Math.round( target.getStrength() /3)) + weaponDamage;
+		if (armor >= deduction)
+			return target.getHitPoints()-1;
+		if (deduction - armor < 0 )
+			return 0;
+		if (target.getHitPoints()- (deduction - armor) < 0)
+			return 0;
+		else 
+			return target.getHitPoints()- (deduction - armor);
+	}
+	public boolean canMemorizeSpell(Player currentPlayer)
 	{
-		Weapon currentWeapon = null;
-		String selectedAction;
-		selectedAction = Board.chooseFightActions();
-		if(selectedAction == "Melee Attack")
-		{
-			if(fighterPlayer.getWeapon() != null)
-			{
-				currentWeapon = (Weapon) fighterPlayer.getWeapon();	
-				Board.info1.setText("You can use weapon to fight");
-			}else
-			{
-				Board.info1.setText("You can use your fists to fight");
-			}
-			
-		}
-		if(selectedAction == "Range Attack")
-		{
-			Board.info1.setText("You have selected Range Attack");
-		}
-		if(selectedAction == "Spell Cast")
-		{
-			Board.info1.setText("You have selected Spell Cast");
-		}
-		if(selectedAction == "Memorize Spell")
-		{
-			Board.info1.setText("You have selected Memorize Spell");
-		}
+		if (currentPlayer.getIntelligence() > 5)
+			return true;
+		else 
+			return false;
 	}
-
-	
-	public static int calculateTotalDamageForNPC(Player fighterPlayer, NPC targetNPC )
-	{ 
-		int totalDamage = 0;
-		int weaponDamage = 0,armorDamage=0 ;
-		Weapon currentWeapon = null;
-		currentWeapon = (Weapon) fighterPlayer.getWeapon();
-		Armor currentArmor = null;
-		currentArmor = targetNPC.getArmor();
-		if(currentWeapon != null)
-		{
-			weaponDamage = currentWeapon.getDamage();
-		}
-		if(currentArmor != null)
-		{
-			armorDamage = currentArmor.getDamage();
-		}
-		totalDamage = (int) (Math.ceil((targetNPC.getStrength()/3) + weaponDamage - armorDamage));
-		return totalDamage;
+	public boolean isTargetGonnaDie (Player target, Player currentPlayer)
+	{
+		if (calcDamage(target, currentPlayer) <= 0)
+			return true;
+		else
+			return false;
 	}
-
-	public static int calculateTotalDamageForPlayer(Player targetPlayer, NPC fighterNPC )
-	{ 
-		int totalDamage = 0;
-		int weaponDamage = 0,armorDamage=0 ;
-		Weapon currentWeapon = null;
-		currentWeapon = (Weapon) fighterNPC.getWeapon();
-		Armor currentArmor = null;
-		currentArmor = targetPlayer.getArmor();
-		if(currentWeapon != null)
-		{
-			weaponDamage = currentWeapon.getDamage();
-		}
-		if(currentArmor != null)
-		{
-			armorDamage = currentArmor.getDamage();
-		}
-		totalDamage = (int) (Math.ceil((targetPlayer.getStrength()/3) + weaponDamage - armorDamage));
-		return totalDamage;
+	public boolean isTargetGonnaDieByWeapon (Player target, Player currentPlayer)
+	{
+		if (calcDamage(target, currentPlayer) <= 0)
+			return true;
+		else
+			return false;
 	}
-
+	public void setHitText(Player currentPlayer, NPC target)
+	{
+		Board.info1.setText(currentPlayer.getName()+" hit "  + target.getName());
+	}
+	public void setKilledText(Player currentPlayer, NPC target)
+	{
+		Board.info1.setText(currentPlayer.getName()+" Killed "  + target.getName());
+	}
+	public void setMissedText(Player currentPlayer, NPC target)
+	{
+		Board.info1.setText(currentPlayer.getName()+" missed the target "  + target.getName());
+	}
+	public int fistOrWeapon (Player currentPlayer)
+	{
+		String[] choices = {"Weapon", "Fists"};
+	    int actionChosen = JOptionPane.showOptionDialog(
+	                               null                       // Center in window.
+	                             , currentPlayer.getName()+", Do you want to use your weapon or your fists?"  // Message
+	                             , "Choose Weapon or fists"            // Title in titlebar
+	                             , JOptionPane.YES_NO_OPTION  // Option type
+	                             , JOptionPane.PLAIN_MESSAGE  // messageType
+	                             , null                       // Icon (none)
+	                             , choices                    // Button text as above.
+	                             , "Default"    // Default button's label
+	                           );
+	    
+	    return actionChosen;
+	}
+	public int chooseAction (Player currentPlayer)
+	{
+		String[] choices = {"Melee", "Range Attack", "Cast Spell", "Hide"};
+	    int actionChosen = JOptionPane.showOptionDialog(
+	                               null                       // Center in window.
+	                             , currentPlayer.getName()+" it's your turn, Choose how do you want to attack"  // Message
+	                             , "Choose Action"            // Title in titlebar
+	                             , JOptionPane.YES_NO_OPTION  // Option type
+	                             , JOptionPane.PLAIN_MESSAGE  // messageType
+	                             , null                       // Icon (none)
+	                             , choices                    // Button text as above.
+	                             , "Default"    // Default button's label
+	                           );
+	    
+	    return actionChosen;
+	}
+	public static String memorizeSpell (NPC npc)
+	{
+		String[] selectedChoices = {"Yes","No"};
+		String resString = "";
+	    int choices = JOptionPane.showOptionDialog(
+	                               null                       
+	                             , npc.getName() + " casted a spell, \n do you want to memorize it?"  
+	                             , "Choose Action"            
+	                             , JOptionPane.YES_NO_OPTION  
+	                             , JOptionPane.PLAIN_MESSAGE  
+	                             , null                       
+	                             , selectedChoices                 
+	                             , "Default"    
+	                           );
+	    if(choices == 0)
+	    {
+	    	resString = "Yes";
+	    }
+	    else
+	    	resString = "No";
+	    
+	    return resString;
+	}
 	public void search(Room room, Player player) // Heather
 	{
-		// check player's int
-		// you can only search a room the first time you're visiting it. After
-		// that, no searching.
-//		if (room.isVisited() == true || isSearched == true) {
-//			System.out.println("This room has already been searched.");
-//			return;
-//		}
-
-		// playerGold = player.getGold();
 		int playerInt = player.getIntelligence();
 		Die intDie = new Die(20);
 		int roomInt = intDie.roll();
 		if (playerInt > roomInt) { // ? what about >= ?
 			int goldFound = room.getGold();
 			Board.info2.setText(player.getName() + " has found " + goldFound + " gold pieces.");
-			//System.out.println(player.getName() + " has found " + goldFound + " gold pieces.");
-			// gold = playerGold + goldFound;
 			player.setGold(player.getGold()+ goldFound);
-//			System.out.println("room gold is " + roomInt);
-//			System.out.println("intele is " + player.getIntelligence());
-//			System.out.println(player.getName() + "  " + player.getStrength());
-			// player.addGold(gold);
 		} else {
-			// return nothing found..
-//			System.out.println("room gold is " +roomInt);
-//			System.out.println("intele is " + player.getIntelligence());
 			Board.info2.setText("your intelligence is too low to find Gold!");
-			//System.out.println("There is nothing to find here.");
 		}
 		isSearched = true;
 	}
 	
-	public static void hide()// nadir
-	{
-		//this method exists in the board class
-	}
-	
-	public static void run()//demario
+	public void run()//demario
 	{
 		Die dice = new Die(2);
 		dice.roll(); 
@@ -242,19 +478,16 @@ public class Party
 		if ( value == 1 )
 		{
 			Board.info2.setText("While you were running your party was attacked!");
-			//System.out.println("While you were running your party was attacked!");
 			for ( int i = 0; i < party.size(); i++ )
 			{
 				Player p;				
 				p = (Player) party.get(i);
 				p.removeHitPoints();
-				//System.out.println(p);
 			}
 		}
 		else
 		{
-			Board.info2.setText("You escape before the enemy could attack!");
-//			System.out.println("You escape before the enemy could attack!");
+			Board.info2.setText("You escaped before the enemy could attack!");
 		}
 	}
 }
